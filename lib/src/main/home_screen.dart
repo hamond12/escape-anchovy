@@ -1,3 +1,4 @@
+import 'package:escape_anchovy/src/common/appbar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,9 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('홈'),
-      ),
+      appBar: CommonAppBar(),
       body: _buildPage(context),
     );
   }
