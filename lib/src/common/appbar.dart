@@ -4,6 +4,7 @@ import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/main/home_screen.dart';
 import 'package:escape_anchovy/src/user_info/user_info_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -28,7 +29,76 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CommonAppBarState extends State<CommonAppBar> {
-  String country = 'korea';
+  final storage = const FlutterSecureStorage();
+  String? country = 'korea';
+
+  void getCountry() async {
+    country = await storage.read(key: 'country');
+    print(country);
+  }
+
+  List<Widget> returnActions() {
+    if (widget.isHome) {
+      return [
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const UserInfoScreen()),
+            );
+          },
+          child: SvgPicture.asset(
+            'assets/svg/user_info.svg',
+            height: 20,
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        GestureDetector(
+          onTap: () {},
+          child: SvgPicture.asset(
+            'assets/svg/darkmode.svg',
+            height: 20,
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+      ];
+    } else if (widget.isUserInfo) {
+      return [
+        const SizedBox(
+          width: 32,
+        ),
+        GestureDetector(
+          onTap: () {
+            if (context.locale == const Locale('ko', 'KR')) {
+              context.setLocale(const Locale('en', 'US'));
+              storage.write(key: 'country', value: 'usa');
+            } else {
+              context.setLocale(const Locale('ko', 'KR'));
+              storage.write(key: 'country', value: 'korea');
+            }
+            getCountry();
+          },
+          child: Image.asset(
+            'assets/png/$country.png',
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        )
+      ];
+    } else {
+      return [
+        const SizedBox(
+          width: 72,
+        )
+      ];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -63,62 +133,6 @@ class _CommonAppBarState extends State<CommonAppBar> {
                   ),
                 ),
               ),
-        actions: widget.isHome
-            ? [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const UserInfoScreen()),
-                    );
-                  },
-                  child: SvgPicture.asset(
-                    'assets/svg/user_info.svg',
-                    height: 20,
-                  ),
-                ),
-                const SizedBox(
-                  width: 16,
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    'assets/svg/darkmode.svg',
-                    height: 20,
-                  ),
-                ),
-                const SizedBox(
-                  width: 16,
-                ),
-              ]
-            : widget.isUserInfo
-                ? [
-                    const SizedBox(
-                      width: 32,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (country == 'korea') {
-                          country = 'usa';
-                          context.setLocale(const Locale('en', 'US'));
-                        } else if (country == 'usa') {
-                          country = 'korea';
-                          context.setLocale(const Locale('ko', 'KR'));
-                        }
-                      },
-                      child: Image.asset(
-                        'assets/png/$country.png',
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    )
-                  ]
-                : [
-                    const SizedBox(
-                      width: 72,
-                    )
-                  ]);
+        actions: returnActions());
   }
 }
