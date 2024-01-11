@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 right: 0,
                 child: Center(
                   child: Transform.rotate(
-                    angle: -3 * (3.141592653589793 / 180),
+                    angle: -2 * (3.141592653589793 / 180),
                     child: Text(
                         _controller.famousSaying[_controller.randomNumber],
                         textAlign: TextAlign.center,
