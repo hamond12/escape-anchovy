@@ -51,8 +51,10 @@ class _CommonAppBarState extends State<CommonAppBar> {
               )
             : GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(14, 14, 28, 14),
@@ -67,7 +69,8 @@ class _CommonAppBarState extends State<CommonAppBar> {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => UserInfoScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const UserInfoScreen()),
                     );
                   },
                   child: SvgPicture.asset(
@@ -75,7 +78,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
                     height: 20,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 GestureDetector(
@@ -85,35 +88,35 @@ class _CommonAppBarState extends State<CommonAppBar> {
                     height: 20,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
               ]
             : widget.isUserInfo
                 ? [
-                    SizedBox(
+                    const SizedBox(
                       width: 32,
                     ),
                     GestureDetector(
                       onTap: () {
                         if (country == 'korea') {
                           country = 'usa';
-                          context.setLocale(Locale('en', 'US'));
+                          context.setLocale(const Locale('en', 'US'));
                         } else if (country == 'usa') {
                           country = 'korea';
-                          context.setLocale(Locale('ko', 'KR'));
+                          context.setLocale(const Locale('ko', 'KR'));
                         }
                       },
                       child: Image.asset(
-                        'assets/png/${country}.png',
+                        'assets/png/$country.png',
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     )
                   ]
                 : [
-                    SizedBox(
+                    const SizedBox(
                       width: 72,
                     )
                   ]);

@@ -22,16 +22,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
     _controller.moveUp();
 
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFFCCE9FF),
+      backgroundColor: const Color(0XFFCCE9FF),
       body: AnimatedBuilder(
           animation: _controller,
           builder: (context, snapshot) {

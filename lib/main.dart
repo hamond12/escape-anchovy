@@ -6,8 +6,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   runApp(EasyLocalization(
-      supportedLocales: [Locale('ko', 'KR'), Locale('en', 'US')],
+      supportedLocales: const [Locale('ko', 'KR'), Locale('en', 'US')],
       path: 'assets/locale',
-      fallbackLocale: Locale('ko', 'KR'),
+      fallbackLocale: const Locale('ko', 'KR'),
       child: const MyApp()));
 }

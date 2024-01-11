@@ -20,7 +20,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   }
 
   Widget _buildPage(BuildContext context) {
-    return Column(
+    return const Column(
       children: [],
     );
   }

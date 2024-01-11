@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildPage(BuildContext context) {
-    return Column(
+    return const Column(
       children: [],
     );
   }
