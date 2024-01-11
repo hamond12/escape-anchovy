@@ -1,10 +1,23 @@
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
+import 'package:escape_anchovy/src/main/home_screen.dart';
+import 'package:escape_anchovy/src/user_info/user_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CommonAppBar({super.key});
+  const CommonAppBar({
+    super.key,
+    required this.title,
+    this.isLogo = false,
+    this.isHome = false,
+    this.isUserInfo = false,
+  });
+
+  final String title;
+  final bool isLogo;
+  final bool isHome;
+  final bool isUserInfo;
 
   @override
   State<CommonAppBar> createState() => _CommonAppBarState();
@@ -17,44 +30,85 @@ class _CommonAppBarState extends State<CommonAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: context.isLight
-          ? LightModeColors.background
-          : DarkModeColors.background,
-      title: Center(
-        child: Text(
-          '메인화면',
-          style: TextStyles.h3Bold.copyWith(color: Colors.black),
-        ),
-      ),
-      leadingWidth: 72,
-      leading: Padding(
-        padding: EdgeInsets.only(right: 8), // 또는 EdgeInsets.zero
-        child: Image.asset(
-          'assets/png/app_logo.png',
-        ),
-      ),
-      actions: [
-        GestureDetector(
-          onTap: () {},
-          child: SvgPicture.asset(
-            'assets/svg/user_info.svg',
-            height: 20,
+        backgroundColor: context.isLight
+            ? LightModeColors.background
+            : DarkModeColors.background,
+        title: Center(
+          child: Text(
+            widget.title,
+            style: TextStyles.h3Bold.copyWith(color: Colors.black),
           ),
         ),
-        SizedBox(
-          width: 16,
-        ),
-        GestureDetector(
-          onTap: () {},
-          child: SvgPicture.asset(
-            'assets/svg/darkmode.svg',
-            height: 20,
-          ),
-        ),
-        SizedBox(
-          width: 16,
-        ),
-      ],
-    );
+        leadingWidth: 72,
+        leading: widget.isLogo
+            ? Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Image.asset(
+                  'assets/png/app_logo.png',
+                ),
+              )
+            : GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 14, 28, 14),
+                  child: SvgPicture.asset(
+                    'assets/svg/back.svg',
+                  ),
+                ),
+              ),
+        actions: widget.isHome
+            ? [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => UserInfoScreen()),
+                    );
+                  },
+                  child: SvgPicture.asset(
+                    'assets/svg/user_info.svg',
+                    height: 20,
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: SvgPicture.asset(
+                    'assets/svg/darkmode.svg',
+                    height: 20,
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+              ]
+            : widget.isUserInfo
+                ? [
+                    SizedBox(
+                      width: 32,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        //todo: 앱 언어 및 아이콘 변경
+                      },
+                      child: Image.asset(
+                        'assets/png/korea.png',
+                        height: 20,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    )
+                  ]
+                : [
+                    SizedBox(
+                      width: 72,
+                    )
+                  ]);
   }
 }

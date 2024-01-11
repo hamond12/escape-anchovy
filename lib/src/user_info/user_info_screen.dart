@@ -1,21 +1,20 @@
 import 'package:escape_anchovy/src/common/appbar.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class UserInfoScreen extends StatefulWidget {
+  const UserInfoScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<UserInfoScreen> createState() => _UserInfoScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        title: '메인화면',
-        isLogo: true,
-        isHome: true,
+        title: '유저정보',
+        isUserInfo: true,
       ),
       body: _buildPage(context),
     );
