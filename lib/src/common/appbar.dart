@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/main/home_screen.dart';
@@ -27,6 +28,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CommonAppBarState extends State<CommonAppBar> {
+  String country = 'korea';
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -94,11 +96,16 @@ class _CommonAppBarState extends State<CommonAppBar> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        //todo: 앱 언어 및 아이콘 변경
+                        if (country == 'korea') {
+                          country = 'usa';
+                          context.setLocale(Locale('en', 'US'));
+                        } else if (country == 'usa') {
+                          country = 'korea';
+                          context.setLocale(Locale('ko', 'KR'));
+                        }
                       },
                       child: Image.asset(
-                        'assets/png/korea.png',
-                        height: 20,
+                        'assets/png/${country}.png',
                       ),
                     ),
                     SizedBox(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:escape_anchovy/src/common/appbar.dart';
 import 'package:flutter/material.dart';
 
@@ -12,10 +13,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar(
-        title: '유저정보',
-        isUserInfo: true,
-      ),
+      appBar:
+          CommonAppBar(title: tr('user_info_appbar_title'), isUserInfo: true),
       body: _buildPage(context),
     );
   }

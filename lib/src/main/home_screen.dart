@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:escape_anchovy/src/common/appbar.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        title: '메인화면',
+        title: tr('home_appbar_title'),
         isLogo: true,
         isHome: true,
       ),
