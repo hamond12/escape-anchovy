@@ -1,9 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:escape_anchovy/src/common/appbar.dart';
+import 'package:escape_anchovy/src/common/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  static const routeName = '/home';
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -14,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        title: tr('home_appbar_title'),
+        title: AppLocalizations.of(context)!.home_app_bar_title,
         isLogo: true,
         isHome: true,
       ),
@@ -24,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildPage(BuildContext context) {
     return const Column(
-      children: [],
+      children: [Text('dd')],
     );
   }
 }
