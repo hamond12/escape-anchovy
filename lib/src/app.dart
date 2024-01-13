@@ -3,6 +3,7 @@ import 'package:escape_anchovy/res/theme/themes.dart';
 import 'package:escape_anchovy/src/screen/main/home_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_screen.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
+import 'package:escape_anchovy/src/screen/user_name/user_name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -50,6 +51,8 @@ class MyApp extends StatelessWidget {
               return const HomeScreen();
             case UserInfoScreen.routeName:
               return UserInfoScreen(controller: settingsController);
+            case UserNameScreen.routeName:
+              return const UserNameScreen();
             default:
               return const SplashScreen();
           }

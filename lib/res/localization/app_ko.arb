@@ -1,6 +1,15 @@
 {
     "@@locale":"ko",
-    "app_title":"멸치탈출",
+    "app_title":"멸치 탈출",
+
     "home_app_bar_title": "메인화면",
-    "user_info_app_bar_title": "유저 정보"
+    "user_info_app_bar_title": "유저 정보",
+
+    "hello": "안녕하세요",
+    "name": "닉네임",
+    "name_explain": "을 입력해주세요.",
+    "name_hint": "닉네임 입력",
+    "name_error_text":"닉네임을 8자 이하로 입력해주세요",
+    "name_pass_text":"입력이 완료되었습니다",
+    "completion": "완료"
 }

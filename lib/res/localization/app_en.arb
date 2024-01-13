@@ -1,6 +1,15 @@
 {
     "@@locale":"en",
     "app_title":"Escape Anchovy",
+
     "home_app_bar_title": "Main",
-    "user_info_app_bar_title": "User Info"
+    "user_info_app_bar_title": "User Info",
+
+    "hello": "Hello",
+    "name": "nickname",
+    "name_explain": "Enter your ",
+    "name_hint": "Enter a nickname",
+    "name_error_text":"Enter a nickname of 8 characters or less",
+    "name_pass_text":"Your input has been completed",
+    "completion": "Completion"
 }

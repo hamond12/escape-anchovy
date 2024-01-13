@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:escape_anchovy/src/screen/main/home_screen.dart';
+import 'package:escape_anchovy/src/screen/user_name/user_name_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SplashController with ChangeNotifier {
   double enchovyTopPos = 60;
 
   void moveUp() {
-    Timer.periodic(Duration(milliseconds: 50), (timer) {
+    Timer.periodic(const Duration(milliseconds: 50), (timer) {
       enchovyTopPos -= 2;
       if (timer.tick >= (3 * 1000) / 50) {
         timer.cancel();
@@ -61,5 +64,29 @@ class SplashController with ChangeNotifier {
       return 24;
     }
     return 24; // randomNumber == 12
+  }
+
+  final storage = const FlutterSecureStorage();
+
+  Future<bool> isNameInput() async {
+    final inputName = await storage.read(key: "inputName");
+    if (inputName == "true") {
+      return true; // 이름 입력 스크린 확인하려면 false로 변경하고 reload
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> checkInputName(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: 3));
+    isNameInput().then((value) async {
+      if (!value) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, UserNameScreen.routeName, (route) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, HomeScreen.routeName, (route) => false);
+      }
+    });
   }
 }

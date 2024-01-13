@@ -21,9 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
+    _controller.checkInputName(context);
     _controller.moveUp();
-
     Timer(const Duration(seconds: 3), () {
       Navigator.push(
         context,
