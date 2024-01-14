@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/src/app.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,12 @@ class SettingsController with ChangeNotifier {
   }
 
   ThemeMode themeMode = ThemeMode.system;
+  String theme = '';
 
-  String theme = 'dark_mode';
+  Future<void> initialTheme(BuildContext context) async {
+    theme = context.isLight ? 'light_mode' : 'dark_mode';
+    notifyListeners();
+  }
 
   Future<void> updateThemeMode(ThemeMode? newThemeMode, String newTheme) async {
     themeMode = newThemeMode!;

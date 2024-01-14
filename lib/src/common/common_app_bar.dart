@@ -66,6 +66,11 @@ class _CommonAppBarState extends State<CommonAppBar> {
                   padding: const EdgeInsets.fromLTRB(14, 14, 28, 14),
                   child: SvgPicture.asset(
                     'assets/svg/back.svg',
+                    colorFilter: ColorFilter.mode(
+                        context.isLight
+                            ? DarkModeColors.background
+                            : LightModeColors.background,
+                        BlendMode.srcIn),
                   ),
                 ),
               ),

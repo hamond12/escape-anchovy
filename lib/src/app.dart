@@ -8,15 +8,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.settingsController});
 
   final SettingsController settingsController;
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    widget.settingsController.initialTheme(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: settingsController,
+        animation: widget.settingsController,
         builder: (context, snapshot) {
           return MaterialApp(
             localizationsDelegates: const [
@@ -26,10 +37,10 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: const [Locale('ko'), Locale('en')],
-            locale: Locale(settingsController.countryCode),
+            locale: Locale(widget.settingsController.countryCode),
             theme: Themes.light,
             darkTheme: Themes.dark,
-            themeMode: settingsController.themeMode,
+            themeMode: widget.settingsController.themeMode,
             onGenerateTitle: (BuildContext context) =>
                 AppLocalizations.of(context)!.app_title,
             initialRoute: SplashScreen.routeName,
@@ -49,10 +60,10 @@ class MyApp extends StatelessWidget {
               return const SplashScreen();
             case HomeScreen.routeName:
               return HomeScreen(
-                controller: settingsController,
+                controller: widget.settingsController,
               );
             case UserInfoScreen.routeName:
-              return UserInfoScreen(controller: settingsController);
+              return UserInfoScreen(controller: widget.settingsController);
             case UserNameScreen.routeName:
               return const UserNameScreen();
             default:
