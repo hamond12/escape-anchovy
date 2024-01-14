@@ -30,7 +30,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CommonAppBarState extends State<CommonAppBar> {
-  String country = 'korea';
+  String themeMode = 'dark_mode';
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,10 @@ class _CommonAppBarState extends State<CommonAppBar> {
         title: Center(
           child: Text(
             widget.title,
-            style: TextStyles.h3Bold.copyWith(color: Colors.black),
+            style: TextStyles.h3Bold.copyWith(
+                color: context.isLight
+                    ? DarkModeColors.background
+                    : LightModeColors.background),
           ),
         ),
         leadingWidth: 72,
@@ -54,9 +57,9 @@ class _CommonAppBarState extends State<CommonAppBar> {
               )
             : GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    HomeScreen.routeName,
                   );
                 },
                 child: Padding(
@@ -75,15 +78,28 @@ class _CommonAppBarState extends State<CommonAppBar> {
                   child: SvgPicture.asset(
                     'assets/svg/user_info.svg',
                     height: 20,
+                    colorFilter: ColorFilter.mode(
+                        context.isLight
+                            ? DarkModeColors.background
+                            : LightModeColors.background,
+                        BlendMode.srcIn),
                   ),
                 ),
                 const SizedBox(
                   width: 16,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    if (widget.controller!.themeMode == ThemeMode.light) {
+                      widget.controller!
+                          .updateThemeMode(ThemeMode.dark, 'light_mode');
+                    } else {
+                      widget.controller!
+                          .updateThemeMode(ThemeMode.light, 'dark_mode');
+                    }
+                  },
                   child: SvgPicture.asset(
-                    'assets/svg/darkmode.svg',
+                    'assets/svg/${widget.controller!.theme}.svg',
                     height: 20,
                   ),
                 ),
@@ -104,8 +120,8 @@ class _CommonAppBarState extends State<CommonAppBar> {
                           widget.controller!.updateLocale('ko', 'korea');
                         }
                       },
-                      child: Image.asset(
-                        'assets/png/${widget.controller!.country}.png',
+                      child: SvgPicture.asset(
+                        'assets/svg/${widget.controller!.country}.svg',
                       ),
                     ),
                     const SizedBox(

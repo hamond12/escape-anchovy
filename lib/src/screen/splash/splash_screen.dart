@@ -24,10 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _controller.checkInputName(context);
     _controller.moveUp();
     Timer(const Duration(seconds: 3), () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
+      Navigator.pushNamed(context, HomeScreen.routeName);
     });
   }
 

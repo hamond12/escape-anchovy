@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             locale: Locale(settingsController.countryCode),
             theme: Themes.light,
             darkTheme: Themes.dark,
-            themeMode: ThemeMode.light,
+            themeMode: settingsController.themeMode,
             onGenerateTitle: (BuildContext context) =>
                 AppLocalizations.of(context)!.app_title,
             initialRoute: SplashScreen.routeName,
@@ -48,7 +48,9 @@ class MyApp extends StatelessWidget {
             case SplashScreen.routeName:
               return const SplashScreen();
             case HomeScreen.routeName:
-              return const HomeScreen();
+              return HomeScreen(
+                controller: settingsController,
+              );
             case UserInfoScreen.routeName:
               return UserInfoScreen(controller: settingsController);
             case UserNameScreen.routeName:

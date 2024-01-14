@@ -12,6 +12,16 @@ class SettingsController with ChangeNotifier {
     country = newCountry;
     notifyListeners();
   }
+
+  ThemeMode themeMode = ThemeMode.system;
+
+  String theme = 'dark_mode';
+
+  Future<void> updateThemeMode(ThemeMode? newThemeMode, String newTheme) async {
+    themeMode = newThemeMode!;
+    theme = newTheme;
+    notifyListeners();
+  }
 }
 
 void main() async {
