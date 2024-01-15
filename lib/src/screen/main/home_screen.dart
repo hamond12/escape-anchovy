@@ -221,14 +221,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? LightModeColors.dark2
                           : DarkModeColors.dark2),
                 ),
-                SizedBox(
-                  height: 210,
-                  child: ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final data = _controller.dataList[index];
-                        return data != null
-                            ? Column(
+                _controller.dataList.isNotEmpty
+                    ? SizedBox(
+                        height: 210,
+                        child: ListView.separated(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final data = _controller.dataList[index];
+                              return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ListTile(
@@ -299,23 +299,55 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 ],
-                              )
-                            : const Column(
-                                children: [],
                               );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const Column(
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const Column(
+                                children: [
+                                  Divider(
+                                    color: Color(0xFFEAEAEA),
+                                    height: 4,
+                                  )
+                                ],
+                              );
+                            },
+                            itemCount: 3),
+                      )
+                    : Center(
+                        child: Column(
                           children: [
-                            Divider(
-                              color: Color(0xFFEAEAEA),
-                              height: 4,
-                            )
+                            const SizedBox(
+                              height: 18,
+                            ),
+                            SvgPicture.asset(
+                              'assets/svg/no_data.svg',
+                              colorFilter: ColorFilter.mode(
+                                  context.isLight
+                                      ? LightModeColors.dark3
+                                      : DarkModeColors.dark3,
+                                  BlendMode.srcIn),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '운동기록이 없습니다',
+                              style: TextStyles.b2Medium.copyWith(
+                                  color: context.isLight
+                                      ? LightModeColors.dark3
+                                      : DarkModeColors.dark3),
+                            ),
+                            Text(
+                              '운동시작을 눌러 일지를 작성해보세요',
+                              style: TextStyles.b4Regular.copyWith(
+                                  color: context.isLight
+                                      ? const Color(0XFFADA8B0)
+                                      : const Color(0XFF8A848D)),
+                            ),
                           ],
-                        );
-                      },
-                      itemCount: 3),
-                )
+                        ),
+                      )
               ],
             ),
           ),

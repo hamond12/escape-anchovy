@@ -21,7 +21,7 @@ class DarkModeColors {
   static const Color darkGold = Color(0xFFE9C332);
   static const Color dark1 = Color(0xFFF2F2F2);
   static const Color dark2 = Color(0xFFCDCDCD);
-  static const Color dark3 = Color(0xFF948E97);
+  static const Color dark3 = Color(0xFFA8A2AB);
   static const Color dark4 = Color(0xFF2A2A2A);
 }
 
