@@ -11,6 +11,7 @@ class CommonButton extends StatefulWidget {
       this.text = '',
       this.textColor,
       this.backgroundColor,
+      this.disabledBackgroundColor,
       this.borderColor});
 
   final double width;
@@ -18,6 +19,7 @@ class CommonButton extends StatefulWidget {
   final void Function()? onPressed;
   final String text;
   final Color? textColor;
+  final Color? disabledBackgroundColor;
   final Color? backgroundColor;
   final Color? borderColor;
 
@@ -38,6 +40,10 @@ class _CommonButtonState extends State<CommonButton> {
             surfaceTintColor: Colors.transparent,
             backgroundColor: widget.backgroundColor ??
                 (context.isLight ? LightModeColors.blue : DarkModeColors.blue),
+            disabledBackgroundColor: widget.disabledBackgroundColor ??
+                (context.isLight
+                    ? LightModeColors.dark3
+                    : DarkModeColors.dark3),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
               side: BorderSide(
