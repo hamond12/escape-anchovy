@@ -43,21 +43,22 @@ class _CommonTextFieldState extends State<CommonTextField> {
           counterText: '',
           hintText: widget.hintText,
           hintStyle: TextStyles.b1Regular.copyWith(
-              color:
-                  context.isLight ? LightModeColors.gray : DarkModeColors.gray),
+              color: context.isLight
+                  ? LightModeColors.dark3
+                  : DarkModeColors.dark3),
           border: OutlineInputBorder(
             borderSide: BorderSide(
                 color: context.isLight
-                    ? LightModeColors.gray
-                    : DarkModeColors.gray,
+                    ? LightModeColors.dark3
+                    : DarkModeColors.dark3,
                 width: 1.0),
             borderRadius: BorderRadius.circular(8.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
                 color: context.isLight
-                    ? LightModeColors.gray
-                    : DarkModeColors.gray,
+                    ? LightModeColors.dark3
+                    : DarkModeColors.dark3,
                 width: 1.0),
             borderRadius: BorderRadius.circular(6.0),
           ),

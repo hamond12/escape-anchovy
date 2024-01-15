@@ -2,7 +2,7 @@
     "@@locale":"en",
     "app_title":"Escape Anchovy",
 
-    "home_app_bar_title": "Main",
+    "home_app_bar_title": "Home",
     "user_info_app_bar_title": "User Info",
 
     "hello": "Hello",

@@ -31,8 +31,6 @@ class SettingsController with ChangeNotifier {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   final settingsController = SettingsController();
-
   runApp(MyApp(settingsController: settingsController));
 }

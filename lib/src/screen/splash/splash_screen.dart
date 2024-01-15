@@ -52,10 +52,8 @@ class _SplashScreenState extends State<SplashScreen> {
               right: 0,
               child: Text('ESCAPE\nENCHOVY',
                   textAlign: TextAlign.center,
-                  style: TextStyles.title.copyWith(
-                      color: context.isLight
-                          ? LightModeColors.gray
-                          : DarkModeColors.gray))),
+                  style:
+                      TextStyles.title.copyWith(color: LightModeColors.dark3))),
           Positioned(
               bottom: 0,
               top: _controller.enchovyTopPos,
@@ -93,12 +91,13 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ],
           ),
-          const Positioned(
+          Positioned(
             bottom: 18,
             left: 0,
             right: 0,
             child: Center(
-              child: Text('Created by Hamond', style: TextStyles.b3Regular),
+              child: Text('Created by Hamond',
+                  style: TextStyles.b3Regular.copyWith(color: Colors.black)),
             ),
           ),
         ],

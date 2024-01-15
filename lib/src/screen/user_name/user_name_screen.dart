@@ -1,5 +1,6 @@
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
+import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_text_field.dart';
 import 'package:escape_anchovy/src/common/common_validation_message.dart';
 import 'package:escape_anchovy/src/screen/user_name/user_name_controller.dart';
@@ -117,7 +118,10 @@ class _UserNameScreenState extends State<UserNameScreen> {
                     const SizedBox(
                       height: 50,
                     ),
-                    Center(child: Image.asset('assets/png/user_icon.png')),
+                    Center(
+                        child: Image.asset(context.isLight
+                            ? 'assets/png/user_icon.png'
+                            : 'assets/png/dark_user_icon.png')),
                     const SizedBox(
                       height: 50,
                     ),
@@ -147,25 +151,13 @@ class _UserNameScreenState extends State<UserNameScreen> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(30, 40, 30, 25),
             child: SizedBox(
-              width: double.maxFinite,
-              height: 50,
-              child: ElevatedButton(
-                  onPressed: _controller.isNameValid
-                      ? () => _controller.savedName(context)
-                      : null,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: context.isLight
-                        ? LightModeColors.blue
-                        : DarkModeColors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  child: Text(AppLocalizations.of(context)!.completion,
-                      style:
-                          TextStyles.b1Medium.copyWith(color: Colors.white))),
-            ),
+                width: double.maxFinite,
+                height: 50,
+                child: CommonButton(
+                    text: AppLocalizations.of(context)!.completion,
+                    onPressed: _controller.isNameValid
+                        ? () => _controller.savedName(context)
+                        : null)),
           ),
         )
       ],

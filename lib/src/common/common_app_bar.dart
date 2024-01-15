@@ -30,8 +30,6 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CommonAppBarState extends State<CommonAppBar> {
-  String themeMode = 'dark_mode';
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -52,7 +50,9 @@ class _CommonAppBarState extends State<CommonAppBar> {
             ? Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: Image.asset(
-                  'assets/png/app_logo.png',
+                  context.isLight
+                      ? 'assets/png/app_logo.png'
+                      : 'assets/png/dark_app_logo.png',
                 ),
               )
             : GestureDetector(

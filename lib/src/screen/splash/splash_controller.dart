@@ -71,7 +71,7 @@ class SplashController with ChangeNotifier {
   Future<bool> isNameInput() async {
     final inputName = await storage.read(key: "inputName");
     if (inputName == "true") {
-      return true; // 이름 입력 스크린 확인하려면 false로 변경하고 reload
+      return true;
     } else {
       return false;
     }

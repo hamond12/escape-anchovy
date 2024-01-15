@@ -6,7 +6,7 @@ class LightModeColors {
   static const Color red = Color(0xFFFE3F2F);
   static const Color green = Color(0xFF009300);
   static const Color gold = Color(0xFFFFD700);
-  static const Color darkGold = Color(0xFFF5CD14);
+  static const Color darkGold = Color(0xFFCDA500);
   static const Color dark1 = Color(0xFF202020);
   static const Color dark2 = Color(0xFF3E3E3E);
   static const Color dark3 = Color(0xFF8A848D);
