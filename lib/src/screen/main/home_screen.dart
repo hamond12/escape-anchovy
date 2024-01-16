@@ -228,6 +228,33 @@ class _HomeScreenState extends State<HomeScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final data = _controller.dataList[index];
+                              final yData = index != 0
+                                  ? _controller.dataList[index - 1]
+                                  : _controller.dataList[0];
+                              int sum1 = data['ex1'][0] +
+                                  data['ex1'][1] +
+                                  data['ex1'][2];
+                              int sum2 = data['ex2'][0] +
+                                  data['ex2'][1] +
+                                  data['ex2'][2];
+                              int ySum1 = yData['ex1'][0] +
+                                  yData['ex1'][1] +
+                                  yData['ex1'][2];
+                              int ySum2 = yData['ex2'][0] +
+                                  yData['ex2'][1] +
+                                  yData['ex2'][2];
+                              String returnSubtarct1() {
+                                return sum1 - ySum1 > 0
+                                    ? '${sum1 - ySum1}↑'
+                                    : '${-1 * (sum1 - ySum1)}↓';
+                              }
+
+                              String returnSubtarct2() {
+                                return sum2 - ySum2 > 0
+                                    ? '${sum2 - ySum2}↑'
+                                    : '${-1 * (sum2 - ySum2)}↓';
+                              }
+
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -259,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 5,
                                             ),
                                             Text(
-                                              '(${data['ex1'][0] + data['ex1'][1] + data['ex1'][2]}개)',
+                                              '($sum1개)',
                                               style: TextStyles.b4Regular
                                                   .copyWith(
                                                       color: context.isLight
@@ -268,6 +295,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           : DarkModeColors
                                                               .dark3),
                                             ),
+                                            const SizedBox(
+                                              width: 7,
+                                            ),
+                                            index != 0
+                                                ? Text(returnSubtarct1(),
+                                                    style: TextStyles.b4Regular
+                                                        .copyWith(
+                                                      color: sum1 - ySum1 > 0
+                                                          ? (context.isLight
+                                                              ? LightModeColors
+                                                                  .blue
+                                                              : DarkModeColors
+                                                                  .blue)
+                                                          : (context.isLight
+                                                              ? LightModeColors
+                                                                  .red
+                                                              : DarkModeColors
+                                                                  .red),
+                                                    ))
+                                                : const SizedBox.shrink()
                                           ],
                                         ),
                                         Row(
@@ -283,8 +330,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               '${data['ex2'].join('  ')}',
                                               style: TextStyles.b4Regular,
                                             ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
                                             Text(
-                                              '(${data['ex2'][0] + data['ex2'][1] + data['ex2'][2]}개)',
+                                              '($sum2개)',
                                               style: TextStyles.b4Regular
                                                   .copyWith(
                                                       color: context.isLight
@@ -292,7 +342,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               .dark3
                                                           : DarkModeColors
                                                               .dark3),
-                                            )
+                                            ),
+                                            const SizedBox(
+                                              width: 7,
+                                            ),
+                                            index != 0
+                                                ? Text(returnSubtarct2(),
+                                                    style: TextStyles.b4Regular.copyWith(
+                                                        color: sum2 - ySum2 > 0
+                                                            ? (context.isLight
+                                                                ? LightModeColors
+                                                                    .blue
+                                                                : DarkModeColors
+                                                                    .blue)
+                                                            : (context.isLight
+                                                                ? LightModeColors
+                                                                    .red
+                                                                : DarkModeColors
+                                                                    .red)))
+                                                : const SizedBox.shrink()
                                           ],
                                         ),
                                       ],

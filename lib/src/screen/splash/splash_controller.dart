@@ -71,7 +71,7 @@ class SplashController with ChangeNotifier {
   Future<bool> isNameInput() async {
     final inputName = await storage.read(key: "inputName");
     if (inputName == "true") {
-      return false;
+      return true;
     } else {
       return false;
     }
