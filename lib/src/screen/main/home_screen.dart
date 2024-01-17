@@ -256,16 +256,56 @@ class _HomeScreenState extends State<HomeScreen> {
                                   yData['ex2'][1] +
                                   yData['ex2'][2];
 
-                              String returnSubtarct1() {
-                                return sum1 - ySum1 > 0
-                                    ? '${sum1 - ySum1}↑'
-                                    : '${-1 * (sum1 - ySum1)}↓';
+                              String returnString1() {
+                                if (sum1 - ySum1 > 0) {
+                                  return '${sum1 - ySum1}↑';
+                                } else if (sum1 - ySum1 < 0) {
+                                  return '${-1 * (sum2 - ySum2)}↓';
+                                } else {
+                                  return '0';
+                                }
                               }
 
-                              String returnSubtarct2() {
-                                return sum2 - ySum2 > 0
-                                    ? '${sum2 - ySum2}↑'
-                                    : '${-1 * (sum2 - ySum2)}↓';
+                              String returnString2() {
+                                if (sum2 - ySum2 > 0) {
+                                  return '${sum2 - ySum2}↑';
+                                } else if (sum2 - ySum2 < 0) {
+                                  return '${-1 * (sum2 - ySum2)}↓';
+                                } else {
+                                  return '0';
+                                }
+                              }
+
+                              Color returnColor1() {
+                                if (sum1 - ySum1 > 0) {
+                                  return context.isLight
+                                      ? LightModeColors.blue
+                                      : DarkModeColors.blue;
+                                } else if (sum1 - ySum1 < 0) {
+                                  return context.isLight
+                                      ? LightModeColors.red
+                                      : DarkModeColors.red;
+                                } else {
+                                  return context.isLight
+                                      ? LightModeColors.dark3
+                                      : DarkModeColors.dark3;
+                                }
+                              }
+
+                              Color returnColor2() {
+                                if (sum2 - ySum2 > 0) {
+                                  return context.isLight
+                                      ? LightModeColors.blue
+                                      : DarkModeColors.blue;
+                                } else if (sum2 - ySum2 < 0) {
+                                  return context.isLight
+                                      ? LightModeColors.red
+                                      : DarkModeColors.red;
+                                } else {
+                                  return context.isLight
+                                      ? LightModeColors.dark3
+                                      : DarkModeColors.dark3;
+                                }
                               }
 
                               return Column(
@@ -312,21 +352,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 7,
                                             ),
                                             data['day'] != 1
-                                                ? Text(returnSubtarct1(),
+                                                ? Text(returnString1(),
                                                     style: TextStyles.b4Bold
                                                         .copyWith(
-                                                      color: sum1 - ySum1 > 0
-                                                          ? (context.isLight
-                                                              ? LightModeColors
-                                                                  .blue
-                                                              : DarkModeColors
-                                                                  .blue)
-                                                          : (context.isLight
-                                                              ? LightModeColors
-                                                                  .red
-                                                              : DarkModeColors
-                                                                  .red),
-                                                    ))
+                                                            color:
+                                                                returnColor1()))
                                                 : const SizedBox.shrink()
                                           ],
                                         ),
@@ -360,19 +390,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 7,
                                             ),
                                             data['day'] != 1
-                                                ? Text(returnSubtarct2(),
-                                                    style: TextStyles.b4Bold.copyWith(
-                                                        color: sum2 - ySum2 > 0
-                                                            ? (context.isLight
-                                                                ? LightModeColors
-                                                                    .blue
-                                                                : DarkModeColors
-                                                                    .blue)
-                                                            : (context.isLight
-                                                                ? LightModeColors
-                                                                    .red
-                                                                : DarkModeColors
-                                                                    .red)))
+                                                ? Text(returnString2(),
+                                                    style: TextStyles.b4Bold
+                                                        .copyWith(
+                                                            color:
+                                                                returnColor2()))
                                                 : const SizedBox.shrink()
                                           ],
                                         ),
