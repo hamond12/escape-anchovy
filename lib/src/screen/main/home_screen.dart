@@ -223,14 +223,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 _controller.dataList.isNotEmpty
                     ? SizedBox(
-                        height: 210,
+                        height: _controller.returnListViewHeight(),
                         child: ListView.separated(
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              final data = _controller.dataList[index];
-                              final yData = index != 0
-                                  ? _controller.dataList[index - 1]
-                                  : _controller.dataList[0];
+                              final data = _controller.dataList.length > 3
+                                  ? _controller.dataList[
+                                      index + _controller.dataList.length - 3]
+                                  : _controller.dataList[index];
+                              final yData = _controller.dataList.length > 3
+                                  ? _controller.dataList[
+                                      index + _controller.dataList.length - 4]
+                                  : (index == 0
+                                      ? _controller.dataList[0] //0~1
+                                      : _controller.dataList[index - 1]);
                               int sum1 = data['ex1'][0] +
                                   data['ex1'][1] +
                                   data['ex1'][2];
@@ -243,6 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               int ySum2 = yData['ex2'][0] +
                                   yData['ex2'][1] +
                                   yData['ex2'][2];
+
                               String returnSubtarct1() {
                                 return sum1 - ySum1 > 0
                                     ? '${sum1 - ySum1}↑'
@@ -298,9 +305,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             const SizedBox(
                                               width: 7,
                                             ),
-                                            index != 0
+                                            data['day'] != 1
                                                 ? Text(returnSubtarct1(),
-                                                    style: TextStyles.b4Regular
+                                                    style: TextStyles.b4Bold
                                                         .copyWith(
                                                       color: sum1 - ySum1 > 0
                                                           ? (context.isLight
@@ -346,9 +353,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             const SizedBox(
                                               width: 7,
                                             ),
-                                            index != 0
+                                            data['day'] != 1
                                                 ? Text(returnSubtarct2(),
-                                                    style: TextStyles.b4Regular.copyWith(
+                                                    style: TextStyles.b4Bold.copyWith(
                                                         color: sum2 - ySum2 > 0
                                                             ? (context.isLight
                                                                 ? LightModeColors
