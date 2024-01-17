@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class HomeController with ChangeNotifier {
+class NoteController with ChangeNotifier {
   final FlutterSecureStorage storage = const FlutterSecureStorage();
   List<Map<String, dynamic>> dataList = [];
 
@@ -15,23 +15,30 @@ class HomeController with ChangeNotifier {
     }
   }
 
-  //todo: ExerciseController로 옮기기
-  Future<void> saveData() async {
-    final String jsonData = json.encode(dataList);
-    await storage.write(key: 'dataList', value: jsonData);
-  }
-
   Future<void> deleteData() async {
     await storage.delete(key: 'dataList');
   }
 
-  double returnListViewHeight() {
-    if (dataList.length == 1) {
-      return 60;
-    } else if (dataList.length == 2) {
-      return 135;
-    } else {
-      return 210;
+  int currentPage = 0;
+  int itemsPerPage = 7;
+
+  List<Map<String, dynamic>> get currentData {
+    final startIndex = currentPage * itemsPerPage;
+    final endIndex = dataList.length;
+    return dataList.sublist(startIndex, endIndex);
+  }
+
+  void loadNextData() {
+    if (currentPage + 1 < dataList.length ~/ itemsPerPage + 1) {
+      currentPage++;
+    }
+    notifyListeners();
+  }
+
+  void loadPrevData() {
+    if (currentPage != 0) {
+      currentPage--;
+      notifyListeners();
     }
   }
 }

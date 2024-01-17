@@ -2,8 +2,10 @@ import 'package:escape_anchovy/main.dart';
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/common/common_app_bar.dart';
+import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_button2.dart';
 import 'package:escape_anchovy/src/screen/main/home_controller.dart';
+import 'package:escape_anchovy/src/screen/note/note_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,13 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    //_controller.deleteData();
+    _controller.loadData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        controller: widget.controller,
+        settingsController: widget.controller,
         title: AppLocalizations.of(context)!.home_app_bar_title,
         isLogo: true,
         isHome: true,
@@ -205,7 +209,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     CommonButton2(
                       width: 65,
                       height: 18,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, NoteScreen.routeName);
+                      },
                       text: '전체 일지 확인',
                       textStyle: TextStyles.caption2.copyWith(height: 0.01),
                     )
@@ -456,7 +462,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           CommonButton2(
                             width: 65,
                             height: 18,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {});
+                              _controller.saveData();
+                            },
                             text: '전체 업적 확인',
                             textStyle:
                                 TextStyles.caption2.copyWith(height: 0.01),
@@ -504,6 +513,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          CommonButton(
+            width: 300,
+            onPressed: () {
+              setState(() {
+                _controller.dataList.add({
+                  'day': _controller.dataList.length + 1,
+                  'ex1_name': '풀업',
+                  'ex2_name': '푸쉬업',
+                  'ex1': [10, 8, 6],
+                  'ex2': [20, 15, 10]
+                });
+                _controller.saveData();
+              });
+            },
+          )
         ],
       ),
     );

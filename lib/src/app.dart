@@ -1,6 +1,8 @@
 import 'package:escape_anchovy/main.dart';
 import 'package:escape_anchovy/res/theme/themes.dart';
+import 'package:escape_anchovy/src/screen/main/home_controller.dart';
 import 'package:escape_anchovy/src/screen/main/home_screen.dart';
+import 'package:escape_anchovy/src/screen/note/note_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_screen.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
 import 'package:escape_anchovy/src/screen/user_name/user_name_screen.dart';
@@ -9,9 +11,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key, required this.settingsController});
+  const MyApp(
+      {super.key,
+      required this.settingsController,
+      required this.homeController});
 
   final SettingsController settingsController;
+  final HomeController homeController;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -66,6 +72,10 @@ class _MyAppState extends State<MyApp> {
               return UserInfoScreen(controller: widget.settingsController);
             case UserNameScreen.routeName:
               return const UserNameScreen();
+            case NoteScreen.routeName:
+              return NoteScreen(
+                controller: widget.homeController,
+              );
             default:
               return const SplashScreen();
           }

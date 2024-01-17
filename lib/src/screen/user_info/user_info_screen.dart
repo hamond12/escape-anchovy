@@ -30,7 +30,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
       appBar: CommonAppBar(
         title: AppLocalizations.of(context)!.user_info_app_bar_title,
         isUserInfo: true,
-        controller: widget.controller,
+        settingsController: widget.controller,
       ),
       body: AnimatedBuilder(
           animation: _controller,
