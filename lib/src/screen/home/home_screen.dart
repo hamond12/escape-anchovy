@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:escape_anchovy/main.dart';
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
@@ -29,6 +31,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _controller.loadData();
+    _controller.timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_controller.dataList.isNotEmpty && _controller.second != 0) {
+          _controller.second--;
+          if (_controller.second == 0) {
+            _controller.dataList.clear();
+            _controller.second = 0;
+            _controller.timer.cancel();
+          }
+        }
+      });
+    });
   }
 
   @override
@@ -220,12 +234,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 7,
                 ),
-                Text(
-                  '당신의 성장과정을 살펴보세요.',
-                  style: TextStyles.b3Regular.copyWith(
-                      color: context.isLight
-                          ? LightModeColors.dark2
-                          : DarkModeColors.dark2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '당신의 성장과정을 살펴보세요.',
+                      style: TextStyles.b3Regular.copyWith(
+                          color: context.isLight
+                              ? LightModeColors.dark2
+                              : DarkModeColors.dark2),
+                    ),
+                    _controller.dataList.isNotEmpty
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                '일지 초기화까지',
+                                style: TextStyles.caption1.copyWith(
+                                    color: context.isLight
+                                        ? LightModeColors.red
+                                        : DarkModeColors.red),
+                              ),
+                              Text(
+                                _controller.formatTime(_controller.second),
+                                style: TextStyles.caption1.copyWith(
+                                    color: context.isLight
+                                        ? LightModeColors.red
+                                        : DarkModeColors.red),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ],
                 ),
                 _controller.dataList.isNotEmpty
                     ? SizedBox(

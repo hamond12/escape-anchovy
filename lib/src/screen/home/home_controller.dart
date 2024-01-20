@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -23,6 +24,19 @@ class HomeController with ChangeNotifier {
 
   Future<void> deleteData() async {
     await storage.delete(key: 'dataList');
+  }
+
+  int second = 3 * 24 * 60 * 60;
+  late Timer timer;
+
+  String formatTime(int second) {
+    Duration duration = Duration(seconds: second);
+
+    String hours = (duration.inHours).toString().padLeft(2, '0');
+    String minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+
+    return '$hours:$minutes:$seconds';
   }
 
   double returnListViewHeight() {
