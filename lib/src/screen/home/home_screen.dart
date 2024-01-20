@@ -31,8 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _controller.loadData();
-    _controller.timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _controller.timerSetting();
+
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      _controller.checkTimeDifference();
     });
   }
 
@@ -258,7 +259,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         : DarkModeColors.red),
                               ),
                               Text(
-                                _controller.formatTime(_controller.second),
+                                _controller.formatDuration(_controller
+                                    .returnDataAddTime()
+                                    .difference(DateTime.now())),
                                 style: TextStyles.caption1.copyWith(
                                     color: context.isLight
                                         ? LightModeColors.red
@@ -501,6 +504,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               setState(() {
                 _controller.dataList.add({
+                  'time': DateTime.now().toString(),
                   'day': _controller.dataList.length + 1,
                   'ex1_name': '풀업',
                   'ex2_name': '푸쉬업',
@@ -509,6 +513,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 _controller.saveData();
               });
+            },
+          ),
+          CommonButton(
+            text: '데이터 삭제',
+            width: 300,
+            onPressed: () {
+              _controller.deleteData();
             },
           ),
         ],

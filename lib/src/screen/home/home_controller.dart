@@ -25,30 +25,7 @@ class HomeController with ChangeNotifier {
   Future<void> deleteData() async {
     dataList.clear();
     await storage.delete(key: 'dataList');
-  }
-
-  int second = 100;
-  // int second = 3 * 24 * 60 * 60;
-  late Timer timer;
-
-  void timerSetting() {
-    if (dataList.isNotEmpty && second > 0) {
-      second--;
-    } else {
-      deleteData();
-      timer.cancel();
-    }
     notifyListeners();
-  }
-
-  String formatTime(int second) {
-    Duration duration = Duration(seconds: second);
-
-    String hours = (duration.inHours).toString().padLeft(2, '0');
-    String minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
-    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-
-    return '$hours:$minutes:$seconds';
   }
 
   double returnListViewHeight() {
@@ -59,5 +36,33 @@ class HomeController with ChangeNotifier {
     } else {
       return 210;
     }
+  }
+
+  DateTime returnDataAddTime() {
+    return DateTime.parse(dataList.last['time']).add(const Duration(days: 3));
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) {
+      if (n >= 10) return "$n";
+      return "0$n";
+    }
+
+    String twoDigitHours = twoDigits(duration.inHours);
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+
+    return "$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  void checkTimeDifference() {
+    if (dataList.isNotEmpty) {
+      DateTime lastDataAddTime = DateTime.parse(dataList.last['time']);
+      DateTime now = DateTime.now();
+      if (now.difference(lastDataAddTime).inHours >= 72) {
+        deleteData();
+      }
+    }
+    notifyListeners();
   }
 }
