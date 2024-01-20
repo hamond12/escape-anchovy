@@ -23,6 +23,7 @@ class HomeController with ChangeNotifier {
   }
 
   Future<void> deleteData() async {
+    dataList.clear();
     await storage.delete(key: 'dataList');
   }
 

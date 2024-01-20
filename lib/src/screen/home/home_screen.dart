@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (_controller.dataList.isNotEmpty && _controller.second != 0) {
           _controller.second--;
           if (_controller.second == 0) {
-            _controller.dataList.clear();
+            _controller.deleteData();
             _controller.second = 0;
             _controller.timer.cancel();
           }
@@ -494,48 +494,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          CommonButton(
-            text: '데이터 추가',
-            width: 300,
-            onPressed: () {
-              setState(() {
-                _controller.dataList.add({
-                  'day': _controller.dataList.length + 1,
-                  'ex1_name': '풀업',
-                  'ex2_name': '푸쉬업',
-                  'ex1': [12, 10, 10],
-                  'ex2': [10, 12, 10]
-                });
-                _controller.saveData();
-              });
-            },
-          ),
-          CommonButton(
-            text: '데이터 추가2',
-            width: 300,
-            onPressed: () {
-              setState(() {
-                _controller.dataList.add({
-                  'day': _controller.dataList.length + 1,
-                  'ex1_name': '친업',
-                  'ex2_name': '너클 푸쉬업',
-                  'ex1': [12, 10, 10],
-                  'ex2': [10, 10, 20]
-                });
-                _controller.saveData();
-              });
-            },
-          ),
-          CommonButton(
-            text: '삭제',
-            width: 300,
-            onPressed: () {
-              setState(() {
-                _controller.dataList = [];
-                _controller.deleteData();
-              });
-            },
-          )
+          // CommonButton(
+          //   text: '데이터 추가',
+          //   width: 300,
+          //   onPressed: () {
+          //     setState(() {
+          //       _controller.dataList.add({
+          //         'day': _controller.dataList.length + 1,
+          //         'ex1_name': '풀업',
+          //         'ex2_name': '푸쉬업',
+          //         'ex1': [12, 10, 10],
+          //         'ex2': [10, 12, 10]
+          //       });
+          //       _controller.saveData();
+          //     });
+          //   },
+          // ),
         ],
       ),
     );
