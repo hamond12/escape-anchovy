@@ -27,8 +27,19 @@ class HomeController with ChangeNotifier {
     await storage.delete(key: 'dataList');
   }
 
-  int second = 3 * 24 * 60 * 60;
+  int second = 100;
+  // int second = 3 * 24 * 60 * 60;
   late Timer timer;
+
+  void timerSetting() {
+    if (dataList.isNotEmpty && second > 0) {
+      second--;
+    } else {
+      deleteData();
+      timer.cancel();
+    }
+    notifyListeners();
+  }
 
   String formatTime(int second) {
     Duration duration = Duration(seconds: second);

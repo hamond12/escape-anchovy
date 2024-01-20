@@ -32,16 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _controller.loadData();
     _controller.timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_controller.dataList.isNotEmpty && _controller.second != 0) {
-          _controller.second--;
-          if (_controller.second == 0) {
-            _controller.deleteData();
-            _controller.second = 0;
-            _controller.timer.cancel();
-          }
-        }
-      });
+      _controller.timerSetting();
     });
   }
 
@@ -93,12 +84,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(
                           width: 4,
                         ),
-                        Text(
-                          '(자세한 설명 보기)',
-                          style: TextStyles.b3Regular.copyWith(
-                              color: context.isLight
-                                  ? LightModeColors.dark2
-                                  : DarkModeColors.dark2),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return explainDialog(context);
+                              },
+                            );
+                          },
+                          child: Text(
+                            '(자세한 설명 보기)',
+                            style: TextStyles.b3Regular.copyWith(
+                                color: context.isLight
+                                    ? LightModeColors.dark2
+                                    : DarkModeColors.dark2),
+                          ),
                         )
                       ],
                     ),
@@ -494,22 +495,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          // CommonButton(
-          //   text: '데이터 추가',
-          //   width: 300,
-          //   onPressed: () {
-          //     setState(() {
-          //       _controller.dataList.add({
-          //         'day': _controller.dataList.length + 1,
-          //         'ex1_name': '풀업',
-          //         'ex2_name': '푸쉬업',
-          //         'ex1': [12, 10, 10],
-          //         'ex2': [10, 12, 10]
-          //       });
-          //       _controller.saveData();
-          //     });
-          //   },
-          // ),
+          CommonButton(
+            text: '데이터 추가',
+            width: 300,
+            onPressed: () {
+              setState(() {
+                _controller.dataList.add({
+                  'day': _controller.dataList.length + 1,
+                  'ex1_name': '풀업',
+                  'ex2_name': '푸쉬업',
+                  'ex1': [12, 10, 10],
+                  'ex2': [10, 12, 10]
+                });
+                _controller.saveData();
+              });
+            },
+          ),
         ],
       ),
     );
@@ -527,6 +528,114 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget explainDialog(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.43,
+      decoration: BoxDecoration(
+        color:
+            context.isLight ? LightModeColors.background : DarkModeColors.dark4,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+      ),
+      child: Column(children: [
+        const SizedBox(
+          height: 14,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              width: 36, // svgSize(24) + svgPadding(12)
+            ),
+            const Text(
+              '운동설명',
+              style: TextStyles.h2Bold,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 12.0),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.close,
+                  )),
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/setting.svg',
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                        context.isLight
+                            ? DarkModeColors.background
+                            : LightModeColors.background,
+                        BlendMode.srcIn),
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  const Text(
+                    '설정',
+                    style: TextStyles.b1Medium,
+                  )
+                ],
+              ),
+              const SizedBox(height: 4),
+              const Padding(
+                padding: EdgeInsets.only(left: 3),
+                child: Text(
+                  '운동시작을 누르면 2개의 종목을 번갈아가며 6세트를 진행합니다. 한 세마다 자신이 수행할 수 있는 최대의 개수를 수행해주세요. 오늘의 기록을 전날의 기록과 비교해서 볼 수 있습니다. 전날보다 1개씩 더하는 걸 목표로 삼아보세요!',
+                  style: TextStyles.b4Regular,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/book.svg',
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                        context.isLight
+                            ? DarkModeColors.background
+                            : LightModeColors.background,
+                        BlendMode.srcIn),
+                  ),
+                  const SizedBox(
+                    width: 7,
+                  ),
+                  const Text(
+                    '운동방식',
+                    style: TextStyles.b1Medium,
+                  )
+                ],
+              ),
+              const SizedBox(height: 4),
+              const Padding(
+                padding: EdgeInsets.only(left: 3),
+                child: Text(
+                  '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 휴식시간 아이콘을 눌러 세트별 휴식시간을 따로 설정할 수 있습니다. 휴식시간은 기본 2분으로 설정되있으며 휴식시간을 줄여나감으로써 운동강도를 높일 수 있습니다. ',
+                  style: TextStyles.b4Regular,
+                ),
+              ),
+            ],
+          ),
+        )
+      ]),
     );
   }
 }
