@@ -1,7 +1,7 @@
 import 'package:escape_anchovy/main.dart';
 import 'package:escape_anchovy/res/theme/themes.dart';
-import 'package:escape_anchovy/src/screen/main/home_controller.dart';
-import 'package:escape_anchovy/src/screen/main/home_screen.dart';
+import 'package:escape_anchovy/src/screen/home/home_controller.dart';
+import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_screen.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
@@ -73,9 +73,7 @@ class _MyAppState extends State<MyApp> {
             case UserNameScreen.routeName:
               return const UserNameScreen();
             case NoteScreen.routeName:
-              return NoteScreen(
-                controller: widget.homeController,
-              );
+              return NoteScreen();
             default:
               return const SplashScreen();
           }

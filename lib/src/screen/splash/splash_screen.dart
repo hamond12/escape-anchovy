@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
-import 'package:escape_anchovy/src/screen/main/home_screen.dart';
+import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:flutter/material.dart';
 

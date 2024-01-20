@@ -11,8 +11,8 @@ class NoteController with ChangeNotifier {
     final String? jsonData = await storage.read(key: 'dataList');
     if (jsonData != null) {
       dataList = List<Map<String, dynamic>>.from(json.decode(jsonData));
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   Future<void> deleteData() async {
@@ -28,8 +28,14 @@ class NoteController with ChangeNotifier {
     return dataList.sublist(startIndex, endIndex);
   }
 
+  int totalPage() {
+    return dataList.length % 7 == 0
+        ? dataList.length ~/ itemsPerPage
+        : dataList.length ~/ itemsPerPage + 1;
+  }
+
   void loadNextData() {
-    if (currentPage + 1 < dataList.length ~/ itemsPerPage + 1) {
+    if (currentPage + 1 < totalPage()) {
       currentPage++;
     }
     notifyListeners();

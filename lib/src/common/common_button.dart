@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 class CommonButton extends StatefulWidget {
   const CommonButton(
       {super.key,
+      required this.text,
       this.width = double.maxFinite,
       this.height = 50,
       this.onPressed,
-      this.text = '',
       this.textColor,
       this.backgroundColor,
       this.disabledBackgroundColor,

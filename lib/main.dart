@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/src/app.dart';
-import 'package:escape_anchovy/src/screen/main/home_controller.dart';
+import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:flutter/material.dart';
 
 class SettingsController with ChangeNotifier {

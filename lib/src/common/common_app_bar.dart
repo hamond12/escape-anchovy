@@ -1,8 +1,8 @@
 import 'package:escape_anchovy/main.dart';
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
-import 'package:escape_anchovy/src/screen/main/home_controller.dart';
-import 'package:escape_anchovy/src/screen/main/home_screen.dart';
+import 'package:escape_anchovy/src/screen/home/home_controller.dart';
+import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,9 +34,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        backgroundColor: context.isLight
-            ? LightModeColors.background
-            : DarkModeColors.background,
+        backgroundColor: Colors.transparent,
         title: Center(
           child: Text(
             widget.title,

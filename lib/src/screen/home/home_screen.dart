@@ -4,7 +4,7 @@ import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/common/common_app_bar.dart';
 import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_button2.dart';
-import 'package:escape_anchovy/src/screen/main/home_controller.dart';
+import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,11 +23,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = HomeController();
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    //_controller.deleteData();
     _controller.loadData();
   }
 
@@ -231,82 +231,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? SizedBox(
                         height: _controller.returnListViewHeight(),
                         child: ListView.separated(
+                            controller: _scrollController,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final data = _controller.dataList.length > 3
                                   ? _controller.dataList[
                                       index + _controller.dataList.length - 3]
                                   : _controller.dataList[index];
-                              final yData = _controller.dataList.length > 3
-                                  ? _controller.dataList[
-                                      index + _controller.dataList.length - 4]
-                                  : (index == 0
-                                      ? _controller.dataList[0] //0~1
-                                      : _controller.dataList[index - 1]);
-                              int sum1 = data['ex1'][0] +
+
+                              int sum1 = (data['ex1'][0] +
                                   data['ex1'][1] +
-                                  data['ex1'][2];
+                                  data['ex1'][2]);
                               int sum2 = data['ex2'][0] +
                                   data['ex2'][1] +
                                   data['ex2'][2];
-                              int ySum1 = yData['ex1'][0] +
-                                  yData['ex1'][1] +
-                                  yData['ex1'][2];
-                              int ySum2 = yData['ex2'][0] +
-                                  yData['ex2'][1] +
-                                  yData['ex2'][2];
-
-                              String returnString1() {
-                                if (sum1 - ySum1 > 0) {
-                                  return '${sum1 - ySum1}↑';
-                                } else if (sum1 - ySum1 < 0) {
-                                  return '${-1 * (sum2 - ySum2)}↓';
-                                } else {
-                                  return '0';
-                                }
-                              }
-
-                              String returnString2() {
-                                if (sum2 - ySum2 > 0) {
-                                  return '${sum2 - ySum2}↑';
-                                } else if (sum2 - ySum2 < 0) {
-                                  return '${-1 * (sum2 - ySum2)}↓';
-                                } else {
-                                  return '0';
-                                }
-                              }
-
-                              Color returnColor1() {
-                                if (sum1 - ySum1 > 0) {
-                                  return context.isLight
-                                      ? LightModeColors.blue
-                                      : DarkModeColors.blue;
-                                } else if (sum1 - ySum1 < 0) {
-                                  return context.isLight
-                                      ? LightModeColors.red
-                                      : DarkModeColors.red;
-                                } else {
-                                  return context.isLight
-                                      ? LightModeColors.dark3
-                                      : DarkModeColors.dark3;
-                                }
-                              }
-
-                              Color returnColor2() {
-                                if (sum2 - ySum2 > 0) {
-                                  return context.isLight
-                                      ? LightModeColors.blue
-                                      : DarkModeColors.blue;
-                                } else if (sum2 - ySum2 < 0) {
-                                  return context.isLight
-                                      ? LightModeColors.red
-                                      : DarkModeColors.red;
-                                } else {
-                                  return context.isLight
-                                      ? LightModeColors.dark3
-                                      : DarkModeColors.dark3;
-                                }
-                              }
 
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,17 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               .dark3
                                                           : DarkModeColors
                                                               .dark3),
-                                            ),
-                                            const SizedBox(
-                                              width: 7,
-                                            ),
-                                            data['day'] != 1
-                                                ? Text(returnString1(),
-                                                    style: TextStyles.b4Bold
-                                                        .copyWith(
-                                                            color:
-                                                                returnColor1()))
-                                                : const SizedBox.shrink()
+                                            )
                                           ],
                                         ),
                                         Row(
@@ -385,17 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               .dark3
                                                           : DarkModeColors
                                                               .dark3),
-                                            ),
-                                            const SizedBox(
-                                              width: 7,
-                                            ),
-                                            data['day'] != 1
-                                                ? Text(returnString2(),
-                                                    style: TextStyles.b4Bold
-                                                        .copyWith(
-                                                            color:
-                                                                returnColor2()))
-                                                : const SizedBox.shrink()
+                                            )
                                           ],
                                         ),
                                       ],
@@ -536,6 +454,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           CommonButton(
+            text: '데이터 추가',
             width: 300,
             onPressed: () {
               setState(() {
@@ -543,10 +462,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   'day': _controller.dataList.length + 1,
                   'ex1_name': '풀업',
                   'ex2_name': '푸쉬업',
-                  'ex1': [10, 8, 6],
-                  'ex2': [20, 15, 10]
+                  'ex1': [12, 10, 10],
+                  'ex2': [10, 12, 10]
                 });
                 _controller.saveData();
+              });
+            },
+          ),
+          CommonButton(
+            text: '데이터 추가2',
+            width: 300,
+            onPressed: () {
+              setState(() {
+                _controller.dataList.add({
+                  'day': _controller.dataList.length + 1,
+                  'ex1_name': '친업',
+                  'ex2_name': '너클 푸쉬업',
+                  'ex1': [12, 10, 10],
+                  'ex2': [10, 10, 20]
+                });
+                _controller.saveData();
+              });
+            },
+          ),
+          CommonButton(
+            text: '삭제',
+            width: 300,
+            onPressed: () {
+              setState(() {
+                _controller.dataList = [];
+                _controller.deleteData();
               });
             },
           )
