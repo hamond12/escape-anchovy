@@ -582,66 +582,29 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(
           height: 20,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/setting.svg',
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                        context.isLight
-                            ? DarkModeColors.background
-                            : LightModeColors.background,
-                        BlendMode.srcIn),
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  const Text(
-                    '설정',
-                    style: TextStyles.b1Medium,
-                  )
-                ],
+              Text(
+                '운동방식',
+                style: TextStyles.b1Medium,
               ),
-              const SizedBox(height: 4),
-              const Padding(
-                padding: EdgeInsets.only(left: 3),
-                child: Text(
-                  '운동시작을 누르면 2개의 종목을 번갈아가며 6세트를 진행합니다. 한 세마다 자신이 수행할 수 있는 최대의 개수를 수행해주세요. 오늘의 기록을 전날의 기록과 비교해서 볼 수 있습니다. 전날보다 1개씩 더하는 걸 목표로 삼아보세요!',
-                  style: TextStyles.b4Regular,
-                ),
+              SizedBox(height: 4),
+              Text(
+                '운동시작을 누르면 2개의 종목을 번갈아가며 6세트를 진행합니다. 한 세마다 자신이 수행할 수 있는 최대의 개수를 수행해주세요. 오늘의 기록을 전날의 기록과 비교해서 볼 수 있습니다. 전날보다 1개씩 더하는 걸 목표로 삼아보세요!',
+                style: TextStyles.b4Regular,
               ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/book.svg',
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                        context.isLight
-                            ? DarkModeColors.background
-                            : LightModeColors.background,
-                        BlendMode.srcIn),
-                  ),
-                  const SizedBox(
-                    width: 7,
-                  ),
-                  const Text(
-                    '운동방식',
-                    style: TextStyles.b1Medium,
-                  )
-                ],
+              SizedBox(height: 20),
+              Text(
+                '설정',
+                style: TextStyles.b1Medium,
               ),
-              const SizedBox(height: 4),
-              const Padding(
-                padding: EdgeInsets.only(left: 3),
-                child: Text(
-                  '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 휴식시간 아이콘을 눌러 세트별 휴식시간을 따로 설정할 수 있습니다. 휴식시간은 기본 2분으로 설정되있으며 휴식시간을 줄여나감으로써 운동강도를 높일 수 있습니다. ',
-                  style: TextStyles.b4Regular,
-                ),
+              SizedBox(height: 4),
+              Text(
+                '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 휴식시간 아이콘을 눌러 세트별 휴식시간을 따로 설정할 수 있습니다. 휴식시간은 기본 2분으로 설정되있으며 휴식시간을 줄여나감으로써 운동강도를 높일 수 있습니다. ',
+                style: TextStyles.b4Regular,
               ),
             ],
           ),
