@@ -1,18 +1,20 @@
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CommonTextField extends StatefulWidget {
-  const CommonTextField({
-    super.key,
-    this.height = 45.0,
-    this.hintText = '',
-    this.onTap,
-    this.maxLength,
-    this.onChanged,
-    this.controller,
-    this.focusNode,
-  });
+  const CommonTextField(
+      {super.key,
+      this.height = 45.0,
+      this.hintText = '',
+      this.onTap,
+      this.maxLength,
+      this.onChanged,
+      this.controller,
+      this.focusNode,
+      this.textInputType,
+      this.inputFormatters = null});
 
   final double height;
   final String hintText;
@@ -21,6 +23,8 @@ class CommonTextField extends StatefulWidget {
   final void Function(String)? onChanged;
   final TextEditingController? controller;
   final FocusNode? focusNode;
+  final TextInputType? textInputType;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<CommonTextField> createState() => _CommonTextFieldState();
@@ -37,7 +41,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         maxLength: widget.maxLength,
         controller: widget.controller,
         focusNode: widget.focusNode,
-        inputFormatters: null,
+        inputFormatters: widget.inputFormatters,
         enableInteractiveSelection: false,
         decoration: InputDecoration(
           counterText: '',
@@ -65,6 +69,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         ),
         textAlignVertical: TextAlignVertical.bottom,
         onChanged: widget.onChanged,
+        keyboardType: widget.textInputType,
       ),
     );
   }

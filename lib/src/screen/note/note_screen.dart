@@ -259,13 +259,13 @@ class _NoteScreenState extends State<NoteScreen> {
                                       return (pushUpSumList[
                                               pushUpSumList.length - 1] -
                                           pushUpSumList[
-                                              pullUpSumList.length - 2]);
+                                              pushUpSumList.length - 2]);
                                     }
                                     if (data['ex2_name'] == '너클 푸쉬업') {
                                       return (nucklePushUpSumList[
                                               nucklePushUpSumList.length - 1] -
                                           nucklePushUpSumList[
-                                              chinUpSumList.length - 2]);
+                                              nucklePushUpSumList.length - 2]);
                                     } else {
                                       return 0;
                                     }
@@ -414,7 +414,7 @@ class _NoteScreenState extends State<NoteScreen> {
                                                 data['day'] != 1 &&
                                                         checkNotFirstEx2()
                                                     ? returnString2()
-                                                    : const SizedBox.shrink()
+                                                    : const SizedBox.shrink(),
                                               ],
                                             ),
                                           ],

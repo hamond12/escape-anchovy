@@ -7,6 +7,7 @@ import 'package:escape_anchovy/src/common/common_app_bar.dart';
 import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_button2.dart';
 import 'package:escape_anchovy/src/common/common_svg.dart';
+import 'package:escape_anchovy/src/screen/exercise/exercise_screen1.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
@@ -32,6 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+    //_controller.deleteCategory();
+    _controller.deleteEx();
     _controller.loadData();
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -176,7 +180,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 CommonButton2(
                   width: 180,
                   height: 40,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ExerciseScreen1(
+                                  set: 1,
+                                )));
+                  },
                   text: '운동시작',
                   textStyle: TextStyles.b1Medium,
                   borderRadius: 8,
@@ -506,30 +517,30 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          CommonButton(
-            text: '데이터 추가',
-            width: 300,
-            onPressed: () {
-              setState(() {
-                _controller.dataList.add({
-                  'time': DateTime.now().toString(),
-                  'day': _controller.dataList.length + 1,
-                  'ex1_name': '풀업',
-                  'ex2_name': '푸쉬업',
-                  'ex1': [12, 10, 10],
-                  'ex2': [10, 12, 10]
-                });
-                _controller.saveData();
-              });
-            },
-          ),
-          CommonButton(
-            text: '데이터 삭제',
-            width: 300,
-            onPressed: () {
-              _controller.deleteData();
-            },
-          ),
+          // CommonButton(
+          //   text: '데이터 추가',
+          //   width: 300,
+          //   onPressed: () {
+          //     setState(() {
+          //       _controller.dataList.add({
+          //         'time': DateTime.now().toString(),
+          //         'day': _controller.dataList.length + 1,
+          //         'ex1_name': '친업',
+          //         'ex2_name': '푸쉬업',
+          //         'ex1': [13, 21, 10],
+          //         'ex2': [11, 23, 10]
+          //       });
+          //       _controller.saveData();
+          //     });
+          //   },
+          // ),
+          // CommonButton(
+          //   text: '데이터 삭제',
+          //   width: 300,
+          //   onPressed: () {
+          //     _controller.deleteData();
+          //   },
+          // ),
         ],
       ),
     );

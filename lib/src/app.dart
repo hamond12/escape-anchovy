@@ -11,10 +11,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp(
-      {super.key,
-      required this.settingsController,
-      required this.homeController});
+  const MyApp({
+    super.key,
+    required this.settingsController,
+    required this.homeController,
+  });
 
   final SettingsController settingsController;
   final HomeController homeController;
@@ -74,6 +75,7 @@ class _MyAppState extends State<MyApp> {
               return const UserNameScreen();
             case NoteScreen.routeName:
               return const NoteScreen();
+
             default:
               return const SplashScreen();
           }

@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeController with ChangeNotifier {
-  final FlutterSecureStorage storage = const FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   List<Map<String, dynamic>> dataList = [];
+
+  Future<void> deleteEx() async {
+    await storage.delete(key: 'ex1');
+    await storage.delete(key: 'ex2');
+    notifyListeners();
+  }
 
   Future<void> loadData() async {
     final String? jsonData = await storage.read(key: 'dataList');
@@ -16,7 +22,6 @@ class HomeController with ChangeNotifier {
     }
   }
 
-  //todo: ExerciseController로 옮기기
   Future<void> saveData() async {
     final String jsonData = json.encode(dataList);
     await storage.write(key: 'dataList', value: jsonData);
@@ -66,19 +71,17 @@ class HomeController with ChangeNotifier {
     notifyListeners();
   }
 
-  late bool isSelected1;
-  late bool isSelected2;
-  late bool isSelected3;
-  late bool isSelected4;
+  bool isSelected1 = true; // 풀업
+  bool isSelected2 = false; // 친업
+  bool isSelected3 = true; // 푸쉬업
+  bool isSelected4 = false; // 너클 푸쉬업
 
-  HomeController() {
-    isSelected1 = true;
-    isSelected2 = false;
-    isSelected3 = true;
-    isSelected4 = false;
+  Future<bool?> getStorageBool(String key) async {
+    String? value = await storage.read(key: key);
+    return value != null ? value.toLowerCase() == 'true' : null;
   }
 
-  void loadCategory() async {
+  Future<void> loadCategory() async {
     isSelected1 = await getStorageBool('isSelected1') ?? true;
     isSelected2 = await getStorageBool('isSelected2') ?? false;
     isSelected3 = await getStorageBool('isSelected3') ?? true;
@@ -94,21 +97,10 @@ class HomeController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool?> getStorageBool(String key) async {
-    String? value = await storage.read(key: key);
-    return value != null ? value.toLowerCase() == 'true' : null;
-  }
-
-  bool isValidCategory() {
-    if ((isSelected1 || isSelected2) && (isSelected3 || isSelected4)) {
-      if ((isSelected1 && isSelected2) || (isSelected3 && isSelected4)) {
-        return false;
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void setCategory() {}
+  // void deleteCategory() async {
+  //   await storage.delete(key: 'isSelected1');
+  //   await storage.delete(key: 'isSelected2');
+  //   await storage.delete(key: 'isSelected3');
+  //   await storage.delete(key: 'isSelected4');
+  // }
 }

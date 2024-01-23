@@ -16,6 +16,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.isLogo = false,
     this.isHome = false,
     this.isUserInfo = false,
+    this.isExercise = false,
   });
 
   final String title;
@@ -23,6 +24,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool isLogo;
   final bool isHome;
   final bool isUserInfo;
+  final bool isExercise;
 
   @override
   State<CommonAppBar> createState() => _CommonAppBarState();
@@ -55,18 +57,20 @@ class _CommonAppBarState extends State<CommonAppBar> {
                       : 'assets/png/dark_app_logo.png',
                 ),
               )
-            : GestureDetector(
-                onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, HomeScreen.routeName, (route) => false);
-                  HomeController().loadData;
-                },
-                child: const Padding(
-                    padding: EdgeInsets.fromLTRB(14, 14, 28, 14),
-                    child: CommonSvg(
-                      src: 'assets/svg/back.svg',
-                    )),
-              ),
+            : widget.isExercise
+                ? const SizedBox.shrink()
+                : GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, HomeScreen.routeName, (route) => false);
+                      HomeController().loadData;
+                    },
+                    child: const Padding(
+                        padding: EdgeInsets.fromLTRB(14, 14, 28, 14),
+                        child: CommonSvg(
+                          src: 'assets/svg/back.svg',
+                        )),
+                  ),
         actions: widget.isHome
             ? [
                 GestureDetector(

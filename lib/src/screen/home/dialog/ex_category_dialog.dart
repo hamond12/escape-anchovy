@@ -79,6 +79,7 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
+                                  if (_controller.isSelected1) {}
                                   _controller.isSelected1 =
                                       !_controller.isSelected1;
                                   _controller.isSelected2 =
@@ -231,7 +232,7 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                   CommonButton(
                     text: '완료',
                     height: 45,
-                    onPressed: () async {
+                    onPressed: () {
                       _controller.saveCategory();
                       Navigator.pop(context);
                     },
