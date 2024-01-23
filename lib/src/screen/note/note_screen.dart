@@ -330,9 +330,18 @@ class _NoteScreenState extends State<NoteScreen> {
                                       ListTile(
                                         contentPadding:
                                             const EdgeInsets.only(left: 2),
-                                        title: Text(
-                                          '${data['day']}일차',
-                                          style: TextStyles.b2Medium,
+                                        title: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${data['day']}일차',
+                                              style: TextStyles.b2Medium,
+                                            ),
+                                            const SizedBox(
+                                              height: 3,
+                                            ),
+                                          ],
                                         ),
                                         subtitle: Column(
                                           crossAxisAlignment:

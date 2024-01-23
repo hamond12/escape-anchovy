@@ -30,11 +30,11 @@ class HomeController with ChangeNotifier {
 
   double returnListViewHeight() {
     if (dataList.length == 1) {
-      return 60;
+      return 63;
     } else if (dataList.length == 2) {
-      return 135;
+      return 140;
     } else {
-      return 210;
+      return 217;
     }
   }
 
@@ -65,4 +65,50 @@ class HomeController with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  late bool isSelected1;
+  late bool isSelected2;
+  late bool isSelected3;
+  late bool isSelected4;
+
+  HomeController() {
+    isSelected1 = true;
+    isSelected2 = false;
+    isSelected3 = true;
+    isSelected4 = false;
+  }
+
+  void loadCategory() async {
+    isSelected1 = await getStorageBool('isSelected1') ?? true;
+    isSelected2 = await getStorageBool('isSelected2') ?? false;
+    isSelected3 = await getStorageBool('isSelected3') ?? true;
+    isSelected4 = await getStorageBool('isSelected4') ?? false;
+    notifyListeners();
+  }
+
+  void saveCategory() async {
+    await storage.write(key: 'isSelected1', value: isSelected1.toString());
+    await storage.write(key: 'isSelected2', value: isSelected2.toString());
+    await storage.write(key: 'isSelected3', value: isSelected3.toString());
+    await storage.write(key: 'isSelected4', value: isSelected4.toString());
+    notifyListeners();
+  }
+
+  Future<bool?> getStorageBool(String key) async {
+    String? value = await storage.read(key: key);
+    return value != null ? value.toLowerCase() == 'true' : null;
+  }
+
+  bool isValidCategory() {
+    if ((isSelected1 || isSelected2) && (isSelected3 || isSelected4)) {
+      if ((isSelected1 && isSelected2) || (isSelected3 && isSelected4)) {
+        return false;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void setCategory() {}
 }

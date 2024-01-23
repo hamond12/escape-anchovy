@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
             case UserNameScreen.routeName:
               return const UserNameScreen();
             case NoteScreen.routeName:
-              return NoteScreen();
+              return const NoteScreen();
             default:
               return const SplashScreen();
           }

@@ -6,6 +6,8 @@ import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/common/common_app_bar.dart';
 import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_button2.dart';
+import 'package:escape_anchovy/src/common/common_svg.dart';
+import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
 import 'package:flutter/material.dart';
@@ -114,53 +116,50 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(context.isLight
-                              ? 'assets/svg/exercise_category.svg'
-                              : 'assets/svg/dark_exercise_category.svg'),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            '운동항목',
-                            style: TextStyles.b1Regular.copyWith(
-                                color: context.isLight
-                                    ? DarkModeColors.background
-                                    : LightModeColors.background),
-                          ),
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return const ExCategoryDialog();
+                            },
+                          );
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(context.isLight
+                                ? 'assets/svg/exercise_category.svg'
+                                : 'assets/svg/dark_exercise_category.svg'),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              '운동항목',
+                              style: TextStyles.b1Regular.copyWith(
+                                  color: context.isLight
+                                      ? DarkModeColors.background
+                                      : LightModeColors.background),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         width: 16,
                       ),
-                      SvgPicture.asset(
-                        'assets/svg/dividing_line.svg',
-                        colorFilter: ColorFilter.mode(
-                            context.isLight
-                                ? DarkModeColors.background
-                                : LightModeColors.background,
-                            BlendMode.srcIn),
-                      ),
+                      const CommonSvg(src: 'assets/svg/dividing_line.svg'),
                       const SizedBox(
                         width: 16,
                       ),
                       Column(
                         children: [
-                          SvgPicture.asset(
-                            'assets/svg/tea.svg',
-                            colorFilter: ColorFilter.mode(
-                                context.isLight
-                                    ? DarkModeColors.background
-                                    : LightModeColors.background,
-                                BlendMode.srcIn),
-                          ),
+                          const CommonSvg(src: 'assets/svg/weight.svg'),
                           const SizedBox(
                             height: 3,
                           ),
                           Text(
-                            '휴식기간',
+                            '중량추가',
                             style: TextStyles.b1Regular.copyWith(
                                 color: context.isLight
                                     ? DarkModeColors.background
@@ -297,9 +296,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ListTile(
                                     contentPadding:
                                         const EdgeInsets.only(left: 2),
-                                    title: Text(
-                                      '${data['day']}일차',
-                                      style: TextStyles.b3Regular,
+                                    title: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${data['day']}일차',
+                                          style: TextStyles.b3Regular,
+                                        ),
+                                        const SizedBox(
+                                          height: 2,
+                                        ),
+                                      ],
                                     ),
                                     subtitle: Column(
                                       crossAxisAlignment:
@@ -378,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               );
                             },
-                            itemCount: 3),
+                            itemCount: _controller.dataList.length),
                       )
                     : Center(
                         child: Column(

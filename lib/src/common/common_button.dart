@@ -3,16 +3,18 @@ import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:flutter/material.dart';
 
 class CommonButton extends StatefulWidget {
-  const CommonButton(
-      {super.key,
-      required this.text,
-      this.width = double.maxFinite,
-      this.height = 50,
-      this.onPressed,
-      this.textColor,
-      this.backgroundColor,
-      this.disabledBackgroundColor,
-      this.borderColor});
+  const CommonButton({
+    super.key,
+    required this.text,
+    this.width = double.maxFinite,
+    this.height = 50,
+    this.onPressed,
+    this.textColor,
+    this.backgroundColor,
+    this.disabledBackgroundColor,
+    this.borderColor,
+    this.borderRadius,
+  });
 
   final double width;
   final double height;
@@ -22,6 +24,7 @@ class CommonButton extends StatefulWidget {
   final Color? disabledBackgroundColor;
   final Color? backgroundColor;
   final Color? borderColor;
+  final BorderRadiusGeometry? borderRadius;
 
   @override
   State<CommonButton> createState() => _CommonButtonState();
@@ -45,7 +48,7 @@ class _CommonButtonState extends State<CommonButton> {
                     ? LightModeColors.dark3
                     : DarkModeColors.dark3),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: widget.borderRadius ?? BorderRadius.circular(8.0),
               side: BorderSide(
                 color: widget.borderColor ?? Colors.transparent,
               ),

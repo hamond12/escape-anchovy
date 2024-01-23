@@ -1,6 +1,7 @@
 import 'package:escape_anchovy/main.dart';
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
+import 'package:escape_anchovy/src/common/common_svg.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
@@ -60,34 +61,19 @@ class _CommonAppBarState extends State<CommonAppBar> {
                       context, HomeScreen.routeName, (route) => false);
                   HomeController().loadData;
                 },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 14, 28, 14),
-                  child: SvgPicture.asset(
-                    'assets/svg/back.svg',
-                    colorFilter: ColorFilter.mode(
-                        context.isLight
-                            ? DarkModeColors.background
-                            : LightModeColors.background,
-                        BlendMode.srcIn),
-                  ),
-                ),
+                child: const Padding(
+                    padding: EdgeInsets.fromLTRB(14, 14, 28, 14),
+                    child: CommonSvg(
+                      src: 'assets/svg/back.svg',
+                    )),
               ),
         actions: widget.isHome
             ? [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, UserInfoScreen.routeName);
-                  },
-                  child: SvgPicture.asset(
-                    'assets/svg/user_info.svg',
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                        context.isLight
-                            ? DarkModeColors.background
-                            : LightModeColors.background,
-                        BlendMode.srcIn),
-                  ),
-                ),
+                    onTap: () {
+                      Navigator.pushNamed(context, UserInfoScreen.routeName);
+                    },
+                    child: const CommonSvg(src: 'assets/svg/user_info.svg')),
                 const SizedBox(
                   width: 16,
                 ),
