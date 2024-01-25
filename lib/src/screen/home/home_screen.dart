@@ -7,6 +7,7 @@ import 'package:escape_anchovy/src/common/common_app_bar.dart';
 import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_button2.dart';
 import 'package:escape_anchovy/src/common/common_svg.dart';
+import 'package:escape_anchovy/src/screen/achievement/achievement_screen.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_screen1.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
@@ -397,7 +398,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               );
                             },
-                            itemCount: _controller.dataList.length),
+                            itemCount: _controller.dataList.length > 3
+                                ? 3
+                                : _controller.dataList.length),
                       )
                     : Center(
                         child: Column(
@@ -467,8 +470,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 65,
                             height: 18,
                             onPressed: () {
-                              setState(() {});
-                              _controller.saveData();
+                              Navigator.pushNamed(
+                                  context, AchievemnetScreen.routeName);
                             },
                             text: '전체 업적 확인',
                             textStyle:
@@ -517,30 +520,30 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          // CommonButton(
-          //   text: '데이터 추가',
-          //   width: 300,
-          //   onPressed: () {
-          //     setState(() {
-          //       _controller.dataList.add({
-          //         'time': DateTime.now().toString(),
-          //         'day': _controller.dataList.length + 1,
-          //         'ex1_name': '친업',
-          //         'ex2_name': '푸쉬업',
-          //         'ex1': [13, 21, 10],
-          //         'ex2': [11, 23, 10]
-          //       });
-          //       _controller.saveData();
-          //     });
-          //   },
-          // ),
-          // CommonButton(
-          //   text: '데이터 삭제',
-          //   width: 300,
-          //   onPressed: () {
-          //     _controller.deleteData();
-          //   },
-          // ),
+          CommonButton(
+            text: '데이터 추가',
+            width: 300,
+            onPressed: () {
+              setState(() {
+                _controller.dataList.add({
+                  'time': DateTime.now().toString(),
+                  'day': _controller.dataList.length + 1,
+                  'ex1_name': '친업',
+                  'ex2_name': '너클 푸쉬업',
+                  'ex1': [3, 4, 8],
+                  'ex2': [3, 4, 8]
+                });
+                _controller.saveData();
+              });
+            },
+          ),
+          CommonButton(
+            text: '데이터 삭제',
+            width: 300,
+            onPressed: () {
+              _controller.deleteData();
+            },
+          ),
         ],
       ),
     );
