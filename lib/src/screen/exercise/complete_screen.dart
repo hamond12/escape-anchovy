@@ -42,73 +42,76 @@ class _CompleteScreenState extends State<CompleteScreen> {
   }
 
   Widget _buildPage(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.14),
-                SvgPicture.asset('assets/svg/complete.svg'),
-                const SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${_controller.dataList.length + 1}',
-                      style: TextStyles.title.copyWith(
-                          color: context.isLight
-                              ? LightModeColors.blue
-                              : DarkModeColors.blue),
-                    ),
-                    const Text(
-                      '일차 완료!',
-                      style: TextStyles.title,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Text(
-                  '수고하셨습니다',
-                  style: TextStyles.h2Medium.copyWith(
-                      color: context.isLight
-                          ? LightModeColors.dark3
-                          : DarkModeColors.dark3),
-                ),
-              ],
+    return PopScope(
+      canPop: false,
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.14),
+                  SvgPicture.asset('assets/svg/complete.svg'),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${_controller.dataList.length + 1}',
+                        style: TextStyles.title.copyWith(
+                            color: context.isLight
+                                ? LightModeColors.blue
+                                : DarkModeColors.blue),
+                      ),
+                      const Text(
+                        '일차 완료!',
+                        style: TextStyles.title,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Text(
+                    '수고하셨습니다',
+                    style: TextStyles.h2Medium.copyWith(
+                        color: context.isLight
+                            ? LightModeColors.dark3
+                            : DarkModeColors.dark3),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30, 40, 30, 25),
-          child: CommonButton(
-            text: '홈으로',
-            onPressed: () {
-              _controller.dataList.add({
-                'time': DateTime.now().toString(),
-                'day': _controller.dataList.length + 1,
-                'ex1_name': _controller.isSelected1 == 'true' ? '풀업' : '친업',
-                'ex2_name':
-                    _controller.isSelected3 == 'true' ? '푸쉬업' : '너클 푸쉬업',
-                'ex1': _controller.ex1,
-                'ex2': _controller.ex2,
-                'weight': int.parse(_controller.weight),
-              });
-              _controller.saveData();
-              _controller.deleteEx();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                HomeScreen.routeName,
-                (route) => false, // In this case, always remove all routes
-              );
-            },
-          ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 40, 30, 25),
+            child: CommonButton(
+              text: '홈으로',
+              onPressed: () {
+                _controller.dataList.add({
+                  'time': DateTime.now().toString(),
+                  'day': _controller.dataList.length + 1,
+                  'ex1_name': _controller.isSelected1 == 'true' ? '풀업' : '친업',
+                  'ex2_name':
+                      _controller.isSelected3 == 'true' ? '푸쉬업' : '너클 푸쉬업',
+                  'ex1': _controller.ex1,
+                  'ex2': _controller.ex2,
+                  'weight': int.parse(_controller.weight),
+                });
+                _controller.saveData();
+                _controller.deleteEx();
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  HomeScreen.routeName,
+                  (route) => false, // In this case, always remove all routes
+                );
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }

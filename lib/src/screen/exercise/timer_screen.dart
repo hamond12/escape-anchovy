@@ -64,38 +64,41 @@ class _TimerScreenState extends State<TimerScreen> {
   }
 
   Widget _buildPage(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.14),
-          SvgPicture.asset('assets/svg/clock.svg'),
-          const SizedBox(
-            height: 24,
-          ),
-          Text(
-            _controller.formatTime(_controller.seconds),
-            style: TextStyles.title.copyWith(fontSize: 50),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                (7 - widget.set).toString(),
-                style: TextStyles.h1Medium.copyWith(
-                    color: context.isLight
-                        ? LightModeColors.darkGold
-                        : DarkModeColors.darkGold),
-              ),
-              const Text(
-                '세트 남았습니다.',
-                style: TextStyles.h1Medium,
-              )
-            ],
-          )
-        ],
+    return PopScope(
+      canPop: false,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.14),
+            SvgPicture.asset('assets/svg/clock.svg'),
+            const SizedBox(
+              height: 24,
+            ),
+            Text(
+              _controller.formatTime(_controller.seconds),
+              style: TextStyles.title.copyWith(fontSize: 50),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  (7 - widget.set).toString(),
+                  style: TextStyles.h1Medium.copyWith(
+                      color: context.isLight
+                          ? LightModeColors.darkGold
+                          : DarkModeColors.darkGold),
+                ),
+                const Text(
+                  '세트 남았습니다.',
+                  style: TextStyles.h1Medium,
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
