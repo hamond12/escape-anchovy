@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserInfoScreen extends StatefulWidget {
-  const UserInfoScreen({super.key, required this.controller});
+  const UserInfoScreen({super.key, required this.settingController});
 
   static const routeName = '/user';
 
-  final SettingsController controller;
+  final SettingsController settingController;
 
   @override
   State<UserInfoScreen> createState() => _UserInfoScreenState();
@@ -30,7 +30,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
       appBar: CommonAppBar(
         title: AppLocalizations.of(context)!.user_info_app_bar_title,
         isUserInfo: true,
-        settingsController: widget.controller,
+        settingsController: widget.settingController,
       ),
       body: AnimatedBuilder(
           animation: _controller,

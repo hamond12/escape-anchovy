@@ -1,21 +1,20 @@
 import 'dart:async';
 
-import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class SplashScreen3 extends StatefulWidget {
+  const SplashScreen3({super.key});
 
-  static const routeName = '/splash';
+  static const routeName = '/splash3';
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreen3> createState() => _SplashScreen3State();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreen3State extends State<SplashScreen3> {
   final _controller = SplashController();
 
   @override
@@ -31,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFFCCE9FF),
+      backgroundColor: const Color(0XFF6878AB),
       body: AnimatedBuilder(
           animation: _controller,
           builder: (context, snapshot) {
@@ -52,14 +51,14 @@ class _SplashScreenState extends State<SplashScreen> {
               right: 0,
               child: Text('ESCAPE\nENCHOVY',
                   textAlign: TextAlign.center,
-                  style:
-                      TextStyles.title.copyWith(color: LightModeColors.dark3))),
+                  style: TextStyles.title
+                      .copyWith(color: const Color(0XFFBCE885)))),
           Positioned(
               bottom: 0,
               top: _controller.enchovyTopPos,
               right: 30,
               left: 0,
-              child: Image.asset('assets/png/anchovy.png')),
+              child: Image.asset('assets/png/daegu.png')),
           Stack(
             children: [
               Positioned(
@@ -67,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 left: 0,
                 right: 0,
                 child: Image.asset(
-                  'assets/png/wave.png',
+                  'assets/png/wave3.png',
                   fit: BoxFit.fill,
                 ),
               ),

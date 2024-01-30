@@ -19,32 +19,8 @@ class NoteController with ChangeNotifier {
     await storage.delete(key: 'dataList');
   }
 
-  int currentPage = 0;
-  int itemsPerPage = 7;
-
-  List<Map<String, dynamic>> get currentData {
-    final startIndex = currentPage * itemsPerPage;
-    final endIndex = dataList.length;
-    return dataList.sublist(startIndex, endIndex);
-  }
-
-  int totalPage() {
-    return dataList.length % 7 == 0
-        ? dataList.length ~/ itemsPerPage
-        : dataList.length ~/ itemsPerPage + 1;
-  }
-
-  void loadNextData() {
-    if (currentPage + 1 < totalPage()) {
-      currentPage++;
-    }
-    notifyListeners();
-  }
-
-  void loadPrevData() {
-    if (currentPage != 0) {
-      currentPage--;
-      notifyListeners();
-    }
+  Future<void> saveData() async {
+    final String jsonData = json.encode(dataList);
+    await storage.write(key: 'dataList', value: jsonData);
   }
 }

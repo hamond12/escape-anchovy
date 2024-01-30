@@ -1,5 +1,6 @@
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
+import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 
 import 'package:escape_anchovy/src/screen/note/note_controller.dart';
@@ -334,9 +335,23 @@ class _NoteScreenState extends State<NoteScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              '${data['day']}일차',
-                                              style: TextStyles.b2Medium,
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  '${data['day']}일차',
+                                                  style: TextStyles.b2Regular,
+                                                ),
+                                                const SizedBox(
+                                                  width: 2,
+                                                ),
+                                                data['weight'] != 0
+                                                    ? Text(
+                                                        '(${data['weight']}kg)',
+                                                        style: TextStyles
+                                                            .b3Regular,
+                                                      )
+                                                    : const SizedBox.shrink()
+                                              ],
                                             ),
                                             const SizedBox(
                                               height: 3,
@@ -512,6 +527,24 @@ class _NoteScreenState extends State<NoteScreen> {
                           color: context.isLight
                               ? const Color(0XFFADA8B0)
                               : const Color(0XFF8A848D)),
+                    ),
+                    CommonButton(
+                      text: '데이터 추가',
+                      width: 300,
+                      onPressed: () {
+                        setState(() {
+                          _controller.dataList.add({
+                            'time': DateTime.now().toString(),
+                            'day': _controller.dataList.length + 1,
+                            'ex1_name': '친업',
+                            'ex2_name': '너클 푸쉬업',
+                            'ex1': [10, 5, 4],
+                            'ex2': [30, 10, 1],
+                            'weight': 0
+                          });
+                          _controller.saveData();
+                        });
+                      },
                     ),
                   ],
                 ),

@@ -8,7 +8,8 @@ class Themes {
         const TextSelectionThemeData(cursorColor: LightModeColors.blue),
   );
   static final dark = ThemeData.dark().copyWith(
-      scaffoldBackgroundColor: DarkModeColors.background,
-      textSelectionTheme:
-          const TextSelectionThemeData(cursorColor: DarkModeColors.blue));
+    scaffoldBackgroundColor: DarkModeColors.background,
+    textSelectionTheme:
+        const TextSelectionThemeData(cursorColor: DarkModeColors.blue),
+  );
 }

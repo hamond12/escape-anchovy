@@ -3,7 +3,11 @@ import 'package:escape_anchovy/res/theme/themes.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
+
 import 'package:escape_anchovy/src/screen/splash/splash_screen.dart';
+import 'package:escape_anchovy/src/screen/splash/splash_screen2.dart';
+import 'package:escape_anchovy/src/screen/splash/splash_screen3.dart';
+import 'package:escape_anchovy/src/screen/splash/splash_screen4.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
 import 'package:escape_anchovy/src/screen/user_name/user_name_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     widget.settingsController.initialTheme(context);
   }
 
@@ -50,12 +55,24 @@ class _MyAppState extends State<MyApp> {
             themeMode: widget.settingsController.themeMode,
             onGenerateTitle: (BuildContext context) =>
                 AppLocalizations.of(context)!.app_title,
-            initialRoute: SplashScreen.routeName,
+            initialRoute: returnInitialRoute(),
             onGenerateRoute: (RouteSettings routeSettings) {
               return route(routeSettings);
             },
           );
         });
+  }
+
+  String returnInitialRoute() {
+    if (widget.settingsController.splashNum == 1) {
+      return SplashScreen2.routeName;
+    } else if (widget.settingsController.splashNum == 2) {
+      return SplashScreen3.routeName;
+    } else if (widget.settingsController.splashNum == 3) {
+      return SplashScreen4.routeName;
+    } else {
+      return SplashScreen.routeName;
+    }
   }
 
   MaterialPageRoute<void> route(RouteSettings routeSettings) {
@@ -65,19 +82,25 @@ class _MyAppState extends State<MyApp> {
           switch (routeSettings.name) {
             case SplashScreen.routeName:
               return const SplashScreen();
+            case SplashScreen2.routeName:
+              return const SplashScreen2();
+            case SplashScreen3.routeName:
+              return const SplashScreen3();
+            case SplashScreen4.routeName:
+              return const SplashScreen4();
             case HomeScreen.routeName:
               return HomeScreen(
-                controller: widget.settingsController,
+                settingController: widget.settingsController,
               );
             case UserInfoScreen.routeName:
-              return UserInfoScreen(controller: widget.settingsController);
+              return UserInfoScreen(
+                  settingController: widget.settingsController);
             case UserNameScreen.routeName:
               return const UserNameScreen();
             case NoteScreen.routeName:
               return const NoteScreen();
-
             default:
-              return const SplashScreen();
+              return const Text('asdf');
           }
         });
   }

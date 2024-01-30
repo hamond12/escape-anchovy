@@ -78,6 +78,7 @@ class SplashController with ChangeNotifier {
   }
 
   Future<void> checkInputName(BuildContext context) async {
+    inItIsMackerel();
     await Future.delayed(const Duration(seconds: 3));
     isNameInput().then((value) async {
       if (!value) {
@@ -88,5 +89,11 @@ class SplashController with ChangeNotifier {
             context, HomeScreen.routeName, (route) => false);
       }
     });
+  }
+
+  late bool isMackerel;
+  void inItIsMackerel() async {
+    isMackerel = await storage.read(key: 'mackerel') == 'true';
+    notifyListeners();
   }
 }

@@ -26,6 +26,7 @@ class _CompleteScreenState extends State<CompleteScreen> {
     _controller.loadCategory2();
     _controller.loadEx1();
     _controller.loadEx2();
+    _controller.initWeight();
   }
 
   @override
@@ -94,11 +95,16 @@ class _CompleteScreenState extends State<CompleteScreen> {
                 'ex2_name':
                     _controller.isSelected3 == 'true' ? '푸쉬업' : '너클 푸쉬업',
                 'ex1': _controller.ex1,
-                'ex2': _controller.ex2
+                'ex2': _controller.ex2,
+                'weight': int.parse(_controller.weight),
               });
               _controller.saveData();
               _controller.deleteEx();
-              Navigator.pushNamed(context, HomeScreen.routeName);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                HomeScreen.routeName,
+                (route) => false, // In this case, always remove all routes
+              );
             },
           ),
         )

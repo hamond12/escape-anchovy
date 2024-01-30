@@ -10,6 +10,7 @@ import 'package:escape_anchovy/src/common/common_svg.dart';
 import 'package:escape_anchovy/src/screen/achievement/achievement_screen.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_screen1.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
+import 'package:escape_anchovy/src/screen/home/dialog/weight_add_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.controller});
+  const HomeScreen({super.key, required this.settingController});
 
   static const routeName = '/home';
 
-  final SettingsController controller;
+  final SettingsController settingController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -35,9 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    //_controller.deleteCategory();
     _controller.deleteEx();
-    _controller.loadData();
+    _controller.loadInformation();
+    //_controller.deleteAchievement();
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
       _controller.checkTimeDifference();
@@ -48,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        settingsController: widget.controller,
+        settingsController: widget.settingController,
         title: AppLocalizations.of(context)!.home_app_bar_title,
         isLogo: true,
         isHome: true,
@@ -117,63 +118,105 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20,
                 ),
                 Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return const ExCategoryDialog();
-                            },
-                          );
-                        },
-                        child: Column(
+                  child: widget.settingController.isMackerel
+                      ? Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(context.isLight
-                                ? 'assets/svg/exercise_category.svg'
-                                : 'assets/svg/dark_exercise_category.svg'),
-                            const SizedBox(
-                              height: 4,
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return const ExCategoryDialog();
+                                  },
+                                );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(context.isLight
+                                      ? 'assets/svg/exercise_category.svg'
+                                      : 'assets/svg/dark_exercise_category.svg'),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text(
+                                    '운동항목',
+                                    style: TextStyles.b1Regular.copyWith(
+                                        color: context.isLight
+                                            ? DarkModeColors.background
+                                            : LightModeColors.background),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Text(
-                              '운동항목',
-                              style: TextStyles.b1Regular.copyWith(
-                                  color: context.isLight
-                                      ? DarkModeColors.background
-                                      : LightModeColors.background),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            const CommonSvg(
+                                src: 'assets/svg/dividing_line.svg'),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return const WeightAddDialog();
+                                  },
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  const CommonSvg(src: 'assets/svg/weight.svg'),
+                                  const SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text(
+                                    '중량추가',
+                                    style: TextStyles.b1Regular.copyWith(
+                                        color: context.isLight
+                                            ? DarkModeColors.background
+                                            : LightModeColors.background),
+                                  )
+                                ],
+                              ),
                             ),
                           ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      const CommonSvg(src: 'assets/svg/dividing_line.svg'),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Column(
-                        children: [
-                          const CommonSvg(src: 'assets/svg/weight.svg'),
-                          const SizedBox(
-                            height: 3,
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const ExCategoryDialog();
+                              },
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(context.isLight
+                                  ? 'assets/svg/exercise_category.svg'
+                                  : 'assets/svg/dark_exercise_category.svg'),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                '운동항목',
+                                style: TextStyles.b1Regular.copyWith(
+                                    color: context.isLight
+                                        ? DarkModeColors.background
+                                        : LightModeColors.background),
+                              ),
+                            ],
                           ),
-                          Text(
-                            '중량추가',
-                            style: TextStyles.b1Regular.copyWith(
-                                color: context.isLight
-                                    ? DarkModeColors.background
-                                    : LightModeColors.background),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+                        ),
                 ),
                 const SizedBox(
                   height: 16,
@@ -312,9 +355,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          '${data['day']}일차',
-                                          style: TextStyles.b3Regular,
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '${data['day']}일차',
+                                              style: TextStyles.b3Regular,
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            data['weight'] != 0
+                                                ? Text(
+                                                    '(${data['weight']}kg)',
+                                                    style: TextStyles.b4Regular,
+                                                  )
+                                                : const SizedBox.shrink()
+                                          ],
                                         ),
                                         const SizedBox(
                                           height: 2,
@@ -470,8 +526,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 65,
                             height: 18,
                             onPressed: () {
-                              Navigator.pushNamed(
-                                  context, AchievemnetScreen.routeName);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AchievemnetScreen(
+                                    clearList: _controller.clearList,
+                                  ),
+                                ),
+                              );
                             },
                             text: '전체 업적 확인',
                             textStyle:
@@ -515,6 +577,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ])),
                 const SizedBox(
+                  height: 5,
+                ),
+                Text('(변경사항은 앱을 재실행하면 확인할 수 있습니다.)',
+                    style: TextStyles.b4Regular.copyWith(
+                        color: context.isLight
+                            ? LightModeColors.dark2
+                            : DarkModeColors.dark2)),
+                const SizedBox(
                   height: 25,
                 )
               ],
@@ -530,8 +600,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   'day': _controller.dataList.length + 1,
                   'ex1_name': '친업',
                   'ex2_name': '너클 푸쉬업',
-                  'ex1': [3, 4, 8],
-                  'ex2': [3, 4, 8]
+                  'ex1': [10, 1, 1],
+                  'ex2': [30, 1, 1],
+                  'weight': 20
                 });
                 _controller.saveData();
               });
@@ -566,7 +637,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget explainDialog(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.43,
+      height: MediaQuery.of(context).size.height * 0.4,
       decoration: BoxDecoration(
         color:
             context.isLight ? LightModeColors.background : DarkModeColors.dark4,
@@ -583,14 +654,14 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox(
-              width: 36, // svgSize(24) + svgPadding(12)
+              width: 40, // svgSize(24) + svgPadding(12)
             ),
             const Text(
               '운동설명',
               style: TextStyles.h2Bold,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 12.0),
+              padding: const EdgeInsets.only(right: 16.0),
               child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
@@ -625,7 +696,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 4),
               Text(
-                '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 휴식시간 아이콘을 눌러 세트별 휴식시간을 따로 설정할 수 있습니다. 휴식시간은 기본 2분으로 설정되있으며 휴식시간을 줄여나감으로써 운동강도를 높일 수 있습니다. ',
+                '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 항목당 하나의 운동만 선택할 수 있습니다. 휴식시간은 기본 2분으로 설정되어 있습니다.',
                 style: TextStyles.b4Regular,
               ),
             ],

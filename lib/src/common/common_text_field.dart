@@ -14,7 +14,7 @@ class CommonTextField extends StatefulWidget {
       this.controller,
       this.focusNode,
       this.textInputType,
-      this.inputFormatters = null});
+      this.inputFormatters});
 
   final double height;
   final String hintText;

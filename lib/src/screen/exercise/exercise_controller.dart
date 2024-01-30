@@ -128,12 +128,30 @@ class ExerciseController with ChangeNotifier {
     }
   }
 
-  int seconds = 120;
+  int seconds = 1;
   late Timer timer;
 
   String formatTime(int second) {
     int minutes = second ~/ 60;
     int seconds = second % 60;
     return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  late bool isMackerel;
+  void initIsMackerel() async {
+    isMackerel = await storage.read(key: 'mackerel') == 'true';
+    notifyListeners();
+  }
+
+  String weight = '0';
+  void initWeight() async {
+    String? storedWeight = await storage.read(key: 'weight');
+    weight = storedWeight ?? '0';
+    notifyListeners();
+  }
+
+  void deleteWeight() async {
+    await storage.delete(key: 'weight');
+    notifyListeners();
   }
 }
