@@ -109,35 +109,71 @@ class HomeController with ChangeNotifier {
     unlockMackerel();
     unlockDaegu();
     unlockShark();
+    unlockCotyledon();
+    unlockSprout();
+    unlockSapling();
+    unlockTree();
   }
 
-  void unlockMackerel() async {
+  Future<void> unlockMackerel() async {
     if (dataList.last['ex1'][0] >= 10 && dataList.last['ex2'][0] >= 30) {
       await storage.write(key: 'mackerel', value: 'true');
     }
   }
 
-  void unlockDaegu() async {
+  Future<void> unlockDaegu() async {
     if ((dataList.last['ex1'][0] >= 10 && dataList.last['weight'] >= 10) &&
         (dataList.last['ex2'][0] >= 30 && dataList.last['weight'] >= 10)) {
       await storage.write(key: 'daegu', value: 'true');
     }
   }
 
-  void unlockShark() async {
+  Future<void> unlockShark() async {
     if ((dataList.last['ex1'][0] >= 10 && dataList.last['weight'] >= 20) &&
         (dataList.last['ex2'][0] >= 30 && dataList.last['weight'] >= 20)) {
       await storage.write(key: 'shark', value: 'true');
     }
   }
 
-  void deleteAchievement() async {
+  Future<void> unlockCotyledon() async {
+    if (dataList.last['day'] == 1) {
+      await storage.write(key: 'cotyledon', value: 'true');
+    }
+  }
+
+  Future<void> unlockSprout() async {
+    if (dataList.last['day'] == 7) {
+      await storage.write(key: 'sprout', value: 'true');
+    }
+  }
+
+  Future<void> unlockSapling() async {
+    if (dataList.last['day'] == 30) {
+      await storage.write(key: 'sapling', value: 'true');
+    }
+  }
+
+  Future<void> unlockTree() async {
+    if (dataList.last['day'] == 100) {
+      await storage.write(key: 'tree', value: 'true');
+    }
+  }
+
+  Future<void> deleteAchievement() async {
     await storage.delete(key: 'mackerel');
     await storage.delete(key: 'mackerel_toast');
     await storage.delete(key: 'daegu');
     await storage.delete(key: 'daegu_toast');
     await storage.delete(key: 'shark');
     await storage.delete(key: 'shark_toast');
+    await storage.delete(key: 'cotyledon');
+    await storage.delete(key: 'cotyledon_toast');
+    await storage.delete(key: 'sprout');
+    await storage.delete(key: 'sprout_toast');
+    await storage.delete(key: 'sapling');
+    await storage.delete(key: 'sapling_toast');
+    await storage.delete(key: 'tree');
+    await storage.delete(key: 'tree_toast');
   }
 
   void showInitialToast(String msg) {
@@ -150,7 +186,7 @@ class HomeController with ChangeNotifier {
     );
   }
 
-  void noticeClear() async {
+  Future<void> noticeClear() async {
     if (await storage.read(key: 'mackerel') == 'true') {
       if (await storage.read(key: 'mackerel_toast') != 'complete') {
         showInitialToast('고등어 도전과제를 달성했습니다!');
@@ -169,14 +205,51 @@ class HomeController with ChangeNotifier {
         await storage.write(key: 'shark_toast', value: 'complete');
       }
     }
+    if (await storage.read(key: 'cotyledon') == 'true') {
+      if (await storage.read(key: 'cotyledon_toast') != 'complete') {
+        showInitialToast('떡잎 도전과제를 달성했습니다!');
+        await storage.write(key: 'cotyledon_toast', value: 'complete');
+      }
+    }
+    if (await storage.read(key: 'sprout') == 'true') {
+      if (await storage.read(key: 'sprout_toast') != 'complete') {
+        showInitialToast('새싹 도전과제를 달성했습니다!');
+        await storage.write(key: 'sprout_toast', value: 'complete');
+      }
+    }
+    if (await storage.read(key: 'sapling') == 'true') {
+      if (await storage.read(key: 'sapling_toast') != 'complete') {
+        showInitialToast('어린나 도전과제를 달성했습니다!');
+        await storage.write(key: 'sapling_toast', value: 'complete');
+      }
+    }
+    if (await storage.read(key: 'tree') == 'true') {
+      if (await storage.read(key: 'tree_toast') != 'complete') {
+        showInitialToast('나무 도전과제를 달성했습니다!');
+        await storage.write(key: 'tree_toast', value: 'complete');
+      }
+    }
     notifyListeners();
   }
 
-  List<bool> clearList = [true, false, false, false];
+  List<bool> clearList = [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   Future<void> initClearList() async {
     clearList[1] = await storage.read(key: 'mackerel') == 'true';
     clearList[2] = await storage.read(key: 'daegu') == 'true';
     clearList[3] = await storage.read(key: 'shark') == 'true';
+    clearList[4] = await storage.read(key: 'cotyledon') == 'true';
+    clearList[5] = await storage.read(key: 'sprout') == 'true';
+    clearList[6] = await storage.read(key: 'sapling') == 'true';
+    clearList[7] = await storage.read(key: 'tree') == 'true';
   }
 
   // 중량추가 다이얼로그 관련
@@ -188,6 +261,10 @@ class HomeController with ChangeNotifier {
   Future<void> loadWeight() async {
     weight = await storage.read(key: 'weight') ?? '3';
     notifyListeners();
+  }
+
+  Future<void> deleteWeight() async {
+    await storage.delete(key: 'weight');
   }
 
   Future<void> saveWeight() async {

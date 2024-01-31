@@ -92,11 +92,43 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
                   '대구 해금조건에서 10kg 추가')
             ],
           ),
-          const Row(
-            children: [],
+          const SizedBox(
+            height: 12,
           ),
-          const Row(
-            children: [],
+          Row(
+            children: [
+              achievementBox(
+                  '떡잎',
+                  widget.clearList[4],
+                  'assets/png/cotyledon.png',
+                  const Color(0XFFCD8032),
+                  '꾸준함',
+                  '1일차 달성'),
+              const SizedBox(
+                width: 12,
+              ),
+              achievementBox('새싹', widget.clearList[5], 'assets/png/sprout.png',
+                  const Color(0XFF8A848D), '꾸준함', '1주일 달성')
+            ],
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            children: [
+              achievementBox(
+                  '어린나무',
+                  widget.clearList[6],
+                  'assets/png/sapling.png',
+                  const Color(0XFFFED700),
+                  '꾸준함',
+                  '1달차 달성'),
+              const SizedBox(
+                width: 12,
+              ),
+              achievementBox('나무', widget.clearList[7], 'assets/png/tree.png',
+                  const Color(0XFF00D8FF), '꾸준함', '100일차 달성')
+            ],
           ),
           const Text('')
         ],

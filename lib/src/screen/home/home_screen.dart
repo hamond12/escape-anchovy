@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _controller.deleteEx();
     _controller.loadInformation();
+    _controller.deleteWeight();
     //_controller.deleteAchievement();
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -236,7 +237,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   textStyle: TextStyles.b1Medium,
                   borderRadius: 8,
                 ),
-                Text(_controller.weight.toString())
               ],
             ),
           ),
@@ -603,7 +603,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'ex2_name': '너클 푸쉬업',
                   'ex1': [10, 1, 1],
                   'ex2': [30, 1, 1],
-                  'weight': 20
+                  'weight': 0
                 });
                 _controller.saveData();
               });
