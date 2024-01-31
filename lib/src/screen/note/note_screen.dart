@@ -339,7 +339,7 @@ class _NoteScreenState extends State<NoteScreen> {
                                               children: [
                                                 Text(
                                                   '${data['day']}일차',
-                                                  style: TextStyles.b2Regular,
+                                                  style: TextStyles.b2Medium,
                                                 ),
                                                 const SizedBox(
                                                   width: 2,

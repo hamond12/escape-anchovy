@@ -184,10 +184,16 @@ class HomeController with ChangeNotifier {
   double weightInputfieldHeight = 24;
   final weightController = TextEditingController();
 
-  void saveWeight() async {
+  String weight = '';
+  Future<void> loadWeight() async {
+    weight = await storage.read(key: 'weight') ?? '3';
+    notifyListeners();
+  }
+
+  Future<void> saveWeight() async {
     await storage.write(
         key: 'weight',
-        value: weightController.text.isEmpty ? '3' : weightController.text);
+        value: weightController.text.isEmpty ? weight : weightController.text);
     notifyListeners();
   }
 

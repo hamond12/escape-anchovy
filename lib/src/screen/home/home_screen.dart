@@ -235,7 +235,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   text: '운동시작',
                   textStyle: TextStyles.b1Medium,
                   borderRadius: 8,
-                )
+                ),
+                Text(_controller.weight.toString())
               ],
             ),
           ),
@@ -359,7 +360,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Text(
                                               '${data['day']}일차',
-                                              style: TextStyles.b3Regular,
+                                              style: TextStyles.b3Medium,
                                             ),
                                             const SizedBox(
                                               width: 2,
@@ -577,7 +578,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ])),
                 const SizedBox(
-                  height: 5,
+                  height: 8,
                 ),
                 Text('(변경사항은 앱을 재실행하면 확인할 수 있습니다.)',
                     style: TextStyles.b4Regular.copyWith(

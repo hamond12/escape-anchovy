@@ -144,13 +144,13 @@ class ExerciseController with ChangeNotifier {
   }
 
   String weight = '0';
-  void initWeight() async {
+  Future<void> initWeight() async {
     String? storedWeight = await storage.read(key: 'weight');
     weight = storedWeight ?? '0';
     notifyListeners();
   }
 
-  void deleteWeight() async {
+  Future<void> deleteWeight() async {
     await storage.delete(key: 'weight');
     notifyListeners();
   }

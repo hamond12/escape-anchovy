@@ -19,6 +19,7 @@ class _WeightAddDialogState extends State<WeightAddDialog> {
   @override
   void initState() {
     super.initState();
+    _controller.loadWeight();
   }
 
   @override
@@ -110,7 +111,7 @@ class _WeightAddDialogState extends State<WeightAddDialog> {
                                 decoration: InputDecoration(
                                     counterText: '',
                                     border: InputBorder.none,
-                                    hintText: '3',
+                                    hintText: _controller.weight,
                                     hintStyle: TextStyles.h1Bold.copyWith(
                                         fontSize: 32,
                                         color: context.isLight
