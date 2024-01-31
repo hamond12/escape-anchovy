@@ -638,7 +638,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget explainDialog(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: widget.settingController.isMackerel
+          ? MediaQuery.of(context).size.height * 0.50
+          : MediaQuery.of(context).size.height * 0.45,
       decoration: BoxDecoration(
         color:
             context.isLight ? LightModeColors.background : DarkModeColors.dark4,
@@ -676,29 +678,45 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(
           height: 20,
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 '운동방식',
                 style: TextStyles.b1Medium,
               ),
-              SizedBox(height: 4),
-              Text(
+              const SizedBox(height: 4),
+              const Text(
                 '운동시작을 누르면 2개의 종목을 번갈아가며 6세트를 진행합니다. 한 세마다 자신이 수행할 수 있는 최대의 개수를 수행해주세요. 오늘의 기록을 전날의 기록과 비교해서 볼 수 있습니다. 전날보다 1개씩 더하는 걸 목표로 삼아보세요!',
                 style: TextStyles.b4Regular,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 '설정',
                 style: TextStyles.b1Medium,
               ),
-              SizedBox(height: 4),
-              Text(
-                '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 항목당 하나의 운동만 선택할 수 있습니다. 휴식시간은 기본 2분으로 설정되어 있습니다.',
-                style: TextStyles.b4Regular,
+              const SizedBox(height: 4),
+              widget.settingController.isMackerel
+                  ? const Text(
+                      '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 항목당 하나의운동만 선택할 수 있습니다. 휴식시간은 기본 2분으로 설정되어 있습니다. 고등어 도전과제를 달성하셨다면 중량을 추가할 수 있습니다.효율적인 근성장을 위해 가방을 매거나 중량조끼를 입는 등 중량을 추가하고 맨몸운동을 진행해보세요!',
+                      style: TextStyles.b4Regular,
+                    )
+                  : const Text(
+                      '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 항목당 하나의 운동만 선택할 수 있습니다. 휴식시간은 기본 2분으로 설정되어 있습니다.',
+                      style: TextStyles.b4Regular,
+                    ),
+              const SizedBox(height: 26),
+              Center(
+                child: Text(
+                  '데이터베이스 관련 문제로 운동 중일 때는 뒤로가기를 막아놨습니다.\n운동시작 버튼을 잘못눌렀다면 앱을 재실행주세요',
+                  style: TextStyles.caption1.copyWith(
+                      color: context.isLight
+                          ? LightModeColors.dark2
+                          : DarkModeColors.dark2),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

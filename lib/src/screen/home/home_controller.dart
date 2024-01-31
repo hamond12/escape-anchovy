@@ -173,7 +173,7 @@ class HomeController with ChangeNotifier {
   }
 
   List<bool> clearList = [true, false, false, false];
-  void initClearList() async {
+  Future<void> initClearList() async {
     clearList[1] = await storage.read(key: 'mackerel') == 'true';
     clearList[2] = await storage.read(key: 'daegu') == 'true';
     clearList[3] = await storage.read(key: 'shark') == 'true';
