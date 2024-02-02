@@ -6,11 +6,14 @@ import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
 import 'package:escape_anchovy/src/screen/exercise/timer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ExerciseScreen1 extends StatefulWidget {
-  const ExerciseScreen1({super.key, required this.set});
+  const ExerciseScreen1({super.key, required this.exerciseController});
 
-  final int set;
+  final ExerciseController exerciseController;
+
+  static const routeName = '/exercise1';
 
   @override
   State<ExerciseScreen1> createState() => _ExerciseScreen1State();
@@ -22,7 +25,6 @@ class _ExerciseScreen1State extends State<ExerciseScreen1> {
   @override
   void initState() {
     super.initState();
-    _controller.loadCategory1();
     _controller.loadEx1();
   }
 
@@ -59,18 +61,18 @@ class _ExerciseScreen1State extends State<ExerciseScreen1> {
                         height: 24,
                       ),
                       Text(
-                        '${widget.set}/6 세트',
+                        '${widget.exerciseController.set}/6 세트',
                         style: TextStyles.h1Bold,
                       ),
                       const SizedBox(
                         height: 30,
                       ),
-                      _controller.returnSvg1(),
+                      returnSvg(),
                       const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        _controller.returnCategoryName1(),
+                        returnCategoryName(),
                         style: TextStyles.h1Medium,
                       ),
                       const SizedBox(
@@ -116,12 +118,9 @@ class _ExerciseScreen1State extends State<ExerciseScreen1> {
                       onPressed: _controller.num1.isNotEmpty
                           ? () {
                               _controller.addEx1();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TimerScreen(
-                                            set: widget.set + 1,
-                                          )));
+                              widget.exerciseController.set++;
+                              Navigator.pushNamed(
+                                  context, TimerScreen.routeName);
                             }
                           : null),
                 ),
@@ -129,5 +128,25 @@ class _ExerciseScreen1State extends State<ExerciseScreen1> {
         ],
       ),
     );
+  }
+
+  Widget returnSvg() {
+    if (widget.exerciseController.isSelected1 == true) {
+      return SvgPicture.asset('assets/svg/pull_up_color.svg');
+    } else if (widget.exerciseController.isSelected2 == true) {
+      return SvgPicture.asset('assets/svg/chin_up_color.svg');
+    } else {
+      return SvgPicture.asset('');
+    }
+  }
+
+  String returnCategoryName() {
+    if (widget.exerciseController.isSelected1 == true) {
+      return '풀업';
+    } else if (widget.exerciseController.isSelected2 == true) {
+      return '친업';
+    } else {
+      return '';
+    }
   }
 }

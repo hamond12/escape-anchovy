@@ -6,36 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AchievemnetScreen extends StatefulWidget {
-  const AchievemnetScreen({super.key, required this.clearList});
+  const AchievemnetScreen({super.key, required this.ahcievemnetController});
 
   static const routeName = '/achievement';
 
-  final List clearList;
+  final AchievementController ahcievemnetController;
 
   @override
   State<AchievemnetScreen> createState() => _AchievemnetScreenState();
 }
 
 class _AchievemnetScreenState extends State<AchievemnetScreen> {
-  final _controller = AhhievementController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonAppBar(
-        title: '전체 업적 확인',
-      ),
-      body: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, snapshot) {
-            return _buildPage(context);
-          }),
-    );
+        appBar: const CommonAppBar(
+          title: '전체 업적 확인',
+        ),
+        body: _buildPage(context));
   }
 
   Widget _buildPage(BuildContext context) {
@@ -50,8 +38,8 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
             children: [
               achievementBox(
                   '멸치',
-                  widget.clearList[0],
-                  'assets/png/anchovy_outline.png',
+                  widget.ahcievemnetController.isClear1,
+                  'assets/svg/anchovy_outline.svg',
                   const Color(0XFFCD8032),
                   '',
                   '',
@@ -61,8 +49,8 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
               ),
               achievementBox(
                   '고등어',
-                  widget.clearList[1],
-                  'assets/png/mackerel_outline.png',
+                  widget.ahcievemnetController.isClear2,
+                  'assets/svg/mackerel_outline.svg',
                   const Color(0XFF8A848D),
                   '최대개수 달성',
                   '턱걸이(10개), 푸쉬업(30개)')
@@ -75,8 +63,8 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
             children: [
               achievementBox(
                   '대구',
-                  widget.clearList[2],
-                  'assets/png/daegu_outline.png',
+                  widget.ahcievemnetController.isClear3,
+                  'assets/svg/daegu_outline.svg',
                   const Color(0XFFFED700),
                   '최대개수 달성',
                   '고등어 해금조건에서 10kg 추가'),
@@ -85,8 +73,8 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
               ),
               achievementBox(
                   '상어',
-                  widget.clearList[3],
-                  'assets/png/shark_outline.png',
+                  widget.ahcievemnetController.isClear4,
+                  'assets/svg/shark_outline.svg',
                   const Color(0XFF00D8FF),
                   '최대개수 달성',
                   '대구 해금조건에서 10kg 추가')
@@ -99,16 +87,21 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
             children: [
               achievementBox(
                   '떡잎',
-                  widget.clearList[4],
-                  'assets/png/cotyledon.png',
+                  widget.ahcievemnetController.isClear5,
+                  'assets/svg/cotyledon.svg',
                   const Color(0XFFCD8032),
                   '꾸준함',
                   '1일차 달성'),
               const SizedBox(
                 width: 12,
               ),
-              achievementBox('새싹', widget.clearList[5], 'assets/png/sprout.png',
-                  const Color(0XFF8A848D), '꾸준함', '1주일 달성')
+              achievementBox(
+                  '새싹',
+                  widget.ahcievemnetController.isClear6,
+                  'assets/svg/sprout.svg',
+                  const Color(0XFF8A848D),
+                  '꾸준함',
+                  '1주일 달성')
             ],
           ),
           const SizedBox(
@@ -118,19 +111,23 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
             children: [
               achievementBox(
                   '어린나무',
-                  widget.clearList[6],
-                  'assets/png/sapling.png',
+                  widget.ahcievemnetController.isClear7,
+                  'assets/svg/sapling.svg',
                   const Color(0XFFFED700),
                   '꾸준함',
                   '1달차 달성'),
               const SizedBox(
                 width: 12,
               ),
-              achievementBox('나무', widget.clearList[7], 'assets/png/tree.png',
-                  const Color(0XFF00D8FF), '꾸준함', '100일차 달성')
+              achievementBox(
+                  '나무',
+                  widget.ahcievemnetController.isClear8,
+                  'assets/svg/tree.svg',
+                  const Color(0XFF00D8FF),
+                  '꾸준함',
+                  '100일차 달성')
             ],
           ),
-          const Text('')
         ],
       ),
     );
@@ -184,7 +181,7 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
                   height: 60,
                   child: Center(
                     child: isUnlock
-                        ? Image.asset(src)
+                        ? SvgPicture.asset(src)
                         : SvgPicture.asset('assets/svg/question_mark.svg'),
                   ),
                 ),
@@ -210,7 +207,10 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
                     ),
                     Text(
                       text1,
-                      style: TextStyles.caption1,
+                      style: TextStyles.caption1.copyWith(
+                          color: context.isLight
+                              ? LightModeColors.dark1
+                              : DarkModeColors.dark1),
                     ),
                     const SizedBox(
                       height: 1,

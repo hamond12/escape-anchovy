@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SplashController with ChangeNotifier {
-  double enchovyTopPos = 60;
+  double topPos = 60;
 
   void moveUp() {
     Timer.periodic(const Duration(milliseconds: 50), (timer) {
-      enchovyTopPos -= 2;
+      topPos -= 2;
       if (timer.tick >= (3 * 1000) / 50) {
         timer.cancel();
       }

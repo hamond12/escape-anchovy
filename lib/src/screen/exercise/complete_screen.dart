@@ -9,7 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CompleteScreen extends StatefulWidget {
-  const CompleteScreen({super.key});
+  const CompleteScreen({super.key, required this.exerciseController});
+
+  final ExerciseController exerciseController;
+
+  static const routeName = '/complete';
 
   @override
   State<CompleteScreen> createState() => _CompleteScreenState();
@@ -22,8 +26,6 @@ class _CompleteScreenState extends State<CompleteScreen> {
   void initState() {
     super.initState();
     _controller.loadData();
-    _controller.loadCategory1();
-    _controller.loadCategory2();
     _controller.loadEx1();
     _controller.loadEx2();
     _controller.initWeight();
@@ -93,9 +95,12 @@ class _CompleteScreenState extends State<CompleteScreen> {
                 _controller.dataList.add({
                   'time': DateTime.now().toString(),
                   'day': _controller.dataList.length + 1,
-                  'ex1_name': _controller.isSelected1 == 'true' ? '풀업' : '친업',
-                  'ex2_name':
-                      _controller.isSelected3 == 'true' ? '푸쉬업' : '너클 푸쉬업',
+                  'ex1_name': widget.exerciseController.isSelected1 == true
+                      ? '풀업'
+                      : '친업',
+                  'ex2_name': widget.exerciseController.isSelected3 == true
+                      ? '푸쉬업'
+                      : '너클 푸쉬업',
                   'ex1': _controller.ex1,
                   'ex2': _controller.ex2,
                   'weight': int.parse(_controller.weight),
@@ -103,10 +108,7 @@ class _CompleteScreenState extends State<CompleteScreen> {
                 _controller.saveData();
                 _controller.deleteEx();
                 Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  HomeScreen.routeName,
-                  (route) => false, // In this case, always remove all routes
-                );
+                    context, HomeScreen.routeName, (route) => false);
               },
             ),
           )

@@ -10,17 +10,17 @@ class HomeController with ChangeNotifier {
   final storage = const FlutterSecureStorage();
   List<Map<String, dynamic>> dataList = [];
 
-  Future<void> deleteEx() async {
-    await storage.delete(key: 'ex1');
-    await storage.delete(key: 'ex2');
-    notifyListeners();
-  }
-
   Future<void> loadData() async {
     final String? jsonData = await storage.read(key: 'dataList');
     if (jsonData != null) {
       dataList = List<Map<String, dynamic>>.from(json.decode(jsonData));
     }
+    notifyListeners();
+  }
+
+  Future<void> deleteEx() async {
+    await storage.delete(key: 'ex1');
+    await storage.delete(key: 'ex2');
     notifyListeners();
   }
 
@@ -95,7 +95,7 @@ class HomeController with ChangeNotifier {
     notifyListeners();
   }
 
-  void saveCategory() async {
+  Future<void> saveCategory() async {
     await storage.write(key: 'isSelected1', value: isSelected1.toString());
     await storage.write(key: 'isSelected2', value: isSelected2.toString());
     await storage.write(key: 'isSelected3', value: isSelected3.toString());
@@ -159,23 +159,6 @@ class HomeController with ChangeNotifier {
     }
   }
 
-  Future<void> deleteAchievement() async {
-    await storage.delete(key: 'mackerel');
-    await storage.delete(key: 'mackerel_toast');
-    await storage.delete(key: 'daegu');
-    await storage.delete(key: 'daegu_toast');
-    await storage.delete(key: 'shark');
-    await storage.delete(key: 'shark_toast');
-    await storage.delete(key: 'cotyledon');
-    await storage.delete(key: 'cotyledon_toast');
-    await storage.delete(key: 'sprout');
-    await storage.delete(key: 'sprout_toast');
-    await storage.delete(key: 'sapling');
-    await storage.delete(key: 'sapling_toast');
-    await storage.delete(key: 'tree');
-    await storage.delete(key: 'tree_toast');
-  }
-
   void showInitialToast(String msg) {
     Fluttertoast.showToast(
       msg: msg,
@@ -232,24 +215,21 @@ class HomeController with ChangeNotifier {
     notifyListeners();
   }
 
-  List<bool> clearList = [
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
-  Future<void> initClearList() async {
-    clearList[1] = await storage.read(key: 'mackerel') == 'true';
-    clearList[2] = await storage.read(key: 'daegu') == 'true';
-    clearList[3] = await storage.read(key: 'shark') == 'true';
-    clearList[4] = await storage.read(key: 'cotyledon') == 'true';
-    clearList[5] = await storage.read(key: 'sprout') == 'true';
-    clearList[6] = await storage.read(key: 'sapling') == 'true';
-    clearList[7] = await storage.read(key: 'tree') == 'true';
+  Future<void> deleteAchievement() async {
+    await storage.delete(key: 'mackerel');
+    await storage.delete(key: 'mackerel_toast');
+    await storage.delete(key: 'daegu');
+    await storage.delete(key: 'daegu_toast');
+    await storage.delete(key: 'shark');
+    await storage.delete(key: 'shark_toast');
+    await storage.delete(key: 'cotyledon');
+    await storage.delete(key: 'cotyledon_toast');
+    await storage.delete(key: 'sprout');
+    await storage.delete(key: 'sprout_toast');
+    await storage.delete(key: 'sapling');
+    await storage.delete(key: 'sapling_toast');
+    await storage.delete(key: 'tree');
+    await storage.delete(key: 'tree_toast');
   }
 
   // 중량추가 다이얼로그 관련
@@ -280,6 +260,7 @@ class HomeController with ChangeNotifier {
     await loadData();
     loadClear();
     noticeClear();
-    initClearList();
+    loadCategory();
+    loadWeight();
   }
 }

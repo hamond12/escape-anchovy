@@ -7,11 +7,14 @@ import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
 import 'package:escape_anchovy/src/screen/exercise/timer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ExerciseScreen2 extends StatefulWidget {
-  const ExerciseScreen2({super.key, required this.set});
+  const ExerciseScreen2({super.key, required this.exerciseController});
 
-  final int set;
+  final ExerciseController exerciseController;
+
+  static const routeName = '/exercise2';
 
   @override
   State<ExerciseScreen2> createState() => _ExerciseScreen2State();
@@ -23,7 +26,6 @@ class _ExerciseScreen2State extends State<ExerciseScreen2> {
   @override
   void initState() {
     super.initState();
-    _controller.loadCategory2();
     _controller.loadEx2();
   }
 
@@ -57,18 +59,18 @@ class _ExerciseScreen2State extends State<ExerciseScreen2> {
                         height: 24,
                       ),
                       Text(
-                        '${widget.set}/6 세트',
+                        '${widget.exerciseController.set}/6 세트',
                         style: TextStyles.h1Bold,
                       ),
                       const SizedBox(
                         height: 30,
                       ),
-                      _controller.returnSvg2(),
+                      returnSvg(),
                       const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        _controller.returnCategoryName2(),
+                        returnCategoryName(),
                         style: TextStyles.h1Medium,
                       ),
                       const SizedBox(
@@ -114,19 +116,14 @@ class _ExerciseScreen2State extends State<ExerciseScreen2> {
                       onPressed: _controller.num2.isNotEmpty
                           ? () {
                               _controller.addEx2();
-                              if (widget.set == 6) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const CompleteScreen()));
+                              if (widget.exerciseController.set == 6) {
+                                widget.exerciseController.set = 1;
+                                Navigator.pushNamed(
+                                    context, CompleteScreen.routeName);
                               } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TimerScreen(
-                                              set: widget.set + 1,
-                                            )));
+                                widget.exerciseController.set++;
+                                Navigator.pushNamed(
+                                    context, TimerScreen.routeName);
                               }
                             }
                           : null),
@@ -135,5 +132,25 @@ class _ExerciseScreen2State extends State<ExerciseScreen2> {
         ],
       ),
     );
+  }
+
+  Widget returnSvg() {
+    if (widget.exerciseController.isSelected3 == true) {
+      return SvgPicture.asset('assets/svg/push_up_color.svg');
+    } else if (widget.exerciseController.isSelected4 == true) {
+      return SvgPicture.asset('assets/svg/nuckle_push_up_color.svg');
+    } else {
+      return SvgPicture.asset('');
+    }
+  }
+
+  String returnCategoryName() {
+    if (widget.exerciseController.isSelected3 == true) {
+      return '푸쉬업';
+    } else if (widget.exerciseController.isSelected4 == true) {
+      return '너클 푸쉬업';
+    } else {
+      return '';
+    }
   }
 }

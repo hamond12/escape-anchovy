@@ -75,7 +75,8 @@ class _CommonAppBarState extends State<CommonAppBar> {
             ? [
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, UserInfoScreen.routeName);
+                      Navigator.pushNamed(context, UserInfoScreen.routeName)
+                          .then((_) {});
                     },
                     child: const CommonSvg(src: 'assets/svg/user_info.svg')),
                 const SizedBox(

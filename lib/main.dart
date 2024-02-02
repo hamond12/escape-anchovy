@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/src/app.dart';
-import 'package:escape_anchovy/src/screen/home/home_controller.dart';
+import 'package:escape_anchovy/src/screen/achievement/achievement_controller.dart';
+import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
+import 'package:escape_anchovy/src/screen/user_info/user_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -59,21 +61,26 @@ class SettingsController with ChangeNotifier {
   }
 }
 
-int splashNum = 0;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final settingsController = SettingsController();
-  final homeController = HomeController();
+  final userInfoController = UserInfoController();
+  final achievementController = AchievementController();
+  final exerciseController = ExerciseController();
 
   await settingsController.initIsMackerel();
   await settingsController.initSplashNum();
 
-  print(settingsController.splashNum);
+  await userInfoController.loadPerformanceLevel();
+  await userInfoController.loadSteadyLevel();
+
+  await exerciseController.loadCategory();
 
   runApp(MyApp(
     settingsController: settingsController,
-    homeController: homeController,
+    userInfoController: userInfoController,
+    achievementController: achievementController,
+    exerciseController: exerciseController,
   ));
 }

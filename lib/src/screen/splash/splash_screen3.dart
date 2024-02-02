@@ -4,6 +4,7 @@ import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SplashScreen3 extends StatefulWidget {
   const SplashScreen3({super.key});
@@ -55,10 +56,13 @@ class _SplashScreen3State extends State<SplashScreen3> {
                       .copyWith(color: const Color(0XFFBCE885)))),
           Positioned(
               bottom: 0,
-              top: _controller.enchovyTopPos,
+              top: _controller.topPos,
               right: 30,
               left: 0,
-              child: Image.asset('assets/png/daegu.png')),
+              child: SvgPicture.asset(
+                'assets/svg/daegu.svg',
+                fit: BoxFit.scaleDown,
+              )),
           Stack(
             children: [
               Positioned(

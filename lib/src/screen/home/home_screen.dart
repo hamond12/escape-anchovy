@@ -7,7 +7,9 @@ import 'package:escape_anchovy/src/common/common_app_bar.dart';
 import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_button2.dart';
 import 'package:escape_anchovy/src/common/common_svg.dart';
+import 'package:escape_anchovy/src/screen/achievement/achievement_controller.dart';
 import 'package:escape_anchovy/src/screen/achievement/achievement_screen.dart';
+
 import 'package:escape_anchovy/src/screen/exercise/exercise_screen1.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/weight_add_dialog.dart';
@@ -18,11 +20,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.settingController});
+  const HomeScreen(
+      {super.key,
+      required this.settingController,
+      required this.achievementController});
 
   static const routeName = '/home';
 
   final SettingsController settingController;
+  final AchievementController achievementController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -38,7 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _controller.deleteEx();
     _controller.loadInformation();
-    _controller.deleteWeight();
+
+    widget.achievementController.initClearList();
+
     //_controller.deleteAchievement();
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -226,12 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 180,
                   height: 40,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ExerciseScreen1(
-                                  set: 1,
-                                )));
+                    Navigator.pushNamed(context, ExerciseScreen1.routeName);
                   },
                   text: '운동시작',
                   textStyle: TextStyles.b1Medium,
@@ -527,14 +530,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 65,
                             height: 18,
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AchievemnetScreen(
-                                    clearList: _controller.clearList,
-                                  ),
-                                ),
-                              );
+                              Navigator.pushNamed(
+                                  context, AchievemnetScreen.routeName);
                             },
                             text: '전체 업적 확인',
                             textStyle:
@@ -603,7 +600,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'ex2_name': '너클 푸쉬업',
                   'ex1': [10, 1, 1],
                   'ex2': [30, 1, 1],
-                  'weight': 0
+                  'weight': 20
                 });
                 _controller.saveData();
               });

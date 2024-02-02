@@ -5,6 +5,7 @@ import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -56,10 +57,11 @@ class _SplashScreenState extends State<SplashScreen> {
                       TextStyles.title.copyWith(color: LightModeColors.dark3))),
           Positioned(
               bottom: 0,
-              top: _controller.enchovyTopPos,
+              top: _controller.topPos,
               right: 30,
               left: 0,
-              child: Image.asset('assets/png/anchovy.png')),
+              child: SvgPicture.asset('assets/svg/anchovy.svg',
+                  fit: BoxFit.scaleDown)),
           Stack(
             children: [
               Positioned(
