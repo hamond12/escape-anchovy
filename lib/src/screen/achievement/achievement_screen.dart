@@ -51,7 +51,7 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
                   '고등어',
                   widget.ahcievemnetController.isClear2,
                   'assets/svg/mackerel_outline.svg',
-                  const Color(0XFF8A848D),
+                  const Color(0XFF9C9CA5),
                   '최대개수 달성',
                   '턱걸이(10개), 푸쉬업(30개)')
             ],
@@ -86,9 +86,9 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
           Row(
             children: [
               achievementBox(
-                  '떡잎',
+                  '씨앗',
                   widget.ahcievemnetController.isClear5,
-                  'assets/svg/cotyledon.svg',
+                  'assets/svg/seed_outline.svg',
                   const Color(0XFFCD8032),
                   '꾸준함',
                   '1일차 달성'),
@@ -98,7 +98,7 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
               achievementBox(
                   '새싹',
                   widget.ahcievemnetController.isClear6,
-                  'assets/svg/sprout.svg',
+                  'assets/svg/sprout_outline.svg',
                   const Color(0XFF8A848D),
                   '꾸준함',
                   '1주일 달성')
@@ -112,7 +112,7 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
               achievementBox(
                   '어린나무',
                   widget.ahcievemnetController.isClear7,
-                  'assets/svg/sapling.svg',
+                  'assets/svg/sapling_outline.svg',
                   const Color(0XFFFED700),
                   '꾸준함',
                   '1달차 달성'),
@@ -122,7 +122,7 @@ class _AchievemnetScreenState extends State<AchievemnetScreen> {
               achievementBox(
                   '나무',
                   widget.ahcievemnetController.isClear8,
-                  'assets/svg/tree.svg',
+                  'assets/svg/tree_outline.svg',
                   const Color(0XFF00D8FF),
                   '꾸준함',
                   '100일차 달성')

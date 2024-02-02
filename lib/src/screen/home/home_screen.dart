@@ -595,7 +595,7 @@ class _HomeScreenState extends State<HomeScreen> {
               setState(() {
                 _controller.dataList.add({
                   'time': DateTime.now().toString(),
-                  'day': _controller.dataList.length + 1,
+                  'day': 7,
                   'ex1_name': '친업',
                   'ex2_name': '너클 푸쉬업',
                   'ex1': [10, 1, 1],

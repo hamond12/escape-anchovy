@@ -109,7 +109,7 @@ class HomeController with ChangeNotifier {
     unlockMackerel();
     unlockDaegu();
     unlockShark();
-    unlockCotyledon();
+    unlockseed();
     unlockSprout();
     unlockSapling();
     unlockTree();
@@ -135,9 +135,9 @@ class HomeController with ChangeNotifier {
     }
   }
 
-  Future<void> unlockCotyledon() async {
+  Future<void> unlockseed() async {
     if (dataList.last['day'] == 1) {
-      await storage.write(key: 'cotyledon', value: 'true');
+      await storage.write(key: 'seed', value: 'true');
     }
   }
 
@@ -188,10 +188,10 @@ class HomeController with ChangeNotifier {
         await storage.write(key: 'shark_toast', value: 'complete');
       }
     }
-    if (await storage.read(key: 'cotyledon') == 'true') {
-      if (await storage.read(key: 'cotyledon_toast') != 'complete') {
-        showInitialToast('떡잎 도전과제를 달성했습니다!');
-        await storage.write(key: 'cotyledon_toast', value: 'complete');
+    if (await storage.read(key: 'seed') == 'true') {
+      if (await storage.read(key: 'seed_toast') != 'complete') {
+        showInitialToast('씨앗 도전과제를 달성했습니다!');
+        await storage.write(key: 'seed_toast', value: 'complete');
       }
     }
     if (await storage.read(key: 'sprout') == 'true') {
@@ -202,7 +202,7 @@ class HomeController with ChangeNotifier {
     }
     if (await storage.read(key: 'sapling') == 'true') {
       if (await storage.read(key: 'sapling_toast') != 'complete') {
-        showInitialToast('어린나 도전과제를 달성했습니다!');
+        showInitialToast('어린나무 도전과제를 달성했습니다!');
         await storage.write(key: 'sapling_toast', value: 'complete');
       }
     }
@@ -222,8 +222,8 @@ class HomeController with ChangeNotifier {
     await storage.delete(key: 'daegu_toast');
     await storage.delete(key: 'shark');
     await storage.delete(key: 'shark_toast');
-    await storage.delete(key: 'cotyledon');
-    await storage.delete(key: 'cotyledon_toast');
+    await storage.delete(key: 'seed');
+    await storage.delete(key: 'seed_toast');
     await storage.delete(key: 'sprout');
     await storage.delete(key: 'sprout_toast');
     await storage.delete(key: 'sapling');
