@@ -47,7 +47,7 @@ class _WeightAddDialogState extends State<WeightAddDialog> {
                         style: TextStyles.b2Medium,
                       ),
                       const SizedBox(
-                        height: 4,
+                        height: 2,
                       ),
                       Text(
                         '숫자를 눌러 추가할 중량을 설정해주세요',

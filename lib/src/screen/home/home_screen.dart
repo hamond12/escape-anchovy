@@ -15,6 +15,7 @@ import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/weight_add_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
+import 'package:escape_anchovy/src/screen/user_info/user_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,12 +24,14 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen(
       {super.key,
       required this.settingController,
-      required this.achievementController});
+      required this.achievementController,
+      required this.userInfoController});
 
   static const routeName = '/home';
 
   final SettingsController settingController;
   final AchievementController achievementController;
+  final UserInfoController userInfoController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -46,6 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
     _controller.loadInformation();
 
     widget.achievementController.initClearList();
+
+    widget.userInfoController.loadPerformanceLevel();
+    widget.userInfoController.loadSteadyLevel();
+    widget.userInfoController.loadSelectedList();
 
     //_controller.deleteAchievement();
 
@@ -72,196 +79,52 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildPage(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 24,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(context.isLight
-                            ? 'assets/svg/heart.svg'
-                            : 'assets/svg/dark_heart.svg'),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          '운동하기',
-                          style: TextStyles.b1Medium.copyWith(
-                              color: context.isLight
-                                  ? DarkModeColors.background
-                                  : LightModeColors.background),
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return explainDialog(context);
-                              },
-                            );
-                          },
-                          child: Text(
-                            '(자세한 설명 보기)',
-                            style: TextStyles.b3Regular.copyWith(
-                                color: context.isLight
-                                    ? LightModeColors.dark2
-                                    : DarkModeColors.dark2),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: widget.settingController.isMackerel
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) {
-                                    return const ExCategoryDialog();
-                                  },
-                                );
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(context.isLight
-                                      ? 'assets/svg/exercise_category.svg'
-                                      : 'assets/svg/dark_exercise_category.svg'),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    '운동항목',
-                                    style: TextStyles.b1Regular.copyWith(
-                                        color: context.isLight
-                                            ? DarkModeColors.background
-                                            : LightModeColors.background),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            const CommonSvg(
-                                src: 'assets/svg/dividing_line.svg'),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) {
-                                    return const WeightAddDialog();
-                                  },
-                                );
-                              },
-                              child: Column(
-                                children: [
-                                  const CommonSvg(src: 'assets/svg/weight.svg'),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  Text(
-                                    '중량추가',
-                                    style: TextStyles.b1Regular.copyWith(
-                                        color: context.isLight
-                                            ? DarkModeColors.background
-                                            : LightModeColors.background),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return const ExCategoryDialog();
-                              },
-                            );
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(context.isLight
-                                  ? 'assets/svg/exercise_category.svg'
-                                  : 'assets/svg/dark_exercise_category.svg'),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                '운동항목',
-                                style: TextStyles.b1Regular.copyWith(
-                                    color: context.isLight
-                                        ? DarkModeColors.background
-                                        : LightModeColors.background),
-                              ),
-                            ],
-                          ),
-                        ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                CommonButton2(
-                  width: 180,
-                  height: 40,
-                  onPressed: () {
-                    Navigator.pushNamed(context, ExerciseScreen1.routeName);
-                  },
-                  text: '운동시작',
-                  textStyle: TextStyles.b1Medium,
-                  borderRadius: 8,
-                ),
-              ],
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (!(Navigator.of(context).canPop())) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('앱을 종료하시겠습니까?'),
+                content:
+                    const Text('There are no remaining screens in the stack.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 24,
             ),
-          ),
-          divideSection(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Row(
                         children: [
                           SvgPicture.asset(context.isLight
-                              ? 'assets/svg/note.svg'
-                              : 'assets/svg/dark_note.svg'),
+                              ? 'assets/svg/heart.svg'
+                              : 'assets/svg/dark_heart.svg'),
                           const SizedBox(
-                            width: 9,
+                            width: 8,
                           ),
                           Text(
-                            '최근 일지 확인',
+                            '운동하기',
                             style: TextStyles.b1Medium.copyWith(
                                 color: context.isLight
                                     ? DarkModeColors.background
@@ -270,350 +133,521 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             width: 4,
                           ),
-                          Text(
-                            '(3일)',
-                            style: TextStyles.b3Regular.copyWith(
-                                color: context.isLight
-                                    ? LightModeColors.dark2
-                                    : DarkModeColors.dark2),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return explainDialog(context);
+                                },
+                              );
+                            },
+                            child: Text(
+                              '(자세한 설명 보기)',
+                              style: TextStyles.b3Regular.copyWith(
+                                  color: context.isLight
+                                      ? LightModeColors.dark2
+                                      : DarkModeColors.dark2),
+                            ),
                           )
                         ],
                       ),
-                    ),
-                    CommonButton2(
-                      width: 65,
-                      height: 18,
-                      onPressed: () {
-                        Navigator.pushNamed(context, NoteScreen.routeName);
-                      },
-                      text: '전체 일지 확인',
-                      textStyle: TextStyles.caption2.copyWith(height: 0.01),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 7,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '당신의 성장과정을 살펴보세요.',
-                      style: TextStyles.b3Regular.copyWith(
-                          color: context.isLight
-                              ? LightModeColors.dark2
-                              : DarkModeColors.dark2),
-                    ),
-                    _controller.dataList.isNotEmpty
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: widget.settingController.isMackerel
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                '일지 초기화까지',
-                                style: TextStyles.caption1.copyWith(
-                                    color: context.isLight
-                                        ? LightModeColors.red
-                                        : DarkModeColors.red),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const ExCategoryDialog();
+                                    },
+                                  );
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(context.isLight
+                                        ? 'assets/svg/exercise_category.svg'
+                                        : 'assets/svg/dark_exercise_category.svg'),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      '운동항목',
+                                      style: TextStyles.b1Regular.copyWith(
+                                          color: context.isLight
+                                              ? DarkModeColors.background
+                                              : LightModeColors.background),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                _controller.formatDuration(_controller
-                                    .returnDataAddTime()
-                                    .difference(DateTime.now())),
-                                style: TextStyles.caption1.copyWith(
-                                    color: context.isLight
-                                        ? LightModeColors.red
-                                        : DarkModeColors.red),
+                              const SizedBox(
+                                width: 16,
+                              ),
+                              const CommonSvg(
+                                  src: 'assets/svg/dividing_line.svg'),
+                              const SizedBox(
+                                width: 16,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const WeightAddDialog();
+                                    },
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+                                    const CommonSvg(
+                                        src: 'assets/svg/weight.svg'),
+                                    const SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      '중량추가',
+                                      style: TextStyles.b1Regular.copyWith(
+                                          color: context.isLight
+                                              ? DarkModeColors.background
+                                              : LightModeColors.background),
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           )
-                        : const SizedBox.shrink(),
-                  ],
-                ),
-                _controller.dataList.isNotEmpty
-                    ? SizedBox(
-                        height: _controller.returnListViewHeight(),
-                        child: ListView.separated(
-                            controller: _scrollController,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final data = _controller.dataList.length > 3
-                                  ? _controller.dataList[
-                                      index + _controller.dataList.length - 3]
-                                  : _controller.dataList[index];
-
-                              int sum1 = (data['ex1'][0] +
-                                  data['ex1'][1] +
-                                  data['ex1'][2]);
-                              int sum2 = data['ex2'][0] +
-                                  data['ex2'][1] +
-                                  data['ex2'][2];
-
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ListTile(
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 2),
-                                    title: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${data['day']}일차',
-                                              style: TextStyles.b3Medium,
-                                            ),
-                                            const SizedBox(
-                                              width: 2,
-                                            ),
-                                            data['weight'] != 0
-                                                ? Text(
-                                                    '(${data['weight']}kg)',
-                                                    style: TextStyles.b4Regular,
-                                                  )
-                                                : const SizedBox.shrink()
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 2,
-                                        ),
-                                      ],
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${data['ex1_name']}',
-                                              style: TextStyles.b4Medium,
-                                            ),
-                                            const SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              '${data['ex1'].join('  ')}',
-                                              style: TextStyles.b4Regular,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              '($sum1개)',
-                                              style: TextStyles.b4Regular
-                                                  .copyWith(
-                                                      color: context.isLight
-                                                          ? LightModeColors
-                                                              .dark3
-                                                          : DarkModeColors
-                                                              .dark3),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${data['ex2_name']}',
-                                              style: TextStyles.b4Medium,
-                                            ),
-                                            const SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              '${data['ex2'].join('  ')}',
-                                              style: TextStyles.b4Regular,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              '($sum2개)',
-                                              style: TextStyles.b4Regular
-                                                  .copyWith(
-                                                      color: context.isLight
-                                                          ? LightModeColors
-                                                              .dark3
-                                                          : DarkModeColors
-                                                              .dark3),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                        : GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const ExCategoryDialog();
+                                },
                               );
                             },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const Column(
-                                children: [
-                                  Divider(
-                                    color: Color(0xFFEAEAEA),
-                                    height: 4,
-                                  )
-                                ],
-                              );
-                            },
-                            itemCount: _controller.dataList.length > 3
-                                ? 3
-                                : _controller.dataList.length),
-                      )
-                    : Center(
-                        child: Column(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(context.isLight
+                                    ? 'assets/svg/exercise_category.svg'
+                                    : 'assets/svg/dark_exercise_category.svg'),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  '운동항목',
+                                  style: TextStyles.b1Regular.copyWith(
+                                      color: context.isLight
+                                          ? DarkModeColors.background
+                                          : LightModeColors.background),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CommonButton2(
+                    width: 180,
+                    height: 40,
+                    onPressed: () {
+                      Navigator.pushNamed(context, ExerciseScreen1.routeName);
+                    },
+                    text: '운동시작',
+                    textStyle: TextStyles.b1Medium,
+                    borderRadius: 8,
+                  ),
+                ],
+              ),
+            ),
+            divideSection(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
                           children: [
+                            SvgPicture.asset(context.isLight
+                                ? 'assets/svg/note.svg'
+                                : 'assets/svg/dark_note.svg'),
                             const SizedBox(
-                              height: 18,
-                            ),
-                            SvgPicture.asset(
-                              'assets/svg/no_data.svg',
-                              colorFilter: ColorFilter.mode(
-                                  context.isLight
-                                      ? LightModeColors.dark3
-                                      : DarkModeColors.dark3,
-                                  BlendMode.srcIn),
-                            ),
-                            const SizedBox(
-                              height: 8,
+                              width: 9,
                             ),
                             Text(
-                              '운동기록이 없습니다',
-                              style: TextStyles.b2Medium.copyWith(
+                              '최근 일지 확인',
+                              style: TextStyles.b1Medium.copyWith(
                                   color: context.isLight
-                                      ? LightModeColors.dark3
-                                      : DarkModeColors.dark3),
+                                      ? DarkModeColors.background
+                                      : LightModeColors.background),
+                            ),
+                            const SizedBox(
+                              width: 4,
                             ),
                             Text(
-                              '운동시작을 눌러 일지를 작성해보세요',
-                              style: TextStyles.b4Regular.copyWith(
+                              '(3일)',
+                              style: TextStyles.b3Regular.copyWith(
                                   color: context.isLight
-                                      ? const Color(0XFFADA8B0)
-                                      : const Color(0XFF8A848D)),
-                            ),
+                                      ? LightModeColors.dark2
+                                      : DarkModeColors.dark2),
+                            )
                           ],
                         ),
-                      )
-              ],
-            ),
-          ),
-          divideSection(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(context.isLight
-                              ? 'assets/svg/challenges.svg'
-                              : 'assets/svg/dark_challenges.svg'),
-                          const SizedBox(
-                            width: 7,
-                          ),
-                          Text(
-                            '도전과제',
-                            style: TextStyles.b1Medium.copyWith(
-                                color: context.isLight
-                                    ? DarkModeColors.background
-                                    : LightModeColors.background),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          CommonButton2(
-                            width: 65,
-                            height: 18,
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, AchievemnetScreen.routeName);
-                            },
-                            text: '전체 업적 확인',
-                            textStyle:
-                                TextStyles.caption2.copyWith(height: 0.01),
-                            buttonColor: context.isLight
-                                ? LightModeColors.darkGold
-                                : DarkModeColors.darkGold,
-                          )
-                        ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 7,
-                ),
-                Text(
-                  '운동을 완료하고 도전과제를 달성해보세요.',
-                  style: TextStyles.b3Regular.copyWith(
-                      color: context.isLight
-                          ? LightModeColors.dark2
-                          : DarkModeColors.dark2),
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-                Text.rich(TextSpan(children: [
-                  TextSpan(
-                    text: '고등어 ',
-                    style: TextStyles.b3Regular.copyWith(
-                        color: context.isLight
-                            ? LightModeColors.blue
-                            : DarkModeColors.blue),
+                      CommonButton2(
+                        width: 65,
+                        height: 18,
+                        onPressed: () {
+                          Navigator.pushNamed(context, NoteScreen.routeName);
+                        },
+                        text: '전체 일지 확인',
+                        textStyle: TextStyles.caption2.copyWith(height: 0.01),
+                      )
+                    ],
                   ),
-                  TextSpan(
-                    text: '도전과제를 달성하면 무언가 바뀔수도?',
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '당신의 성장과정을 살펴보세요.',
+                        style: TextStyles.b3Regular.copyWith(
+                            color: context.isLight
+                                ? LightModeColors.dark2
+                                : DarkModeColors.dark2),
+                      ),
+                      _controller.dataList.isNotEmpty
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '일지 초기화까지',
+                                  style: TextStyles.caption1.copyWith(
+                                      color: context.isLight
+                                          ? LightModeColors.red
+                                          : DarkModeColors.red),
+                                ),
+                                Text(
+                                  _controller.formatDuration(_controller
+                                      .returnDataAddTime()
+                                      .difference(DateTime.now())),
+                                  style: TextStyles.caption1.copyWith(
+                                      color: context.isLight
+                                          ? LightModeColors.red
+                                          : DarkModeColors.red),
+                                ),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
+                  _controller.dataList.isNotEmpty
+                      ? SizedBox(
+                          height: _controller.returnListViewHeight(),
+                          child: ListView.separated(
+                              controller: _scrollController,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                final data = _controller.dataList.length > 3
+                                    ? _controller.dataList[
+                                        index + _controller.dataList.length - 3]
+                                    : _controller.dataList[index];
+
+                                int sum1 = (data['ex1'][0] +
+                                    data['ex1'][1] +
+                                    data['ex1'][2]);
+                                int sum2 = data['ex2'][0] +
+                                    data['ex2'][1] +
+                                    data['ex2'][2];
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.only(left: 2),
+                                      title: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                '${data['day']}일차',
+                                                style: TextStyles.b3Medium,
+                                              ),
+                                              const SizedBox(
+                                                width: 2,
+                                              ),
+                                              data['weight'] != 0
+                                                  ? Text(
+                                                      '(${data['weight']}kg)',
+                                                      style:
+                                                          TextStyles.b4Regular,
+                                                    )
+                                                  : const SizedBox.shrink()
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 2,
+                                          ),
+                                        ],
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                '${data['ex1_name']}',
+                                                style: TextStyles.b4Medium,
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                '${data['ex1'].join('  ')}',
+                                                style: TextStyles.b4Regular,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                '($sum1개)',
+                                                style: TextStyles.b4Regular
+                                                    .copyWith(
+                                                        color: context.isLight
+                                                            ? LightModeColors
+                                                                .dark3
+                                                            : DarkModeColors
+                                                                .dark3),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                '${data['ex2_name']}',
+                                                style: TextStyles.b4Medium,
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                '${data['ex2'].join('  ')}',
+                                                style: TextStyles.b4Regular,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                '($sum2개)',
+                                                style: TextStyles.b4Regular
+                                                    .copyWith(
+                                                        color: context.isLight
+                                                            ? LightModeColors
+                                                                .dark3
+                                                            : DarkModeColors
+                                                                .dark3),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const Column(
+                                  children: [
+                                    Divider(
+                                      color: Color(0xFFEAEAEA),
+                                      height: 4,
+                                    )
+                                  ],
+                                );
+                              },
+                              itemCount: _controller.dataList.length > 3
+                                  ? 3
+                                  : _controller.dataList.length),
+                        )
+                      : Center(
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              SvgPicture.asset(
+                                'assets/svg/no_data.svg',
+                                colorFilter: ColorFilter.mode(
+                                    context.isLight
+                                        ? LightModeColors.dark3
+                                        : DarkModeColors.dark3,
+                                    BlendMode.srcIn),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                '운동기록이 없습니다',
+                                style: TextStyles.b2Medium.copyWith(
+                                    color: context.isLight
+                                        ? LightModeColors.dark3
+                                        : DarkModeColors.dark3),
+                              ),
+                              Text(
+                                '운동시작을 눌러 일지를 작성해보세요',
+                                style: TextStyles.b4Regular.copyWith(
+                                    color: context.isLight
+                                        ? const Color(0XFFADA8B0)
+                                        : const Color(0XFF8A848D)),
+                              ),
+                            ],
+                          ),
+                        )
+                ],
+              ),
+            ),
+            divideSection(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(context.isLight
+                                ? 'assets/svg/challenges.svg'
+                                : 'assets/svg/dark_challenges.svg'),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              '도전과제',
+                              style: TextStyles.b1Medium.copyWith(
+                                  color: context.isLight
+                                      ? DarkModeColors.background
+                                      : LightModeColors.background),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            CommonButton2(
+                              width: 65,
+                              height: 18,
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, AchievemnetScreen.routeName);
+                              },
+                              text: '전체 업적 확인',
+                              textStyle:
+                                  TextStyles.caption2.copyWith(height: 0.01),
+                              buttonColor: context.isLight
+                                  ? LightModeColors.darkGold
+                                  : DarkModeColors.darkGold,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  Text(
+                    '운동을 완료하고 도전과제를 달성해보세요.',
                     style: TextStyles.b3Regular.copyWith(
                         color: context.isLight
                             ? LightModeColors.dark2
                             : DarkModeColors.dark2),
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Text.rich(TextSpan(children: [
+                    TextSpan(
+                      text: '고등어 ',
+                      style: TextStyles.b3Regular.copyWith(
+                          color: context.isLight
+                              ? LightModeColors.blue
+                              : DarkModeColors.blue),
+                    ),
+                    TextSpan(
+                      text: '도전과제를 달성하면 무언가 바뀔수도?',
+                      style: TextStyles.b3Regular.copyWith(
+                          color: context.isLight
+                              ? LightModeColors.dark2
+                              : DarkModeColors.dark2),
+                    )
+                  ])),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text('(변경사항은 앱을 재실행하면 확인할 수 있습니다.)',
+                      style: TextStyles.b4Regular.copyWith(
+                          color: context.isLight
+                              ? LightModeColors.dark2
+                              : DarkModeColors.dark2)),
+                  const SizedBox(
+                    height: 25,
                   )
-                ])),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text('(변경사항은 앱을 재실행하면 확인할 수 있습니다.)',
-                    style: TextStyles.b4Regular.copyWith(
-                        color: context.isLight
-                            ? LightModeColors.dark2
-                            : DarkModeColors.dark2)),
-                const SizedBox(
-                  height: 25,
-                )
-              ],
+                ],
+              ),
             ),
-          ),
-          CommonButton(
-            text: '데이터 추가',
-            width: 300,
-            onPressed: () {
-              setState(() {
-                _controller.dataList.add({
-                  'time': DateTime.now().toString(),
-                  'day': 7,
-                  'ex1_name': '친업',
-                  'ex2_name': '너클 푸쉬업',
-                  'ex1': [10, 1, 1],
-                  'ex2': [30, 1, 1],
-                  'weight': 20
+            CommonButton(
+              text: '데이터 추가',
+              width: 300,
+              onPressed: () {
+                setState(() {
+                  _controller.dataList.add({
+                    'time': DateTime.now().toString(),
+                    'day': _controller.dataList.length + 1,
+                    'ex1_name': '친업',
+                    'ex2_name': '너클 푸쉬업',
+                    'ex1': [10, 1, 1],
+                    'ex2': [30, 1, 1],
+                    'weight': 20
+                  });
+                  _controller.saveData();
                 });
-                _controller.saveData();
-              });
-            },
-          ),
-          CommonButton(
-            text: '데이터 삭제',
-            width: 300,
-            onPressed: () {
-              _controller.deleteData();
-            },
-          ),
-        ],
+              },
+            ),
+            CommonButton(
+              text: '데이터 삭제',
+              width: 300,
+              onPressed: () {
+                _controller.deleteData();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

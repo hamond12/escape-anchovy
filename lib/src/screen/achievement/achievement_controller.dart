@@ -18,7 +18,7 @@ class AchievementController with ChangeNotifier {
     isClear2 = await storage.read(key: 'mackerel') == 'true';
     isClear3 = await storage.read(key: 'daegu') == 'true';
     isClear4 = await storage.read(key: 'shark') == 'true';
-    isClear5 = await storage.read(key: 'cotyledon') == 'true';
+    isClear5 = await storage.read(key: 'seed') == 'true';
     isClear6 = await storage.read(key: 'sprout') == 'true';
     isClear7 = await storage.read(key: 'sapling') == 'true';
     isClear8 = await storage.read(key: 'tree') == 'true';

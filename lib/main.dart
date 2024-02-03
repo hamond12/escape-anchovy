@@ -42,20 +42,23 @@ class SettingsController with ChangeNotifier {
 
   late int splashNum;
   Future<void> initSplashNum() async {
-    if (await storage.read(key: 'mackerel') == 'true' &&
-        await storage.read(key: 'daegu') == null &&
-        await storage.read(key: 'shark') == null) {
-      splashNum = 1;
-    } else if (await storage.read(key: 'mackerel') == 'true' &&
-        await storage.read(key: 'daegu') == 'true' &&
-        await storage.read(key: 'shark') == null) {
-      splashNum = 2;
-    } else if (await storage.read(key: 'mackerel') == 'true' &&
-        await storage.read(key: 'daegu') == 'true' &&
-        await storage.read(key: 'shark') == 'true') {
-      splashNum = 3;
-    } else {
+    if (await storage.read(key: 'anchovy_medal') == 'true') {
       splashNum = 0;
+    } else if ((await storage.read(key: 'mackerel') == 'true' &&
+            await storage.read(key: 'daegu') == null &&
+            await storage.read(key: 'shark') == null) ||
+        await storage.read(key: 'mackerel_medal') == 'true') {
+      splashNum = 1;
+    } else if ((await storage.read(key: 'mackerel') == 'true' &&
+            await storage.read(key: 'daegu') == 'true' &&
+            await storage.read(key: 'shark') == null) ||
+        await storage.read(key: 'daegu_medal') == 'true') {
+      splashNum = 2;
+    } else if ((await storage.read(key: 'mackerel') == 'true' &&
+            await storage.read(key: 'daegu') == 'true' &&
+            await storage.read(key: 'shark') == 'true') ||
+        await storage.read(key: 'shark_medal') == 'true') {
+      splashNum = 3;
     }
     notifyListeners();
   }
@@ -71,9 +74,6 @@ void main() async {
 
   await settingsController.initIsMackerel();
   await settingsController.initSplashNum();
-
-  await userInfoController.loadPerformanceLevel();
-  await userInfoController.loadSteadyLevel();
 
   await exerciseController.loadCategory();
 

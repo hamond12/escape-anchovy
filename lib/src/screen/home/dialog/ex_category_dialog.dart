@@ -48,7 +48,7 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                           style: TextStyles.b2Medium,
                         ),
                         const SizedBox(
-                          height: 4,
+                          height: 2,
                         ),
                         Text(
                           '각 항목에서 운동을 하나씩 선택해주세요',

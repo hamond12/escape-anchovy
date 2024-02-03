@@ -103,11 +103,13 @@ class _MyAppState extends State<MyApp> {
               return HomeScreen(
                 achievementController: widget.achievementController,
                 settingController: widget.settingsController,
+                userInfoController: widget.userInfoController,
               );
             case UserInfoScreen.routeName:
               return UserInfoScreen(
                   userInfoController: widget.userInfoController,
                   settingController: widget.settingsController);
+
             case ExerciseScreen1.routeName:
               return ExerciseScreen1(
                   exerciseController: widget.exerciseController);
