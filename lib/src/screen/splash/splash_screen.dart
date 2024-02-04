@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:escape_anchovy/main.dart';
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
@@ -8,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({super.key, required this.settingController});
 
   static const routeName = '/splash';
+
+  final SettingsController settingController;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -22,6 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
+    //widget.settingController.initTheme(context);
+
     _controller.checkInputName(context);
     _controller.moveUp();
     Timer(const Duration(seconds: 3), () {

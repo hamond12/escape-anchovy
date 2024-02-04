@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ExerciseController with ChangeNotifier {
   final storage = const FlutterSecureStorage();
@@ -68,54 +67,11 @@ class ExerciseController with ChangeNotifier {
     await storage.write(key: 'dataList', value: jsonData);
   }
 
-  late bool isSelected1;
-  late bool isSelected2;
-  late bool isSelected3;
-  late bool isSelected4;
-
   Future<void> deleteCategory() async {
     await storage.delete(key: 'isSelected1');
     await storage.delete(key: 'isSelected2');
     await storage.delete(key: 'isSelected3');
     await storage.delete(key: 'isSelected4');
-  }
-
-  Future<bool?> getStorageBool(String key) async {
-    String? value = await storage.read(key: key);
-    return value != null ? value.toLowerCase() == 'true' : null;
-  }
-
-  Future<void> loadCategory() async {
-    isSelected1 = await getStorageBool('isSelected1') ?? true;
-    isSelected2 = await getStorageBool('isSelected2') ?? false;
-    isSelected3 = await getStorageBool('isSelected3') ?? true;
-    isSelected4 = await getStorageBool('isSelected4') ?? false;
-    notifyListeners();
-  }
-
-  Future<String?> getStorageString(String key) async {
-    String? value = await storage.read(key: key);
-    return value;
-  }
-
-  SvgPicture returnSvg2() {
-    if (isSelected3 == true) {
-      return SvgPicture.asset('assets/svg/push_up_color.svg');
-    } else if (isSelected4 == true) {
-      return SvgPicture.asset('assets/svg/nuckle_push_up_color.svg');
-    } else {
-      return SvgPicture.asset('');
-    }
-  }
-
-  String returnCategoryName2() {
-    if (isSelected3 == true) {
-      return '푸쉬업';
-    } else if (isSelected4 == true) {
-      return '너클푸쉬업';
-    } else {
-      return '';
-    }
   }
 
   int seconds = 1;

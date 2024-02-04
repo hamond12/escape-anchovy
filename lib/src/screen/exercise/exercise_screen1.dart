@@ -4,14 +4,19 @@ import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_text_field.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
 import 'package:escape_anchovy/src/screen/exercise/timer_screen.dart';
+import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ExerciseScreen1 extends StatefulWidget {
-  const ExerciseScreen1({super.key, required this.exerciseController});
+  const ExerciseScreen1(
+      {super.key,
+      required this.exerciseController,
+      required this.homeController});
 
   final ExerciseController exerciseController;
+  final HomeController homeController;
 
   static const routeName = '/exercise1';
 
@@ -131,9 +136,9 @@ class _ExerciseScreen1State extends State<ExerciseScreen1> {
   }
 
   Widget returnSvg() {
-    if (widget.exerciseController.isSelected1 == true) {
+    if (widget.homeController.isSelected1 == true) {
       return SvgPicture.asset('assets/svg/pull_up_color.svg');
-    } else if (widget.exerciseController.isSelected2 == true) {
+    } else if (widget.homeController.isSelected2 == true) {
       return SvgPicture.asset('assets/svg/chin_up_color.svg');
     } else {
       return SvgPicture.asset('');
@@ -141,9 +146,9 @@ class _ExerciseScreen1State extends State<ExerciseScreen1> {
   }
 
   String returnCategoryName() {
-    if (widget.exerciseController.isSelected1 == true) {
+    if (widget.homeController.isSelected1 == true) {
       return '풀업';
-    } else if (widget.exerciseController.isSelected2 == true) {
+    } else if (widget.homeController.isSelected2 == true) {
       return '친업';
     } else {
       return '';

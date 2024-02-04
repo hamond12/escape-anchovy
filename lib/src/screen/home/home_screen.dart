@@ -9,6 +9,7 @@ import 'package:escape_anchovy/src/common/common_button2.dart';
 import 'package:escape_anchovy/src/common/common_svg.dart';
 import 'package:escape_anchovy/src/screen/achievement/achievement_controller.dart';
 import 'package:escape_anchovy/src/screen/achievement/achievement_screen.dart';
+import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
 
 import 'package:escape_anchovy/src/screen/exercise/exercise_screen1.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
@@ -25,13 +26,17 @@ class HomeScreen extends StatefulWidget {
       {super.key,
       required this.settingController,
       required this.achievementController,
-      required this.userInfoController});
+      required this.userInfoController,
+      required this.exerciseController,
+      required this.homeController});
 
   static const routeName = '/home';
 
   final SettingsController settingController;
   final AchievementController achievementController;
   final UserInfoController userInfoController;
+  final ExerciseController exerciseController;
+  final HomeController homeController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -47,14 +52,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _controller.deleteEx();
     _controller.loadInformation();
-
     widget.achievementController.initClearList();
+
+    widget.homeController.loadCategory();
 
     widget.userInfoController.loadPerformanceLevel();
     widget.userInfoController.loadSteadyLevel();
     widget.userInfoController.loadSelectedList();
 
-    //_controller.deleteAchievement();
+    // _controller.deleteAchievement();
+    // _controller.deleteWeight();
+    // widget.userInfoController.deleteSelctedSplash();
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
       _controller.checkTimeDifference();
@@ -65,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        settingsController: widget.settingController,
+        settingController: widget.settingController,
         title: AppLocalizations.of(context)!.home_app_bar_title,
         isLogo: true,
         isHome: true,
@@ -158,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   Center(
-                    child: widget.settingController.isMackerel
+                    child: widget.homeController.isMackerel
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +177,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     context: context,
                                     barrierDismissible: false,
                                     builder: (BuildContext context) {
-                                      return const ExCategoryDialog();
+                                      return ExCategoryDialog(
+                                          homeController:
+                                              widget.homeController);
                                     },
                                   );
                                 },
@@ -235,7 +245,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context: context,
                                 barrierDismissible: false,
                                 builder: (BuildContext context) {
-                                  return const ExCategoryDialog();
+                                  return ExCategoryDialog(
+                                      homeController: widget.homeController);
                                 },
                               );
                             },
@@ -631,9 +642,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     'day': _controller.dataList.length + 1,
                     'ex1_name': '친업',
                     'ex2_name': '너클 푸쉬업',
-                    'ex1': [10, 1, 1],
-                    'ex2': [30, 1, 1],
-                    'weight': 20
+                    'ex1': [30, 1, 1],
+                    'ex2': [50, 1, 1],
+                    'weight': 0
                   });
                   _controller.saveData();
                 });
@@ -646,6 +657,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _controller.deleteData();
               },
             ),
+            Text(widget.achievementController.isClear2.toString())
           ],
         ),
       ),
@@ -669,7 +681,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget explainDialog(BuildContext context) {
     return Container(
-      height: widget.settingController.isMackerel
+      height: widget.homeController.isMackerel
           ? MediaQuery.of(context).size.height * 0.50
           : MediaQuery.of(context).size.height * 0.45,
       decoration: BoxDecoration(
@@ -729,7 +741,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyles.b1Medium,
               ),
               const SizedBox(height: 4),
-              widget.settingController.isMackerel
+              widget.homeController.isMackerel
                   ? const Text(
                       '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 항목당 하나의운동만 선택할 수 있습니다. 휴식시간은 기본 2분으로 설정되어 있습니다. 고등어 도전과제를 달성하셨다면 중량을 추가할 수 있습니다.효율적인 근성장을 위해 가방을 매거나 중량조끼를 입는 등 중량을 추가하고 맨몸운동을 진행해보세요!',
                       style: TextStyles.b4Regular,

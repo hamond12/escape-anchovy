@@ -3,15 +3,20 @@ import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/common/common_app_bar.dart';
 import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
+import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CompleteScreen extends StatefulWidget {
-  const CompleteScreen({super.key, required this.exerciseController});
+  const CompleteScreen(
+      {super.key,
+      required this.exerciseController,
+      required this.homeController});
 
   final ExerciseController exerciseController;
+  final HomeController homeController;
 
   static const routeName = '/complete';
 
@@ -95,18 +100,18 @@ class _CompleteScreenState extends State<CompleteScreen> {
                 _controller.dataList.add({
                   'time': DateTime.now().toString(),
                   'day': _controller.dataList.length + 1,
-                  'ex1_name': widget.exerciseController.isSelected1 == true
-                      ? '풀업'
-                      : '친업',
-                  'ex2_name': widget.exerciseController.isSelected3 == true
+                  'ex1_name':
+                      widget.homeController.isSelected1 == true ? '풀업' : '친업',
+                  'ex2_name': widget.homeController.isSelected3 == true
                       ? '푸쉬업'
                       : '너클 푸쉬업',
                   'ex1': _controller.ex1,
                   'ex2': _controller.ex2,
-                  'weight': int.parse(_controller.weight),
+                  'weight': int.parse(_controller.weight)
                 });
                 _controller.saveData();
                 _controller.deleteEx();
+
                 Navigator.pushNamedAndRemoveUntil(
                     context, HomeScreen.routeName, (route) => false);
               },

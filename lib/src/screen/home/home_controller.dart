@@ -77,10 +77,10 @@ class HomeController with ChangeNotifier {
 
   // 운동항목 다이얼로그 관련
 
-  bool isSelected1 = true; // 풀업
-  bool isSelected2 = false; // 친업
-  bool isSelected3 = true; // 푸쉬업
-  bool isSelected4 = false; // 너클 푸쉬업
+  late bool isSelected1; // 풀업
+  late bool isSelected2; // 친업
+  late bool isSelected3; // 푸쉬업
+  late bool isSelected4; // 너클 푸쉬업
 
   Future<bool?> getStorageBool(String key) async {
     String? value = await storage.read(key: key);
@@ -95,7 +95,11 @@ class HomeController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveCategory() async {
+  Future<void> saveCategory(bool a, bool b, bool c, bool d) async {
+    isSelected1 = a;
+    isSelected2 = b;
+    isSelected3 = c;
+    isSelected4 = d;
     await storage.write(key: 'isSelected1', value: isSelected1.toString());
     await storage.write(key: 'isSelected2', value: isSelected2.toString());
     await storage.write(key: 'isSelected3', value: isSelected3.toString());
@@ -260,7 +264,13 @@ class HomeController with ChangeNotifier {
     await loadData();
     loadClear();
     noticeClear();
-    loadCategory();
     loadWeight();
+  }
+
+  // 고등어 도전과제 클리어 여부
+  late bool isMackerel;
+  Future<void> initIsMackerel() async {
+    isMackerel = await storage.read(key: 'mackerel') == 'true';
+    notifyListeners();
   }
 }

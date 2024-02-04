@@ -12,7 +12,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CommonAppBar({
     super.key,
     required this.title,
-    this.settingsController,
+    this.settingController,
     this.isLogo = false,
     this.isHome = false,
     this.isUserInfo = false,
@@ -20,7 +20,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
   });
 
   final String title;
-  final SettingsController? settingsController;
+  final SettingsController? settingController;
   final bool isLogo;
   final bool isHome;
   final bool isUserInfo;
@@ -36,6 +36,11 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _CommonAppBarState extends State<CommonAppBar> {
   @override
   Widget build(BuildContext context) {
+    if (widget.isHome || widget.isUserInfo) {
+      widget.settingController!.theme =
+          context.isLight ? 'dark_mode' : 'light_mode';
+    }
+
     return AppBar(
         backgroundColor: Colors.transparent,
         title: Center(
@@ -83,17 +88,17 @@ class _CommonAppBarState extends State<CommonAppBar> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    if (widget.settingsController!.themeMode ==
+                    if (widget.settingController!.themeMode ==
                         ThemeMode.light) {
-                      widget.settingsController!
+                      widget.settingController!
                           .updateThemeMode(ThemeMode.dark, 'light_mode');
                     } else {
-                      widget.settingsController!
+                      widget.settingController!
                           .updateThemeMode(ThemeMode.light, 'dark_mode');
                     }
                   },
                   child: SvgPicture.asset(
-                    'assets/svg/${widget.settingsController!.theme}.svg',
+                    'assets/svg/${widget.settingController!.theme}.svg',
                     height: 20,
                   ),
                 ),
@@ -108,15 +113,14 @@ class _CommonAppBarState extends State<CommonAppBar> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (widget.settingsController!.country == 'korea') {
-                          widget.settingsController!.updateLocale('en', 'usa');
+                        if (widget.settingController!.country == 'korea') {
+                          widget.settingController!.updateLocale('en', 'usa');
                         } else {
-                          widget.settingsController!
-                              .updateLocale('ko', 'korea');
+                          widget.settingController!.updateLocale('ko', 'korea');
                         }
                       },
                       child: SvgPicture.asset(
-                        'assets/svg/${widget.settingsController!.country}.svg',
+                        'assets/svg/${widget.settingController!.country}.svg',
                       ),
                     ),
                     const SizedBox(

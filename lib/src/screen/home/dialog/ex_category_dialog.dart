@@ -1,12 +1,16 @@
+import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/common/common_button.dart';
 import 'package:escape_anchovy/src/common/common_svg.dart';
-import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 
 class ExCategoryDialog extends StatefulWidget {
-  const ExCategoryDialog({super.key});
+  const ExCategoryDialog({super.key, required this.homeController});
+
+  static const routeName = '/ex_category_dialog';
+
+  final HomeController homeController;
 
   @override
   State<StatefulWidget> createState() {
@@ -15,18 +19,15 @@ class ExCategoryDialog extends StatefulWidget {
 }
 
 class _ExCategoryDialogState extends State<ExCategoryDialog> {
-  final _controller = HomeController();
-
   @override
   void initState() {
     super.initState();
-    _controller.loadCategory();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _controller,
+      animation: widget.homeController,
       builder: (context, snapshot) {
         return Dialog(
           shape: const RoundedRectangleBorder(
@@ -79,11 +80,11 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  if (_controller.isSelected1) {}
-                                  _controller.isSelected1 =
-                                      !_controller.isSelected1;
-                                  _controller.isSelected2 =
-                                      !_controller.isSelected2;
+                                  if (widget.homeController.isSelected1) {}
+                                  widget.homeController.isSelected1 =
+                                      !widget.homeController.isSelected1;
+                                  widget.homeController.isSelected2 =
+                                      !widget.homeController.isSelected2;
                                 });
                               },
                               child: Column(
@@ -96,7 +97,7 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                                   Text(
                                     '풀업',
                                     style: TextStyles.b3Regular.copyWith(
-                                        color: _controller.isSelected1
+                                        color: widget.homeController.isSelected1
                                             ? (context.isLight
                                                 ? LightModeColors.green
                                                 : DarkModeColors.green)
@@ -113,10 +114,10 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  _controller.isSelected1 =
-                                      !_controller.isSelected1;
-                                  _controller.isSelected2 =
-                                      !_controller.isSelected2;
+                                  widget.homeController.isSelected1 =
+                                      !widget.homeController.isSelected1;
+                                  widget.homeController.isSelected2 =
+                                      !widget.homeController.isSelected2;
                                 });
                               },
                               child: Column(
@@ -129,7 +130,7 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                                   Text(
                                     '친업',
                                     style: TextStyles.b3Regular.copyWith(
-                                        color: _controller.isSelected2
+                                        color: widget.homeController.isSelected2
                                             ? (context.isLight
                                                 ? LightModeColors.green
                                                 : DarkModeColors.green)
@@ -164,10 +165,10 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  _controller.isSelected3 =
-                                      !_controller.isSelected3;
-                                  _controller.isSelected4 =
-                                      !_controller.isSelected4;
+                                  widget.homeController.isSelected3 =
+                                      !widget.homeController.isSelected3;
+                                  widget.homeController.isSelected4 =
+                                      !widget.homeController.isSelected4;
                                 });
                               },
                               child: Column(
@@ -180,7 +181,7 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                                   Text(
                                     '푸쉬업',
                                     style: TextStyles.b3Regular.copyWith(
-                                        color: _controller.isSelected3
+                                        color: widget.homeController.isSelected3
                                             ? (context.isLight
                                                 ? LightModeColors.green
                                                 : DarkModeColors.green)
@@ -197,10 +198,10 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  _controller.isSelected3 =
-                                      !_controller.isSelected3;
-                                  _controller.isSelected4 =
-                                      !_controller.isSelected4;
+                                  widget.homeController.isSelected3 =
+                                      !widget.homeController.isSelected3;
+                                  widget.homeController.isSelected4 =
+                                      !widget.homeController.isSelected4;
                                 });
                               },
                               child: Column(
@@ -213,7 +214,7 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                                   Text(
                                     '너클 푸쉬업',
                                     style: TextStyles.b3Regular.copyWith(
-                                        color: _controller.isSelected4
+                                        color: widget.homeController.isSelected4
                                             ? (context.isLight
                                                 ? LightModeColors.green
                                                 : DarkModeColors.green)
@@ -233,7 +234,11 @@ class _ExCategoryDialogState extends State<ExCategoryDialog> {
                     text: '완료',
                     height: 45,
                     onPressed: () {
-                      _controller.saveCategory();
+                      widget.homeController.saveCategory(
+                          widget.homeController.isSelected1,
+                          widget.homeController.isSelected2,
+                          widget.homeController.isSelected3,
+                          widget.homeController.isSelected4);
                       Navigator.pop(context);
                     },
                     borderRadius: const BorderRadius.only(
