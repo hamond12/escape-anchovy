@@ -161,7 +161,7 @@ class _SplashSelectDialogState extends State<SplashSelectDialog> {
                           widget.userInfoController.isSelected3,
                           widget.userInfoController.isSelected4);
 
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                           context,
                           PageRouteBuilder(
                             pageBuilder: (BuildContext context,
@@ -174,7 +174,8 @@ class _SplashSelectDialogState extends State<SplashSelectDialog> {
                             },
                             transitionDuration: Duration.zero,
                             reverseTransitionDuration: Duration.zero,
-                          ));
+                          ),
+                          (route) => false);
                     },
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(10.0),

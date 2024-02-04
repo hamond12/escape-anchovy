@@ -65,7 +65,7 @@ class UserInfoController with ChangeNotifier {
         await storage.read(key: 'tree') == 'true') {
       stedayLevel = '4';
     } else {
-      performanceLevel = '0';
+      stedayLevel = '0';
     }
     notifyListeners();
   }

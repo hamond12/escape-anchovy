@@ -21,8 +21,8 @@ class SettingsController with ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;
   String theme = '';
 
-  Future<void> initialTheme(BuildContext context) async {
-    theme = context.isLight ? 'light_mode' : 'dark_mode';
+  initialTheme(BuildContext context) {
+    theme = context.isLight ? 'dark_mode' : 'light_mode';
     notifyListeners();
   }
 
@@ -42,9 +42,7 @@ class SettingsController with ChangeNotifier {
 
   late int splashNum;
   Future<void> initSplashNum() async {
-    if (await storage.read(key: 'anchovy_medal') == 'true') {
-      splashNum = 0;
-    } else if ((await storage.read(key: 'mackerel') == 'true' &&
+    if ((await storage.read(key: 'mackerel') == 'true' &&
             await storage.read(key: 'daegu') == null &&
             await storage.read(key: 'shark') == null) ||
         await storage.read(key: 'mackerel_medal') == 'true') {
@@ -59,6 +57,8 @@ class SettingsController with ChangeNotifier {
             await storage.read(key: 'shark') == 'true') ||
         await storage.read(key: 'shark_medal') == 'true') {
       splashNum = 3;
+    } else {
+      splashNum = 0;
     }
     notifyListeners();
   }
