@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "924857519951",
+    "project_id": "escape-anchovy",
+    "storage_bucket": "escape-anchovy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924857519951:android:000e0b317deeb04678bf3a",
+        "android_client_info": {
+          "package_name": "com.example.escape_anchovy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhW90ykYvhDQ5vIA3slxU5J60kEUMY0qE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

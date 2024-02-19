@@ -642,8 +642,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     'day': _controller.dataList.length + 1,
                     'ex1_name': '친업',
                     'ex2_name': '너클 푸쉬업',
-                    'ex1': [30, 1, 1],
-                    'ex2': [50, 1, 1],
+                    'ex1': [12, 1, 1],
+                    'ex2': [28, 1, 1],
                     'weight': 0
                   });
                   _controller.saveData();
@@ -657,7 +657,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 _controller.deleteData();
               },
             ),
-            Text(widget.achievementController.isClear2.toString())
           ],
         ),
       ),
@@ -681,9 +680,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget explainDialog(BuildContext context) {
     return Container(
-      height: widget.homeController.isMackerel
-          ? MediaQuery.of(context).size.height * 0.50
-          : MediaQuery.of(context).size.height * 0.45,
+      height: widget.homeController.isMackerel ? 370 : 340,
       decoration: BoxDecoration(
         color:
             context.isLight ? LightModeColors.background : DarkModeColors.dark4,
@@ -750,7 +747,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       '운동항목 아이콘을 눌러 2개의 항목을 선택해주세요. 항목당 하나의 운동만 선택할 수 있습니다. 휴식시간은 기본 2분으로 설정되어 있습니다.',
                       style: TextStyles.b4Regular,
                     ),
-              const SizedBox(height: 26),
+              const SizedBox(height: 24),
               Center(
                 child: Text(
                   '데이터베이스 관련 문제로 운동 중일 때는 뒤로가기를 막아놨습니다.\n운동시작 버튼을 잘못눌렀다면 앱을 재실행주세요',

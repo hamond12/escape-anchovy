@@ -16,6 +16,7 @@ dependencies:
   flutter_svg: ^2.0.9
   flutter_secure_storage: ^9.0.0
   fluttertoast: ^8.2.4
+  fl_chart: ^0.66.2
 
 dev_dependencies:
   flutter_test:
