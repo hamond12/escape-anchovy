@@ -4,10 +4,11 @@ class TextStyles {
   static const String fontName = 'Pretendard';
 
   static const TextStyle title = TextStyle(
-      fontSize: 40,
-      fontWeight: FontWeight.w700,
-      fontFamily: fontName,
-      height: 1.2);
+    fontSize: 40,
+    fontWeight: FontWeight.w700,
+    fontFamily: fontName,
+    height: 1.2,
+  );
 
   static const TextStyle h1Bold = TextStyle(
       fontSize: 28, fontWeight: FontWeight.w700, fontFamily: fontName);

@@ -127,4 +127,28 @@ class UserInfoController with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<void> loadUserInfo() async {
+    loadPerformanceLevel();
+    loadSteadyLevel();
+    loadSelectedList();
+  }
+
+  int setHour = 0;
+  int setMinute = 0;
+
+  bool setAlarm = false;
+
+  Future<void> setAlarmOn() async {
+    await storage.write(key: 'setAlarm', value: 'true');
+  }
+
+  Future<void> setAlarmOff() async {
+    await storage.delete(key: 'setAlarm');
+  }
+
+  Future<void> setAlarmCheck() async {
+    setAlarm = await storage.read(key: 'setAlarm') == 'true';
+    notifyListeners();
+  }
 }

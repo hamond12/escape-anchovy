@@ -55,7 +55,7 @@ class _CommonButtonState extends State<CommonButton> {
             ),
           ),
           child: Text(widget.text,
-              style: TextStyles.b1Medium
+              style: TextStyles.b2Medium
                   .copyWith(color: widget.textColor ?? Colors.white))),
     );
   }

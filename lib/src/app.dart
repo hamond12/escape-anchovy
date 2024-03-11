@@ -7,7 +7,6 @@ import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_screen1.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_screen2.dart';
 import 'package:escape_anchovy/src/screen/exercise/timer_screen.dart';
-import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
@@ -107,10 +106,6 @@ class _MyAppState extends State<MyApp> {
                 settingController: widget.settingController,
                 userInfoController: widget.userInfoController,
                 exerciseController: widget.exerciseController,
-                homeController: widget.homeController,
-              );
-            case ExCategoryDialog.routeName:
-              return ExCategoryDialog(
                 homeController: widget.homeController,
               );
             case UserInfoScreen.routeName:

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:escape_anchovy/notification.dart';
 import 'package:escape_anchovy/src/app.dart';
 import 'package:escape_anchovy/src/screen/achievement/achievement_controller.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
@@ -52,6 +53,7 @@ class SettingsController with ChangeNotifier {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.init();
 
   final homeController = HomeController();
   final settingController = SettingsController();

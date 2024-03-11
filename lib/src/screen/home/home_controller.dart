@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:escape_anchovy/src/util/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeController with ChangeNotifier {
   // 데이터 관련
@@ -163,56 +163,46 @@ class HomeController with ChangeNotifier {
     }
   }
 
-  void showInitialToast(String msg) {
-    Fluttertoast.showToast(
-      msg: msg,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 3,
-      fontSize: 16.0,
-    );
-  }
-
   Future<void> noticeClear() async {
     if (await storage.read(key: 'mackerel') == 'true') {
       if (await storage.read(key: 'mackerel_toast') != 'complete') {
-        showInitialToast('고등어 도전과제를 달성했습니다!');
+        ToastUtil.showToast('고등어 도전과제를 달성했습니다!');
         await storage.write(key: 'mackerel_toast', value: 'complete');
       }
     }
     if (await storage.read(key: 'daegu') == 'true') {
       if (await storage.read(key: 'daegu_toast') != 'complete') {
-        showInitialToast('대구 도전과제를 달성했습니다!');
+        ToastUtil.showToast('대구 도전과제를 달성했습니다!');
         await storage.write(key: 'daegu_toast', value: 'complete');
       }
     }
     if (await storage.read(key: 'shark') == 'true') {
       if (await storage.read(key: 'shark_toast') != 'complete') {
-        showInitialToast('상어 도전과제를 달성했습니다!');
+        ToastUtil.showToast('상어 도전과제를 달성했습니다!');
         await storage.write(key: 'shark_toast', value: 'complete');
       }
     }
     if (await storage.read(key: 'seed') == 'true') {
       if (await storage.read(key: 'seed_toast') != 'complete') {
-        showInitialToast('씨앗 도전과제를 달성했습니다!');
+        ToastUtil.showToast('씨앗 도전과제를 달성했습니다!');
         await storage.write(key: 'seed_toast', value: 'complete');
       }
     }
     if (await storage.read(key: 'sprout') == 'true') {
       if (await storage.read(key: 'sprout_toast') != 'complete') {
-        showInitialToast('새싹 도전과제를 달성했습니다!');
+        ToastUtil.showToast('새싹 도전과제를 달성했습니다!');
         await storage.write(key: 'sprout_toast', value: 'complete');
       }
     }
     if (await storage.read(key: 'sapling') == 'true') {
       if (await storage.read(key: 'sapling_toast') != 'complete') {
-        showInitialToast('어린나무 도전과제를 달성했습니다!');
+        ToastUtil.showToast('어린나무 도전과제를 달성했습니다!');
         await storage.write(key: 'sapling_toast', value: 'complete');
       }
     }
     if (await storage.read(key: 'tree') == 'true') {
       if (await storage.read(key: 'tree_toast') != 'complete') {
-        showInitialToast('나무 도전과제를 달성했습니다!');
+        ToastUtil.showToast('나무 도전과제를 달성했습니다!');
         await storage.write(key: 'tree_toast', value: 'complete');
       }
     }

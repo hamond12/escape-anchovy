@@ -52,13 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _controller.deleteEx();
     _controller.loadInformation();
+
     widget.achievementController.initClearList();
 
     widget.homeController.loadCategory();
 
-    widget.userInfoController.loadPerformanceLevel();
-    widget.userInfoController.loadSteadyLevel();
-    widget.userInfoController.loadSelectedList();
+    widget.userInfoController.loadUserInfo();
+    widget.userInfoController.setAlarmCheck();
 
     // _controller.deleteAchievement();
     // _controller.deleteWeight();
@@ -174,8 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               GestureDetector(
                                 onTap: () {
                                   showDialog(
+                                    barrierDismissible: true,
                                     context: context,
-                                    barrierDismissible: false,
                                     builder: (BuildContext context) {
                                       return ExCategoryDialog(
                                           homeController:
@@ -214,7 +214,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: () {
                                   showDialog(
                                     context: context,
-                                    barrierDismissible: false,
                                     builder: (BuildContext context) {
                                       return const WeightAddDialog();
                                     },
@@ -642,8 +641,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     'day': _controller.dataList.length + 1,
                     'ex1_name': '친업',
                     'ex2_name': '너클 푸쉬업',
-                    'ex1': [12, 1, 1],
-                    'ex2': [28, 1, 1],
+                    'ex1': [10, 1, 1],
+                    'ex2': [30, 1, 1],
                     'weight': 0
                   });
                   _controller.saveData();

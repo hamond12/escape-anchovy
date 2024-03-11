@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LightModeColors {
-  static const Color background = Color(0xFFFFFFFF);
+  static const Color background = Color(0xFFF9F9F9);
   static const Color blue = Color(0xFF5B84FF);
   static const Color red = Color(0xFFFE3F2F);
   static const Color green = Color(0xFF009300);
@@ -14,7 +14,7 @@ class LightModeColors {
 }
 
 class DarkModeColors {
-  static const Color background = Color(0xFF000000);
+  static const Color background = Color(0xFF0C0C0C);
   static const Color blue = Color(0xFF79A2FF);
   static const Color red = Color(0xFFFF5D4D);
   static const Color green = Color(0xFF1EB11E);
