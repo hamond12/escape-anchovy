@@ -39,7 +39,7 @@ class _CommonDialogState extends State<CommonDialog> {
         insetPadding: EdgeInsets.symmetric(horizontal: widget.dialogPadding),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
+            Radius.circular(15.0),
           ),
         ),
         child: Padding(
@@ -73,8 +73,8 @@ class _CommonDialogState extends State<CommonDialog> {
                   height: widget.buttonHeight,
                   onPressed: widget.onPressed,
                   borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(10.0),
-                    bottomRight: Radius.circular(10.0),
+                    bottomLeft: Radius.circular(15.0),
+                    bottomRight: Radius.circular(15.0),
                   ),
                 ),
               ],

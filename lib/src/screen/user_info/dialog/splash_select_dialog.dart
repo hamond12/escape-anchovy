@@ -35,7 +35,7 @@ class _SplashSelectDialogState extends State<SplashSelectDialog> {
       animation: _controller,
       builder: (context, snapshot) {
         return CommonDialog(
-          dialogHeight: 180,
+          dialogHeight: 175,
           title: '스플래쉬 화면 설정',
           explain: '도전과제를 달성하면 메달을 얻을 수 있습니다',
           body: Row(
@@ -120,6 +120,7 @@ class _SplashSelectDialogState extends State<SplashSelectDialog> {
               ),
             ],
           ),
+          buttonHeight: 38,
           onPressed: () async {
             _controller.saveSelctedSplash(
                 widget.userInfoController.isSelected1,

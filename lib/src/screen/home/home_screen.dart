@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:escape_anchovy/main.dart';
 import 'package:escape_anchovy/res/text/colors.dart';
@@ -91,24 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
       canPop: false,
       onPopInvoked: (didPop) {
         if (!(Navigator.of(context).canPop())) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('앱을 종료하시겠습니까?'),
-                content:
-                    const Text('There are no remaining screens in the stack.'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
+          exitDialog(context);
         }
       },
       child: SingleChildScrollView(
@@ -627,39 +611,107 @@ class _HomeScreenState extends State<HomeScreen> {
                               : DarkModeColors.dark2)),
                   const SizedBox(
                     height: 25,
-                  )
+                  ),
+                  CommonButton(
+                    text: '데이터 추가',
+                    width: 300,
+                    onPressed: () {
+                      setState(() {
+                        _controller.dataList.add({
+                          'time': DateTime.now().toString(),
+                          'day': _controller.dataList.length + 1,
+                          'ex1_name': '풀업',
+                          'ex2_name': '푸쉬업',
+                          'ex1': [9, 1, 1],
+                          'ex2': [27, 1, 1],
+                          'weight': 3
+                        });
+                        _controller.saveData();
+                      });
+                    },
+                  ),
+                  CommonButton(
+                    text: '데이터 삭제',
+                    width: 300,
+                    onPressed: () {
+                      _controller.deleteData();
+                    },
+                  ),
                 ],
               ),
-            ),
-            CommonButton(
-              text: '데이터 추가',
-              width: 300,
-              onPressed: () {
-                setState(() {
-                  _controller.dataList.add({
-                    'time': DateTime.now().toString(),
-                    'day': _controller.dataList.length + 1,
-                    'ex1_name': '풀업',
-                    'ex2_name': '푸쉬업',
-                    'ex1': [9, 1, 1],
-                    'ex2': [27, 1, 1],
-                    'weight': 3
-                  });
-                  _controller.saveData();
-                });
-              },
-            ),
-            CommonButton(
-              text: '데이터 삭제',
-              width: 300,
-              onPressed: () {
-                _controller.deleteData();
-              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  exitDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            contentPadding: const EdgeInsets.all(0),
+            content: SizedBox(
+              height: 180,
+              child: Column(
+                children: [
+                  const Expanded(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 12.0),
+                        child: Text(
+                          '앱을 종료하시겠습니까?',
+                          style: TextStyles.b1Medium,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 130,
+                        child: CommonButton(
+                          text: '예',
+                          height: 40,
+                          backgroundColor: context.isLight
+                              ? LightModeColors.blue
+                              : DarkModeColors.blue,
+                          onPressed: () {
+                            exit(0);
+                          },
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(15.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 130,
+                        child: CommonButton(
+                          text: '아니오',
+                          height: 40,
+                          backgroundColor: context.isLight
+                              ? LightModeColors.red
+                              : DarkModeColors.red,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(15.0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   Widget divideSection() {

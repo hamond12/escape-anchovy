@@ -500,6 +500,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
         builder: (context) {
           return AlertDialog(
             insetPadding: const EdgeInsets.symmetric(horizontal: 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
             contentPadding: const EdgeInsets.all(0),
             content: SizedBox(
                 height: 300,
@@ -577,7 +580,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                               Navigator.pop(context);
                             },
                             borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
+                              bottomLeft: Radius.circular(15.0),
                             ),
                           ),
                         ),
@@ -600,7 +603,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                               Navigator.pop(context);
                             },
                             borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(20.0),
+                              bottomRight: Radius.circular(15.0),
                             ),
                           ),
                         ),
