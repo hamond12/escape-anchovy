@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
@@ -94,6 +95,16 @@ class SplashController with ChangeNotifier {
   late bool isMackerel;
   void inItIsMackerel() async {
     isMackerel = await storage.read(key: 'mackerel') == 'true';
+    notifyListeners();
+  }
+
+  List<Map<String, dynamic>> dataList = [];
+
+  Future<void> loadData() async {
+    final String? jsonData = await storage.read(key: 'dataList');
+    if (jsonData != null) {
+      dataList = List<Map<String, dynamic>>.from(json.decode(jsonData));
+    }
     notifyListeners();
   }
 }

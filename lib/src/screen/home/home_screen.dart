@@ -16,6 +16,7 @@ import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/weight_add_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
+import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,7 +29,8 @@ class HomeScreen extends StatefulWidget {
       required this.achievementController,
       required this.userInfoController,
       required this.exerciseController,
-      required this.homeController});
+      required this.homeController,
+      required this.splashController});
 
   static const routeName = '/home';
 
@@ -37,6 +39,7 @@ class HomeScreen extends StatefulWidget {
   final UserInfoController userInfoController;
   final ExerciseController exerciseController;
   final HomeController homeController;
+  final SplashController splashController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -58,11 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     widget.homeController.loadCategory();
 
     widget.userInfoController.loadUserInfo();
-    widget.userInfoController.setAlarmCheck();
-
-    // _controller.deleteAchievement();
-    // _controller.deleteWeight();
-    // widget.userInfoController.deleteSelctedSplash();
+    widget.userInfoController.loadAlarmInfo();
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
       _controller.checkTimeDifference();
@@ -74,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: CommonAppBar(
         settingController: widget.settingController,
+        splashController: widget.splashController,
         title: AppLocalizations.of(context)!.home_app_bar_title,
         isLogo: true,
         isHome: true,
@@ -637,13 +637,13 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 setState(() {
                   _controller.dataList.add({
-                    'time': DateTime.now().toString(),
+                    'time': DateTime(2024, 3, 17, 0, 0, 0).toString(),
                     'day': _controller.dataList.length + 1,
-                    'ex1_name': '친업',
-                    'ex2_name': '너클 푸쉬업',
-                    'ex1': [10, 1, 1],
-                    'ex2': [30, 1, 1],
-                    'weight': 0
+                    'ex1_name': '풀업',
+                    'ex2_name': '푸쉬업',
+                    'ex1': [9, 1, 1],
+                    'ex2': [27, 1, 1],
+                    'weight': 3
                   });
                   _controller.saveData();
                 });

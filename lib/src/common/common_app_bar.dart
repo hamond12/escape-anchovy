@@ -3,6 +3,7 @@ import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/common/common_svg.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
+import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,6 +13,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     this.settingController,
+    this.splashController,
     this.isLogo = false,
     this.isHome = false,
     this.isUserInfo = false,
@@ -20,6 +22,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   final String title;
   final SettingsController? settingController;
+  final SplashController? splashController;
   final bool isLogo;
   final bool isHome;
   final bool isUserInfo;
@@ -33,6 +36,15 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CommonAppBarState extends State<CommonAppBar> {
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isHome) {
+      widget.settingController!.loadData();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.isHome || widget.isUserInfo) {
@@ -78,9 +90,12 @@ class _CommonAppBarState extends State<CommonAppBar> {
             ? [
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, UserInfoScreen.routeName);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, UserInfoScreen.routeName, (route) => false);
                     },
-                    child: const CommonSvg(src: 'assets/svg/user_info.svg')),
+                    child: widget.settingController!.dataList.isEmpty
+                        ? const SizedBox.shrink()
+                        : const CommonSvg(src: 'assets/svg/user_info.svg')),
                 const SizedBox(
                   width: 16,
                 ),

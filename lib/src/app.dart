@@ -10,6 +10,7 @@ import 'package:escape_anchovy/src/screen/exercise/timer_screen.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
+import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_screen2.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_screen3.dart';
@@ -24,12 +25,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MyApp extends StatefulWidget {
   const MyApp(
       {super.key,
+      required this.splashController,
       required this.settingController,
       required this.homeController,
       required this.userInfoController,
       required this.achievementController,
       required this.exerciseController});
 
+  final SplashController splashController;
   final SettingsController settingController;
   final HomeController homeController;
   final UserInfoController userInfoController;
@@ -92,7 +95,7 @@ class _MyAppState extends State<MyApp> {
           switch (routeSettings.name) {
             case SplashScreen.routeName:
               return SplashScreen(
-                settingController: widget.settingController,
+                splashController: widget.splashController,
               );
             case SplashScreen2.routeName:
               return const SplashScreen2();
@@ -102,6 +105,7 @@ class _MyAppState extends State<MyApp> {
               return const SplashScreen4();
             case HomeScreen.routeName:
               return HomeScreen(
+                splashController: widget.splashController,
                 achievementController: widget.achievementController,
                 settingController: widget.settingController,
                 userInfoController: widget.userInfoController,

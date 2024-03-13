@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class UserInfoController with ChangeNotifier {
   String userName = '';
 
-  Future<void> returnName() async {
+  Future<void> loadUserName() async {
     userName = (await storage.read(key: 'name'))!;
     notifyListeners();
   }
@@ -103,7 +103,6 @@ class UserInfoController with ChangeNotifier {
     isSelected2 = await storage.read(key: 'mackerel_medal') == 'true';
     isSelected3 = await storage.read(key: 'daegu_medal') == 'true';
     isSelected4 = await storage.read(key: 'shark_medal') == 'true';
-    notifyListeners();
   }
 
   Future<void> deleteSelctedSplash() async {
@@ -111,7 +110,6 @@ class UserInfoController with ChangeNotifier {
     await storage.delete(key: 'mackerel_medal');
     await storage.delete(key: 'daegu_medal');
     await storage.delete(key: 'shark_medal');
-    notifyListeners();
   }
 
   Future<void> saveSelctedSplash(bool a, bool b, bool c, bool d) async {
@@ -134,11 +132,6 @@ class UserInfoController with ChangeNotifier {
     loadSelectedList();
   }
 
-  int setHour = 0;
-  int setMinute = 0;
-
-  bool setAlarm = false;
-
   Future<void> setAlarmOn() async {
     await storage.write(key: 'setAlarm', value: 'true');
   }
@@ -147,8 +140,38 @@ class UserInfoController with ChangeNotifier {
     await storage.delete(key: 'setAlarm');
   }
 
-  Future<void> setAlarmCheck() async {
+  bool setAlarm = false;
+
+  String? setHour = '';
+  String? setMinute = '';
+
+  Future<void> loadAlarmInfo() async {
     setAlarm = await storage.read(key: 'setAlarm') == 'true';
+    setHour = await storage.read(key: 'setHour');
+    setMinute = await storage.read(key: 'setMinute');
     notifyListeners();
+  }
+
+  Future<void> setTime(hour, minute) async {
+    await storage.write(key: 'setHour', value: hour.toString());
+    await storage.write(key: 'setMinute', value: minute.toString());
+  }
+
+  int getConsecutiveDays(List<Map<String, dynamic>> dataList) {
+    int consecutiveDays = 1;
+    if (dataList.length <= 1) {
+      return consecutiveDays;
+    } else {
+      for (int i = 1; i < dataList.length; i++) {
+        DateTime currentDate = DateTime.parse(dataList[i]['time']);
+        DateTime previousDate = DateTime.parse(dataList[i - 1]['time']);
+        if (currentDate.difference(previousDate).inDays > 1) {
+          consecutiveDays = 1;
+        } else {
+          consecutiveDays++;
+        }
+      }
+    }
+    return consecutiveDays;
   }
 }

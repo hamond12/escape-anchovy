@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:escape_anchovy/notification.dart';
@@ -5,11 +6,23 @@ import 'package:escape_anchovy/src/app.dart';
 import 'package:escape_anchovy/src/screen/achievement/achievement_controller.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
+import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SettingsController with ChangeNotifier {
+  final storage = const FlutterSecureStorage();
+  List<Map<String, dynamic>> dataList = [];
+
+  Future<void> loadData() async {
+    final String? jsonData = await storage.read(key: 'dataList');
+    if (jsonData != null) {
+      dataList = List<Map<String, dynamic>>.from(json.decode(jsonData));
+    }
+    notifyListeners();
+  }
+
   String countryCode = Platform.localeName.split('_')[0];
   String country = Platform.localeName.split('_')[0] == 'ko' ? 'korea' : 'usa';
 
@@ -27,8 +40,6 @@ class SettingsController with ChangeNotifier {
     theme = newTheme;
     notifyListeners();
   }
-
-  final storage = const FlutterSecureStorage();
 
   late int splashNum;
   Future<void> initSplashNum() async {
@@ -55,6 +66,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.init();
 
+  final splashController = SplashController();
   final homeController = HomeController();
   final settingController = SettingsController();
   final userInfoController = UserInfoController();
@@ -65,6 +77,7 @@ void main() async {
   await settingController.initSplashNum();
 
   runApp(MyApp(
+    splashController: splashController,
     settingController: settingController,
     homeController: homeController,
     userInfoController: userInfoController,

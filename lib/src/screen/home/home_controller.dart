@@ -249,12 +249,12 @@ class HomeController with ChangeNotifier {
   }
 
   // 정보 가져오기
-
   Future<void> loadInformation() async {
     await loadData();
     loadClear();
     noticeClear();
     loadWeight();
+    notifyListeners();
   }
 
   // 고등어 도전과제 클리어 여부

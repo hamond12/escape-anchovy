@@ -12,8 +12,6 @@ class SplashSelectDialog extends StatefulWidget {
       required this.settingsController,
       required this.userInfoController});
 
-  static const routeName = '/splash_select';
-
   final UserInfoController userInfoController;
   final SettingsController settingsController;
 
@@ -130,19 +128,20 @@ class _SplashSelectDialogState extends State<SplashSelectDialog> {
                 widget.userInfoController.isSelected4);
 
             Navigator.pushAndRemoveUntil(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (BuildContext context,
-                      Animation<double> animation1,
-                      Animation<double> animation2) {
-                    return UserInfoScreen(
-                        settingController: SettingsController(),
-                        userInfoController: widget.userInfoController);
-                  },
-                  transitionDuration: Duration.zero,
-                  reverseTransitionDuration: Duration.zero,
-                ),
-                (route) => false);
+              context,
+              PageRouteBuilder(
+                pageBuilder: (BuildContext context,
+                    Animation<double> animation1,
+                    Animation<double> animation2) {
+                  return UserInfoScreen(
+                      settingController: widget.settingsController,
+                      userInfoController: widget.userInfoController);
+                },
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ),
+              (route) => false,
+            );
           },
         );
       },
