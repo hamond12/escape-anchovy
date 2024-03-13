@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeController with ChangeNotifier {
-  // 데이터 관련
   final storage = const FlutterSecureStorage();
   List<Map<String, dynamic>> dataList = [];
 
@@ -48,7 +47,7 @@ class HomeController with ChangeNotifier {
   // 일지 자동 초기화 관련
 
   DateTime returnDataAddTime() {
-    return DateTime.parse(dataList.last['time']).add(const Duration(days: 3));
+    return DateTime.parse(dataList.last['time']).add(const Duration(days: 7));
   }
 
   String formatDuration(Duration duration) {
@@ -68,7 +67,7 @@ class HomeController with ChangeNotifier {
     if (dataList.isNotEmpty) {
       DateTime lastDataAddTime = DateTime.parse(dataList.last['time']);
       DateTime now = DateTime.now();
-      if (now.difference(lastDataAddTime).inHours >= 72) {
+      if (now.difference(lastDataAddTime).inHours >= 24 * 7) {
         deleteData();
       }
     }

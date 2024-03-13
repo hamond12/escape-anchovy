@@ -92,7 +92,7 @@ class _NoteScreenState extends State<NoteScreen> {
                   Expanded(
                       child: Column(
                     children: [
-                      Text('3일 이상 운동을 하지 않으면 일지가 초기화됩니다.',
+                      Text('7일 이상 운동을 하지 않으면 일지가 초기화됩니다.',
                           style: TextStyles.caption1.copyWith(
                               color: context.isLight
                                   ? LightModeColors.red
