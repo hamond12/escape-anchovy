@@ -44,22 +44,22 @@ class UserInfoController with ChangeNotifier {
 
   late String stedayLevel;
   Future<void> loadSteadyLevel() async {
-    if (await storage.read(key: 'cotyledon') == 'true' &&
+    if (await storage.read(key: 'seed') == 'true' &&
         await storage.read(key: 'sprout') == null &&
         await storage.read(key: 'sapling') == null &&
         await storage.read(key: 'tree') == null) {
       stedayLevel = '1';
-    } else if (await storage.read(key: 'cotyledon') == 'true' &&
+    } else if (await storage.read(key: 'seed') == 'true' &&
         await storage.read(key: 'sprout') == 'true' &&
         await storage.read(key: 'sapling') == null &&
         await storage.read(key: 'tree') == null) {
       stedayLevel = '2';
-    } else if (await storage.read(key: 'cotyledon') == 'true' &&
+    } else if (await storage.read(key: 'seed') == 'true' &&
         await storage.read(key: 'sprout') == 'true' &&
         await storage.read(key: 'sapling') == 'true' &&
         await storage.read(key: 'tree') == null) {
       stedayLevel = '3';
-    } else if (await storage.read(key: 'cotyledon') == 'true' &&
+    } else if (await storage.read(key: 'seed') == 'true' &&
         await storage.read(key: 'sprout') == 'true' &&
         await storage.read(key: 'sapling') == 'true' &&
         await storage.read(key: 'tree') == 'true') {

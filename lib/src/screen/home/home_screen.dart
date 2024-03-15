@@ -606,6 +606,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: context.isLight
                               ? LightModeColors.dark2
                               : DarkModeColors.dark2)),
+                  CommonButton(
+                    text: '데이터 추가',
+                    width: 300,
+                    onPressed: () {
+                      setState(() {
+                        _controller.dataList.add({
+                          'time': DateTime.now().toString(),
+                          'day': _controller.dataList.length + 1,
+                          'ex1_name': '친업',
+                          'ex2_name': '너클 푸쉬업',
+                          'ex1': [9, 1, 1],
+                          'ex2': [30, 1, 1],
+                          'weight': 3
+                        });
+                        _controller.saveData();
+                      });
+                    },
+                  ),
+                  CommonButton(
+                    text: '데이터 삭제',
+                    width: 300,
+                    onPressed: () {
+                      _controller.deleteData();
+                    },
+                  ),
                 ],
               ),
             ),

@@ -290,7 +290,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   children: [
                     Column(
                       children: [
-                        _controller.dataList.isNotEmpty
+                        returnExList()[0].isNotEmpty
                             ? exLineChart(
                                 context,
                                 'ex1',
@@ -311,7 +311,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     ),
                     Column(
                       children: [
-                        _controller.dataList.isNotEmpty
+                        returnExList()[1].isNotEmpty
                             ? exLineChart(
                                 context,
                                 'ex2',
@@ -340,7 +340,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   children: [
                     Column(
                       children: [
-                        _controller.dataList.isNotEmpty
+                        returnExList()[2].isNotEmpty
                             ? exLineChart(
                                 context,
                                 'ex1',
@@ -361,7 +361,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     ),
                     Column(
                       children: [
-                        _controller.dataList.isNotEmpty
+                        returnExList()[3].isNotEmpty
                             ? exLineChart(
                                 context,
                                 'ex2',
@@ -452,82 +452,86 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     }
   }
 
-  Widget emptyBox(context) {
-    return SizedBox(
+  Widget emptyBox(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: context.isLight
+              ? DarkModeColors.background
+              : LightModeColors.background, // 테두리 색상
+          width: 1, // 테두리 두께
+        ),
+      ),
       height: MediaQuery.of(context).size.height * 0.12,
       width: MediaQuery.of(context).size.width * 0.39,
     );
   }
 
-  Widget exLineChart(BuildContext context, String ex, String exCategory,
-      Color? color, int addY) {
-    final List<FlSpot> spots = [];
-
+  List returnExList() {
     final List pullUp = [];
     final List chinUp = [];
     final List pushUp = [];
     final List nukclePushUp = [];
 
     for (int i = 0; i < _controller.dataList.length; i++) {
-      int value = _controller.dataList[i][ex][0];
+      int value1 = _controller.dataList[i]['ex1'][0];
+      int value2 = _controller.dataList[i]['ex2'][0];
       if (_controller.dataList[i]['ex1_name'] == '풀업') {
-        pullUp.add(value);
+        pullUp.add(value1);
       }
-
       if (_controller.dataList[i]['ex1_name'] == '친업') {
-        chinUp.add(value);
+        chinUp.add(value1);
       }
 
       if (_controller.dataList[i]['ex2_name'] == '푸쉬업') {
-        pushUp.add(value);
+        pushUp.add(value2);
       }
-
       if (_controller.dataList[i]['ex2_name'] == '너클 푸쉬업') {
-        nukclePushUp.add(value);
+        nukclePushUp.add(value2);
       }
     }
 
-    int returnMaxExValue() {
-      if (exCategory == '풀업') {
-        return pullUp
-            .reduce((value, element) => value > element ? value : element);
-      }
-      if (exCategory == '푸쉬업') {
-        return pushUp
-            .reduce((value, element) => value > element ? value : element);
-      }
-      if (exCategory == '친업') {
-        return chinUp
-            .reduce((value, element) => value > element ? value : element);
-      }
-      if (exCategory == '너클 푸쉬업') {
-        return nukclePushUp
-            .reduce((value, element) => value > element ? value : element);
-      }
-      return 0;
-    }
+    final exList = [pullUp, pushUp, chinUp, nukclePushUp];
+    return exList;
+  }
+
+  Widget exLineChart(BuildContext context, String ex, String exCategory,
+      Color? color, int addY) {
+    final List<FlSpot> spots = [];
+
+    final List exList = returnExList();
+
+    int maxValue = 0;
 
     if (exCategory == '풀업') {
-      for (int i = 0; i < pullUp.length; i++) {
-        int y = pullUp[i];
+      maxValue = exList[0]
+          .reduce((value, element) => value > element ? value : element);
+      for (int i = 0; i < exList[0].length; i++) {
+        int y = exList[0][i];
         spots.add(FlSpot(i.toDouble(), y.toDouble()));
       }
     }
     if (exCategory == '푸쉬업') {
-      for (int i = 0; i < pushUp.length; i++) {
-        int y = pushUp[i];
+      maxValue = exList[1]
+          .reduce((value, element) => value > element ? value : element);
+      for (int i = 0; i < exList[1].length; i++) {
+        int y = exList[1][i];
         spots.add(FlSpot(i.toDouble(), y.toDouble()));
       }
     }
     if (exCategory == '친업') {
-      for (int i = 0; i < chinUp.length; i++) {
-        int y = chinUp[i];
+      maxValue = exList[2]
+          .reduce((value, element) => value > element ? value : element);
+      for (int i = 0; i < exList[2].length; i++) {
+        int y = exList[2][i];
         spots.add(FlSpot(i.toDouble(), y.toDouble()));
       }
     }
     if (exCategory == '너클 푸쉬업') {
-      for (int i = 0; i < nukclePushUp.length; i++) {
-        int y = nukclePushUp[i];
+      maxValue = exList[3]
+          .reduce((value, element) => value > element ? value : element);
+      for (int i = 0; i < exList[3].length; i++) {
+        int y = exList[3][i];
         spots.add(FlSpot(i.toDouble(), y.toDouble()));
       }
     }
@@ -586,7 +590,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             minX: spots.length > 31 ? spots.length - 31 : 0,
             maxX: spots.length.toDouble(),
             minY: 0,
-            maxY: returnMaxExValue().toDouble() + addY,
+            maxY: maxValue.toDouble() + addY,
             borderData: FlBorderData(
                 show: true,
                 border: Border.all(
