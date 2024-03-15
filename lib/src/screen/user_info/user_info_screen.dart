@@ -263,7 +263,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     ? LightModeColors.dark4
                     : DarkModeColors.dark4),
             const SizedBox(
-              height: 24,
+              height: 22,
             ),
             Row(
               children: [
@@ -279,6 +279,16 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   style: TextStyles.b1Medium,
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Text(
+              '운동기록이 2일 이상이어야 그래프 확인이 가능합니다',
+              style: TextStyles.b4Regular.copyWith(
+                  color: context.isLight
+                      ? LightModeColors.dark2
+                      : DarkModeColors.dark2),
             ),
             const SizedBox(
               height: 20,
@@ -385,7 +395,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               ],
             ),
             const SizedBox(
-              height: 24,
+              height: 22,
             ),
             Container(
                 height: 1,

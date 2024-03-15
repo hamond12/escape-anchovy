@@ -614,8 +614,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         _controller.dataList.add({
                           'time': DateTime.now().toString(),
                           'day': _controller.dataList.length + 1,
-                          'ex1_name': '친업',
-                          'ex2_name': '너클 푸쉬업',
+                          'ex1_name': '풀업',
+                          'ex2_name': '푸쉬업',
                           'ex1': [9, 1, 1],
                           'ex2': [30, 1, 1],
                           'weight': 3
