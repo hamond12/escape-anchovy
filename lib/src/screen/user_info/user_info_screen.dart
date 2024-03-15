@@ -281,61 +281,105 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               ],
             ),
             const SizedBox(
-              height: 12,
+              height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
               children: [
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _controller.dataList.isNotEmpty
-                        ? exLineChart(context, 'ex1',
-                            context.isLight ? Colors.blue : Colors.blue[400], 5)
-                        : Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: context.isLight
-                                    ? Colors.black
-                                    : Colors.white,
-                                width: 1.0,
-                              ),
-                            ),
-                            height: 100,
-                            width: MediaQuery.of(context).size.width * 0.41,
-                          ),
-                    const SizedBox(
-                      height: 8,
+                    Column(
+                      children: [
+                        _controller.dataList.isNotEmpty
+                            ? exLineChart(
+                                context,
+                                'ex1',
+                                '풀업',
+                                context.isLight
+                                    ? LightModeColors.blue
+                                    : DarkModeColors.blue,
+                                5)
+                            : emptyBox(context),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          '풀업',
+                          style: TextStyles.b2Regular,
+                        )
+                      ],
                     ),
-                    const Text(
-                      '운동항목1',
-                      style: TextStyles.b2Regular,
-                    )
+                    Column(
+                      children: [
+                        _controller.dataList.isNotEmpty
+                            ? exLineChart(
+                                context,
+                                'ex2',
+                                '푸쉬업',
+                                context.isLight
+                                    ? LightModeColors.red
+                                    : DarkModeColors.red,
+                                10)
+                            : emptyBox(context),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          '푸쉬업',
+                          style: TextStyles.b2Regular,
+                        )
+                      ],
+                    ),
                   ],
                 ),
-                Column(
+                const SizedBox(
+                  height: 14,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _controller.dataList.isNotEmpty
-                        ? exLineChart(context, 'ex2',
-                            context.isLight ? Colors.red : Colors.red[400], 10)
-                        : Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: context.isLight
-                                    ? Colors.black
-                                    : Colors.white,
-                                width: 1.0,
-                              ),
-                            ),
-                            height: 100,
-                            width: MediaQuery.of(context).size.width * 0.41,
-                          ),
-                    const SizedBox(
-                      height: 8,
+                    Column(
+                      children: [
+                        _controller.dataList.isNotEmpty
+                            ? exLineChart(
+                                context,
+                                'ex1',
+                                '친업',
+                                context.isLight
+                                    ? LightModeColors.blue
+                                    : DarkModeColors.blue,
+                                5)
+                            : emptyBox(context),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          '친업',
+                          style: TextStyles.b2Regular,
+                        )
+                      ],
                     ),
-                    const Text(
-                      '운동항목2',
-                      style: TextStyles.b2Regular,
-                    )
+                    Column(
+                      children: [
+                        _controller.dataList.isNotEmpty
+                            ? exLineChart(
+                                context,
+                                'ex2',
+                                '너클 푸쉬업',
+                                context.isLight
+                                    ? LightModeColors.red
+                                    : DarkModeColors.red,
+                                10)
+                            : emptyBox(context),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          '너클 푸쉬업',
+                          style: TextStyles.b2Regular,
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ],
@@ -408,19 +452,85 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     }
   }
 
-  Widget exLineChart(BuildContext context, String ex, Color? color, int addY) {
+  Widget emptyBox(context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.12,
+      width: MediaQuery.of(context).size.width * 0.39,
+    );
+  }
+
+  Widget exLineChart(BuildContext context, String ex, String exCategory,
+      Color? color, int addY) {
     final List<FlSpot> spots = [];
 
+    final List pullUp = [];
+    final List chinUp = [];
+    final List pushUp = [];
+    final List nukclePushUp = [];
+
     for (int i = 0; i < _controller.dataList.length; i++) {
-      int y = _controller.dataList[i][ex][0];
-      spots.add(FlSpot(i.toDouble(), y.toDouble()));
+      int value = _controller.dataList[i][ex][0];
+      if (_controller.dataList[i]['ex1_name'] == '풀업') {
+        pullUp.add(value);
+      }
+
+      if (_controller.dataList[i]['ex1_name'] == '친업') {
+        chinUp.add(value);
+      }
+
+      if (_controller.dataList[i]['ex2_name'] == '푸쉬업') {
+        pushUp.add(value);
+      }
+
+      if (_controller.dataList[i]['ex2_name'] == '너클 푸쉬업') {
+        nukclePushUp.add(value);
+      }
     }
 
-    int maxEx1Value = _controller.dataList
-        .map((data) => data[ex])
-        .map((exList) => exList
-            .reduce((value, element) => value > element ? value : element))
-        .reduce((value, element) => value > element ? value : element);
+    int returnMaxExValue() {
+      if (exCategory == '풀업') {
+        return pullUp
+            .reduce((value, element) => value > element ? value : element);
+      }
+      if (exCategory == '푸쉬업') {
+        return pushUp
+            .reduce((value, element) => value > element ? value : element);
+      }
+      if (exCategory == '친업') {
+        return chinUp
+            .reduce((value, element) => value > element ? value : element);
+      }
+      if (exCategory == '너클 푸쉬업') {
+        return nukclePushUp
+            .reduce((value, element) => value > element ? value : element);
+      }
+      return 0;
+    }
+
+    if (exCategory == '풀업') {
+      for (int i = 0; i < pullUp.length; i++) {
+        int y = pullUp[i];
+        spots.add(FlSpot(i.toDouble(), y.toDouble()));
+      }
+    }
+    if (exCategory == '푸쉬업') {
+      for (int i = 0; i < pushUp.length; i++) {
+        int y = pushUp[i];
+        spots.add(FlSpot(i.toDouble(), y.toDouble()));
+      }
+    }
+    if (exCategory == '친업') {
+      for (int i = 0; i < chinUp.length; i++) {
+        int y = chinUp[i];
+        spots.add(FlSpot(i.toDouble(), y.toDouble()));
+      }
+    }
+    if (exCategory == '너클 푸쉬업') {
+      for (int i = 0; i < nukclePushUp.length; i++) {
+        int y = nukclePushUp[i];
+        spots.add(FlSpot(i.toDouble(), y.toDouble()));
+      }
+    }
 
     double getTouchLineStart(LineChartBarData barData, int spotIndex) {
       return 0;
@@ -431,8 +541,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     }
 
     return SizedBox(
-        height: 100,
-        width: MediaQuery.of(context).size.width * 0.405,
+        height: MediaQuery.of(context).size.height * 0.12,
+        width: MediaQuery.of(context).size.width * 0.39,
         child: LineChart(
           LineChartData(
             gridData: const FlGridData(
@@ -446,8 +556,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 getTooltipItems: (List<LineBarSpot> touchedSpots) {
                   return touchedSpots.map((LineBarSpot touchedSpot) {
                     final FlSpot spot = touchedSpot;
-                    int day =
-                        -1 * (spot.x.toInt() + 1 - _controller.dataList.length);
+                    int day = -1 * (spot.x.toInt() + 1 - spots.length);
                     int weight = _controller.dataList[spot.x.toInt()]['weight'];
                     return LineTooltipItem(
                         '', TextStyles.b4Medium.copyWith(color: Colors.white),
@@ -468,22 +577,22 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             ),
             lineBarsData: [
               LineChartBarData(
-                  spots: _controller.dataList.length > 31
-                      ? spots.sublist(_controller.dataList.length - 31)
+                  spots: spots.length > 31
+                      ? spots.sublist(spots.length - 31)
                       : spots,
                   color: color,
                   dotData: const FlDotData(show: false)),
             ],
-            minX: _controller.dataList.length > 31
-                ? _controller.dataList.length - 31
-                : 0,
-            maxX: _controller.dataList.length.toDouble(),
+            minX: spots.length > 31 ? spots.length - 31 : 0,
+            maxX: spots.length.toDouble(),
             minY: 0,
-            maxY: maxEx1Value.toDouble() + addY,
+            maxY: returnMaxExValue().toDouble() + addY,
             borderData: FlBorderData(
                 show: true,
                 border: Border.all(
-                    color: context.isLight ? Colors.black : Colors.white,
+                    color: context.isLight
+                        ? DarkModeColors.background
+                        : LightModeColors.background,
                     width: 1)),
             titlesData: const FlTitlesData(
                 rightTitles: AxisTitles(),
