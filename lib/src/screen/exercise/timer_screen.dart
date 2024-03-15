@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/common/common_app_bar.dart';
 import 'package:escape_anchovy/src/screen/exercise/exercise_controller.dart';
-import 'package:escape_anchovy/src/screen/exercise/exercise_screen1.dart';
-import 'package:escape_anchovy/src/screen/exercise/exercise_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -26,20 +22,8 @@ class _TimerScreenState extends State<TimerScreen> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      setState(() {
-        if (_controller.seconds == 0) {
-          timer.cancel();
-          if (widget.exerciseController.set % 2 != 0) {
-            Navigator.pushNamed(context, ExerciseScreen1.routeName);
-          } else {
-            Navigator.pushNamed(context, ExerciseScreen2.routeName);
-          }
-        } else {
-          _controller.seconds--;
-        }
-      });
-    });
+    _controller.moveTimerNeedle();
+    _controller.moveScreen(context, widget.exerciseController.set);
   }
 
   @override
@@ -61,7 +45,30 @@ class _TimerScreenState extends State<TimerScreen> {
         child: Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height * 0.14),
-            SvgPicture.asset('assets/svg/clock.svg'),
+            Stack(
+              children: [
+                Positioned(child: SvgPicture.asset('assets/svg/timer.svg')),
+                Positioned(
+                    right: _controller.needleRightPos,
+                    left: _controller.needleLeftPos,
+                    bottom: 0,
+                    top: _controller.needleTopPos,
+                    child: Transform.rotate(
+                        angle: _controller.needleRotate *
+                            (3.141592653589793 / 180),
+                        child: SvgPicture.asset('assets/svg/timer_needle.svg',
+                            fit: BoxFit.scaleDown))),
+                Positioned(
+                    right: 0,
+                    left: 0,
+                    top: 30,
+                    bottom: 0,
+                    child: SvgPicture.asset(
+                      'assets/svg/timer_circle.svg',
+                      fit: BoxFit.scaleDown,
+                    )),
+              ],
+            ),
             const SizedBox(
               height: 24,
             ),

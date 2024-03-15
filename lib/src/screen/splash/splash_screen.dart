@@ -1,18 +1,22 @@
-import 'dart:async';
-
-import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
-import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key, required this.splashController});
+  const SplashScreen(
+      {super.key,
+      required this.backgroundColor,
+      required this.titleColor,
+      required this.fish,
+      required this.wave});
 
   static const routeName = '/splash';
 
-  final SplashController splashController;
+  final Color backgroundColor;
+  final Color titleColor;
+  final String fish;
+  final String wave;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -25,19 +29,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    _controller.checkInputName(context);
     _controller.moveUp();
-    Timer(const Duration(seconds: 3), () {
-      _controller.loadData();
-      print(_controller.dataList.toString());
-      Navigator.pushNamed(context, HomeScreen.routeName);
-    });
+    _controller.checkInputName(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFFCCE9FF),
+      backgroundColor: widget.backgroundColor,
       body: AnimatedBuilder(
           animation: _controller,
           builder: (context, snapshot) {
@@ -58,15 +57,13 @@ class _SplashScreenState extends State<SplashScreen> {
               right: 0,
               child: Text('ESCAPE\nENCHOVY',
                   textAlign: TextAlign.center,
-                  style:
-                      TextStyles.title.copyWith(color: LightModeColors.dark3))),
+                  style: TextStyles.title.copyWith(color: widget.titleColor))),
           Positioned(
               bottom: 0,
               top: _controller.topPos,
               right: 30,
               left: 0,
-              child: SvgPicture.asset('assets/svg/anchovy.svg',
-                  fit: BoxFit.scaleDown)),
+              child: SvgPicture.asset(widget.fish, fit: BoxFit.scaleDown)),
           Stack(
             children: [
               Positioned(
@@ -74,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 left: 0,
                 right: 0,
                 child: Image.asset(
-                  'assets/png/wave.png',
+                  widget.wave,
                   fit: BoxFit.fill,
                 ),
               ),

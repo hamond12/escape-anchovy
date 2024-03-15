@@ -3,7 +3,6 @@ import 'package:escape_anchovy/res/text/colors.dart';
 import 'package:escape_anchovy/res/text/styles.dart';
 import 'package:escape_anchovy/src/common/common_svg.dart';
 import 'package:escape_anchovy/src/screen/home/home_screen.dart';
-import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,7 +12,6 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     this.settingController,
-    this.splashController,
     this.isLogo = false,
     this.isHome = false,
     this.isUserInfo = false,
@@ -22,7 +20,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   final String title;
   final SettingsController? settingController;
-  final SplashController? splashController;
+
   final bool isLogo;
   final bool isHome;
   final bool isUserInfo;

@@ -17,21 +17,20 @@ import 'package:escape_anchovy/src/screen/home/dialog/ex_category_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/dialog/weight_add_dialog.dart';
 import 'package:escape_anchovy/src/screen/home/home_controller.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
-import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen(
-      {super.key,
-      required this.settingController,
-      required this.achievementController,
-      required this.userInfoController,
-      required this.exerciseController,
-      required this.homeController,
-      required this.splashController});
+  const HomeScreen({
+    super.key,
+    required this.settingController,
+    required this.achievementController,
+    required this.userInfoController,
+    required this.exerciseController,
+    required this.homeController,
+  });
 
   static const routeName = '/home';
 
@@ -40,7 +39,6 @@ class HomeScreen extends StatefulWidget {
   final UserInfoController userInfoController;
   final ExerciseController exerciseController;
   final HomeController homeController;
-  final SplashController splashController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -65,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     widget.userInfoController.loadAlarmInfo();
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      _controller.checkTimeDifference();
+      _controller.checkTimeDifference(context);
     });
   }
 
@@ -74,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: CommonAppBar(
         settingController: widget.settingController,
-        splashController: widget.splashController,
         title: AppLocalizations.of(context)!.home_app_bar_title,
         isLogo: true,
         isHome: true,
@@ -609,34 +606,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: context.isLight
                               ? LightModeColors.dark2
                               : DarkModeColors.dark2)),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  CommonButton(
-                    text: '데이터 추가',
-                    width: 300,
-                    onPressed: () {
-                      setState(() {
-                        _controller.dataList.add({
-                          'time': DateTime.now().toString(),
-                          'day': _controller.dataList.length + 1,
-                          'ex1_name': '풀업',
-                          'ex2_name': '푸쉬업',
-                          'ex1': [9, 1, 1],
-                          'ex2': [27, 1, 1],
-                          'weight': 3
-                        });
-                        _controller.saveData();
-                      });
-                    },
-                  ),
-                  CommonButton(
-                    text: '데이터 삭제',
-                    width: 300,
-                    onPressed: () {
-                      _controller.deleteData();
-                    },
-                  ),
                 ],
               ),
             ),

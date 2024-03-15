@@ -12,9 +12,6 @@ import 'package:escape_anchovy/src/screen/home/home_screen.dart';
 import 'package:escape_anchovy/src/screen/note/note_screen.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_controller.dart';
 import 'package:escape_anchovy/src/screen/splash/splash_screen.dart';
-import 'package:escape_anchovy/src/screen/splash/splash_screen2.dart';
-import 'package:escape_anchovy/src/screen/splash/splash_screen3.dart';
-import 'package:escape_anchovy/src/screen/splash/splash_screen4.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_controller.dart';
 import 'package:escape_anchovy/src/screen/user_info/user_info_screen.dart';
 import 'package:escape_anchovy/src/screen/user_name/user_name_screen.dart';
@@ -47,6 +44,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    print(widget.settingController.splashNum);
   }
 
   @override
@@ -68,7 +66,7 @@ class _MyAppState extends State<MyApp> {
             themeMode: widget.settingController.themeMode,
             onGenerateTitle: (BuildContext context) =>
                 AppLocalizations.of(context)!.app_title,
-            initialRoute: returnInitialRoute(),
+            initialRoute: SplashScreen.routeName,
             onGenerateRoute: (RouteSettings routeSettings) {
               return route(routeSettings);
             },
@@ -76,15 +74,31 @@ class _MyAppState extends State<MyApp> {
         });
   }
 
-  String returnInitialRoute() {
+  Widget returnSplashScreen() {
     if (widget.settingController.splashNum == 1) {
-      return SplashScreen2.routeName;
+      return const SplashScreen(
+          backgroundColor: Color(0XFF81A0FF),
+          titleColor: Color(0XFFF6CA6E),
+          fish: 'assets/svg/mackerel.svg',
+          wave: 'assets/png/wave2.png');
     } else if (widget.settingController.splashNum == 2) {
-      return SplashScreen3.routeName;
+      return const SplashScreen(
+          backgroundColor: Color(0XFF6878AB),
+          titleColor: Color(0XFFBCE885),
+          fish: 'assets/svg/daegu.svg',
+          wave: 'assets/png/wave3.png');
     } else if (widget.settingController.splashNum == 3) {
-      return SplashScreen4.routeName;
+      return const SplashScreen(
+          backgroundColor: Color(0XFF5F7088),
+          titleColor: Color(0XFFFF5038),
+          fish: 'assets/svg/shark.svg',
+          wave: 'assets/png/wave4.png');
     } else {
-      return SplashScreen.routeName;
+      return const SplashScreen(
+          backgroundColor: Color(0XFFC7E7FF),
+          titleColor: Color(0XFF8A848D),
+          fish: 'assets/svg/anchovy.svg',
+          wave: 'assets/png/wave.png');
     }
   }
 
@@ -94,18 +108,9 @@ class _MyAppState extends State<MyApp> {
         builder: (BuildContext context) {
           switch (routeSettings.name) {
             case SplashScreen.routeName:
-              return SplashScreen(
-                splashController: widget.splashController,
-              );
-            case SplashScreen2.routeName:
-              return const SplashScreen2();
-            case SplashScreen3.routeName:
-              return const SplashScreen3();
-            case SplashScreen4.routeName:
-              return const SplashScreen4();
+              return returnSplashScreen();
             case HomeScreen.routeName:
               return HomeScreen(
-                splashController: widget.splashController,
                 achievementController: widget.achievementController,
                 settingController: widget.settingController,
                 userInfoController: widget.userInfoController,
@@ -139,7 +144,7 @@ class _MyAppState extends State<MyApp> {
             case NoteScreen.routeName:
               return const NoteScreen();
             default:
-              return const Text('asdf');
+              return const Text('Error');
           }
         });
   }

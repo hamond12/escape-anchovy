@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:escape_anchovy/src/screen/exercise/exercise_screen1.dart';
+import 'package:escape_anchovy/src/screen/exercise/exercise_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -74,7 +76,7 @@ class ExerciseController with ChangeNotifier {
     await storage.delete(key: 'isSelected4');
   }
 
-  int seconds = 1;
+  int seconds = 120;
   late Timer timer;
 
   String formatTime(int second) {
@@ -99,5 +101,53 @@ class ExerciseController with ChangeNotifier {
   Future<void> deleteWeight() async {
     await storage.delete(key: 'weight');
     notifyListeners();
+  }
+
+  void moveScreen(context, set) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      if (seconds == 0) {
+        timer.cancel();
+        if (set % 2 != 0) {
+          Navigator.pushNamed(context, ExerciseScreen1.routeName);
+        } else {
+          Navigator.pushNamed(context, ExerciseScreen2.routeName);
+        }
+      } else {
+        seconds--;
+      }
+    });
+  }
+
+  double needleRotate = 0;
+  double needleTopPos = 0;
+  double needleRightPos = 0;
+  double needleLeftPos = 0;
+
+  void moveTimerNeedle() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      needleRotate += 3;
+
+      if (needleRotate <= 90) {
+        needleLeftPos += 1.33;
+        needleTopPos += 1;
+      }
+
+      if (needleRotate > 90 && needleRotate <= 180) {
+        needleLeftPos -= 1.33;
+        needleTopPos += 1;
+      }
+
+      if (needleRotate > 180 && needleRotate <= 270) {
+        needleRightPos += 1.33;
+        needleTopPos -= 1;
+      }
+
+      if (needleRotate > 270) {
+        needleRightPos -= 1.33;
+        needleTopPos -= 1;
+      }
+
+      notifyListeners();
+    });
   }
 }

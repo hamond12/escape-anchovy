@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:escape_anchovy/src/screen/splash/splash_screen.dart';
 import 'package:escape_anchovy/src/util/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -63,12 +64,16 @@ class HomeController with ChangeNotifier {
     return "$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds";
   }
 
-  void checkTimeDifference() {
+  void checkTimeDifference(
+    BuildContext context,
+  ) {
     if (dataList.isNotEmpty) {
       DateTime lastDataAddTime = DateTime.parse(dataList.last['time']);
       DateTime now = DateTime.now();
-      if (now.difference(lastDataAddTime).inHours >= 24 * 7) {
+      if (now.difference(lastDataAddTime).inDays >= 7) {
         deleteData();
+        Navigator.pushNamedAndRemoveUntil(
+            context, SplashScreen.routeName, (route) => false);
       }
     }
     notifyListeners();
