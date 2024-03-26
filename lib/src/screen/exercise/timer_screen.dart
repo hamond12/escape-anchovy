@@ -86,8 +86,8 @@ class _TimerScreenState extends State<TimerScreen> {
                   (7 - widget.exerciseController.set).toString(),
                   style: TextStyles.h1Medium.copyWith(
                       color: context.isLight
-                          ? LightModeColors.darkGold
-                          : DarkModeColors.darkGold),
+                          ? LightModeColors.yellow
+                          : DarkModeColors.yellow),
                 ),
                 const Text(
                   '세트 남았습니다.',

@@ -561,8 +561,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               textStyle:
                                   TextStyles.caption2.copyWith(height: 0.01),
                               buttonColor: context.isLight
-                                  ? LightModeColors.darkGold
-                                  : DarkModeColors.darkGold,
+                                  ? LightModeColors.yellow
+                                  : DarkModeColors.yellow,
                             )
                           ],
                         ),
